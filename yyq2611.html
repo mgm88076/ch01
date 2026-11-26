@@ -1,0 +1,3649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>龍鶴堂事務所 · 探命诹祥｜厚土开渠，因才立身</title>
+
+  <!-- Google Fonts: Noto Serif SC, Noto Sans SC, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#07090F',
+            paper: '#EAE4D7',
+            ochre: '#C89B54',
+            cinnabar: '#9E2A22',
+            vermilion: '#C44536',
+            cyanwater: '#49A6A8',
+            starblue: '#7DA8D6',
+            pine: '#5C8D6B',
+          },
+          fontFamily: {
+            serif: ['"Noto Serif SC"', 'Songti SC', 'SimSun', 'serif'],
+            sans: ['"Noto Sans SC"', '"PingFang SC"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Three.js r128 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    :root {
+      --ink: #07090F;
+      --paper: #EAE4D7;
+      --ochre: #C89B54;
+      --cinnabar: #9E2A22;
+      --vermilion: #C44536;
+      --cyanwater: #49A6A8;
+      --pine: #5C8D6B;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      background-color: var(--ink);
+      color: var(--paper);
+      font-family: 'Noto Sans SC', sans-serif;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Chinese Anti-Orphan & Editorial Typography Rules */
+    p, li, .anti-orphan {
+      text-wrap: pretty;
+      line-break: strict;
+      overflow-wrap: break-word;
+    }
+    h1, h2, h3, .balance-text {
+      text-wrap: balance;
+      line-break: strict;
+    }
+    .no-orphan {
+      white-space: nowrap;
+      display: inline;
+    }
+    .clause {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    /* Fullscreen WebGL Canvas */
+    #webgl-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 1;
+    }
+
+    /* Cosmic Vignette Overlay */
+    .vignette-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      background:
+        radial-gradient(circle at 50% 44%, rgba(7, 9, 15, 0.04) 0%, rgba(7, 9, 15, 0.45) 70%, rgba(5, 7, 12, 0.86) 100%);
+    }
+
+    /* Minimalist Architectural Perimeter Frame */
+    .arch-frame {
+      position: fixed;
+      inset: 14px;
+      border: 1px solid rgba(234, 228, 215, 0.08);
+      pointer-events: none;
+      z-index: 15;
+      transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .arch-corner {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-color: rgba(200, 155, 84, 0.48);
+      border-style: solid;
+      border-width: 0;
+    }
+    .arch-corner.tl { top: -1px; left: -1px; border-top-width: 1px; border-left-width: 1px; }
+    .arch-corner.tr { top: -1px; right: -1px; border-top-width: 1px; border-right-width: 1px; }
+    .arch-corner.bl { bottom: -1px; left: -1px; border-bottom-width: 1px; border-left-width: 1px; }
+    .arch-corner.br { bottom: -1px; right: -1px; border-bottom-width: 1px; border-right-width: 1px; }
+
+    /* Brand Logo Lockup Styling */
+    .lht-emblem-dark {
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+    }
+    .lht-lockup-cn {
+      font-family: 'Noto Sans SC', 'PingFang SC', sans-serif;
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: 0.14em;
+    }
+    .lht-lockup-en {
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: 0.015em;
+    }
+
+    /* Custom subtle scrollbar */
+    .custom-scroll {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(200, 155, 84, 0.35) transparent;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: contain;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(200, 155, 84, 0.35);
+      border-radius: 99px;
+    }
+
+    /* Eastern Gallery Obsidian Frosted Glass */
+    .arch-panel {
+      background: linear-gradient(155deg, rgba(14, 17, 26, 0.78) 0%, rgba(7, 9, 15, 0.86) 100%);
+      border: 1px solid rgba(234, 228, 215, 0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.52);
+    }
+
+    .arch-card {
+      background: rgba(16, 19, 28, 0.68);
+      border: 1px solid rgba(234, 228, 215, 0.11);
+      transition: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .arch-card:hover {
+      border-color: rgba(200, 155, 84, 0.48);
+      background: rgba(24, 28, 40, 0.84);
+    }
+    .arch-card.active {
+      border-color: rgba(200, 155, 84, 0.82);
+      background: linear-gradient(160deg, rgba(200, 155, 84, 0.16) 0%, rgba(16, 19, 28, 0.90) 100%);
+      box-shadow: 0 0 28px rgba(200, 155, 84, 0.15);
+    }
+
+    /* Custom Architectural Range Slider (Act 5) */
+    input[type="range"].cosmic-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, rgba(73, 166, 168, 0.55) 0%, rgba(200, 155, 84, 0.65) 50%, rgba(196, 69, 54, 0.75) 100%);
+      border-radius: 999px;
+      outline: none;
+      cursor: pointer;
+    }
+    input[type="range"].cosmic-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #EAE4D7;
+      border: 2px solid #C89B54;
+      box-shadow: 0 0 12px rgba(200, 155, 84, 0.75);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    input[type="range"].cosmic-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.18);
+      border-color: #49A6A8;
+    }
+    input[type="range"].cosmic-slider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #EAE4D7;
+      border: 2px solid #C89B54;
+      box-shadow: 0 0 12px rgba(200, 155, 84, 0.75);
+    }
+
+    /* Act 0: Deliberately Plain White Word/PPT Document */
+    #act-0-boring {
+      position: fixed;
+      inset: 0;
+      height: 100dvh;
+      z-index: 40;
+      background: #E9ECEF;
+      color: #1F2937;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Calibri, "SimSun", "Microsoft YaHei", Arial, sans-serif;
+      perspective: 1400px;
+      transition: opacity 0.6s ease;
+    }
+
+    .boring-page {
+      width: min(760px, 94vw);
+      max-height: calc(100dvh - 24px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      background: #FFFFFF;
+      border: 1px solid #C5CAD2;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+      padding: clamp(18px, 3.6vw, 42px);
+      position: relative;
+      transform-style: preserve-3d;
+    }
+
+    .boring-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(11.5px, 3vw, 13px);
+      margin-top: 12px;
+      margin-bottom: 16px;
+    }
+    .boring-table th, .boring-table td {
+      border: 1px solid #BFC5CE;
+      padding: clamp(5px, 1.5vw, 7px) clamp(4px, 1.8vw, 10px);
+      text-align: center;
+    }
+    .boring-table th {
+      background: #F3F4F6;
+      color: #374151;
+      font-weight: 600;
+    }
+
+    @keyframes subtlePulse {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(158, 42, 34, 0.32), 0 0 18px rgba(200, 155, 84, 0.22);
+      }
+      50% {
+        box-shadow: 0 0 0 8px rgba(158, 42, 34, 0), 0 0 32px rgba(73, 166, 168, 0.42);
+      }
+    }
+
+    .breakthrough-btn {
+      position: relative;
+      background: #0B0E16;
+      color: #EAE4D7;
+      border: 1px solid rgba(200, 155, 84, 0.78);
+      padding: 13px 28px;
+      border-radius: 4px;
+      font-family: 'Noto Serif SC', serif;
+      letter-spacing: 0.12em;
+      font-size: 15px;
+      cursor: pointer;
+      animation: subtlePulse 2.8s infinite ease-in-out;
+      transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+    }
+    .breakthrough-btn:hover {
+      transform: translateY(-1px) scale(1.02);
+      background: #121724;
+      border-color: #49A6A8;
+    }
+
+    /* 3D Shatter Shards Overlay */
+    #shatter-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 45;
+      pointer-events: none;
+      perspective: 1200px;
+      overflow: hidden;
+      display: none;
+    }
+    .shatter-shard {
+      position: absolute;
+      background: linear-gradient(135deg, #FFFFFF 0%, #F2ECE1 60%, #D9C49B 100%);
+      border: 1px solid rgba(200, 155, 84, 0.85);
+      box-shadow: 0 0 22px rgba(200, 155, 84, 0.65), inset 0 0 12px rgba(73, 166, 168, 0.25);
+      transform-style: preserve-3d;
+      will-change: transform, opacity;
+    }
+    .crack-flash {
+      position: fixed;
+      inset: 0;
+      z-index: 46;
+      pointer-events: none;
+      background: radial-gradient(circle at center, rgba(234, 228, 215, 0.55) 0%, rgba(200, 155, 84, 0.30) 34%, rgba(73, 166, 168, 0.18) 62%, transparent 80%);
+      opacity: 0;
+    }
+
+    /* Slide Transitions */
+    .scene-slide {
+      position: fixed;
+      inset: 0;
+      height: 100dvh;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 76px clamp(16px, 4vw, 56px) calc(84px + env(safe-area-inset-bottom, 0px));
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(16px) scale(0.986);
+      transition:
+        opacity 0.78s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.88s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .scene-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Poetic staggered reveal (Act 10) */
+    .poetic-line {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 1.1s ease, transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .scene-slide.active .poetic-line.d1 { opacity: 1; transform: translateY(0); transition-delay: 0.25s; }
+    .scene-slide.active .poetic-line.d2 { opacity: 1; transform: translateY(0); transition-delay: 0.75s; }
+    .scene-slide.active .poetic-line.d3 { opacity: 1; transform: translateY(0); transition-delay: 1.25s; }
+    .scene-slide.active .poetic-line.d4 { opacity: 1; transform: translateY(0); transition-delay: 1.8s; }
+    .scene-slide.active .poetic-line.d5 { opacity: 1; transform: translateY(0); transition-delay: 2.35s; }
+
+    /* Top Autoplay Thin Line */
+    #autoplay-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, #9E2A22, #C89B54, #49A6A8);
+      z-index: 50;
+      transition: width 0.1s linear;
+    }
+
+    /* Side Navigation Arrows */
+    .side-nav-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 25;
+      width: 40px;
+      height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(7, 9, 15, 0.36);
+      border: 1px solid rgba(234, 228, 215, 0.12);
+      color: rgba(234, 228, 215, 0.68);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(6px);
+    }
+    .side-nav-btn:hover {
+      color: var(--ochre);
+      border-color: rgba(200, 155, 84, 0.55);
+      background: rgba(16, 20, 30, 0.78);
+    }
+    .side-nav-btn.hidden-ui {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Toast Message */
+    #toast-msg {
+      position: fixed;
+      top: 72px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-10px);
+      z-index: 60;
+      padding: 7px 16px;
+      border-radius: 4px;
+      background: rgba(12, 15, 24, 0.92);
+      border: 1px solid rgba(200, 155, 84, 0.52);
+      color: var(--paper);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s ease;
+    }
+    #toast-msg.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Native-Grade Mobile Touch Swipe Edge Arc Feedback */
+    .swipe-edge-indicator {
+      position: fixed;
+      top: 50%;
+      width: 54px;
+      height: 190px;
+      z-index: 55;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      will-change: transform, opacity;
+      transition: opacity 0.24s ease, transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #swipe-edge-left {
+      left: 0;
+      transform: translate(-28px, -50%);
+      border-radius: 0 999px 999px 0;
+      background: radial-gradient(circle at 0% 50%, rgba(200, 155, 84, 0.34) 0%, rgba(73, 166, 168, 0.14) 52%, transparent 78%);
+      border-right: 1px solid rgba(200, 155, 84, 0.55);
+      padding-right: 8px;
+    }
+    #swipe-edge-right {
+      right: 0;
+      transform: translate(28px, -50%);
+      border-radius: 999px 0 0 999px;
+      background: radial-gradient(circle at 100% 50%, rgba(200, 155, 84, 0.34) 0%, rgba(73, 166, 168, 0.14) 52%, transparent 78%);
+      border-left: 1px solid rgba(200, 155, 84, 0.55);
+      padding-left: 8px;
+    }
+
+    /* Subtle Mobile Swipe Gesture Hint (Auto-fades after first swipe) */
+    #mobile-swipe-hint {
+      transition: opacity 0.6s ease, max-height 0.5s ease, margin 0.5s ease;
+    }
+    #mobile-swipe-hint.dismissed {
+      opacity: 0;
+      max-height: 0;
+      margin-bottom: 0 !important;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    /* Bottom dock safe-area spacing */
+    #bottom-dock {
+      padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    }
+
+    @media (max-width: 768px) {
+      .side-nav-btn { display: none; }
+      .scene-slide {
+        padding: 64px 14px calc(86px + env(safe-area-inset-bottom, 0px));
+      }
+      .arch-frame { inset: 6px; }
+    }
+
+    @media (max-width: 540px) {
+      .hud-en-sub { display: none; }
+      .hud-hide-xs { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Fullscreen WebGL 3D Stage -->
+  <canvas id="webgl-canvas"></canvas>
+  <div class="vignette-overlay"></div>
+
+  <!-- Top Autoplay Thin Progress Bar -->
+  <div id="autoplay-progress-bar"></div>
+
+  <!-- Custom Non-blocking Toast -->
+  <div id="toast-msg"></div>
+
+  <!-- Architectural Perimeter Frame -->
+  <div id="arch-frame" class="arch-frame opacity-0">
+    <span class="arch-corner tl"></span>
+    <span class="arch-corner tr"></span>
+    <span class="arch-corner bl"></span>
+    <span class="arch-corner br"></span>
+  </div>
+
+  <!-- Mobile Horizontal Swipe Edge Feedback Arcs -->
+  <div id="swipe-edge-left" class="swipe-edge-indicator" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EAE4D7" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+  </div>
+  <div id="swipe-edge-right" class="swipe-edge-indicator" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EAE4D7" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+  </div>
+
+  <!-- ==================== PERSISTENT TOP HUD (EXACT BRAND LOCKUP) ==================== -->
+  <header id="top-hud" class="fixed top-0 left-0 right-0 z-30 flex items-center justify-between gap-2 px-3 sm:px-8 py-2.5 sm:py-3 transition-all duration-700 opacity-0 pointer-events-none">
+    <!-- Left: Authentic 龍鶴堂事務所 Frosted Lockup -->
+    <div class="flex items-center gap-2 sm:gap-3 px-2 sm:px-2.5 py-1.5 rounded-md bg-ink/55 border border-paper/10 backdrop-blur-md shrink-0">
+      <svg viewBox="0 0 100 100" class="w-7 h-7 sm:w-9 sm:h-9 shrink-0 rounded-[2px] lht-emblem-dark" xmlns="http://www.w3.org/2000/svg" aria-label="龍鶴堂事務所徽标">
+        <rect width="100" height="100" fill="#050507"/>
+        <rect x="20" y="15" width="13" height="13" fill="#9A2B22"/>
+        <rect x="67" y="15" width="13" height="13" fill="#9A2B22"/>
+        <rect x="20" y="28" width="13" height="56" fill="#F8F6F0"/>
+        <rect x="67" y="28" width="13" height="56" fill="#F8F6F0"/>
+        <rect x="20" y="48" width="60" height="12" fill="#F8F6F0"/>
+        <rect x="20" y="72" width="60" height="12" fill="#F8F6F0"/>
+      </svg>
+      <div class="flex flex-col justify-center">
+        <div class="lht-lockup-cn text-[13.5px] sm:text-[15px] text-[#F8F6F0] whitespace-nowrap">龍鶴堂事務所</div>
+        <div class="hud-en-sub lht-lockup-en text-[8.5px] sm:text-[9px] text-paper/65 mt-[2px] whitespace-nowrap">Dragon-Crane Hall Feng Shui Firm</div>
+      </div>
+    </div>
+
+    <!-- Right: Utility Controls -->
+    <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+      <span id="scene-counter" class="hidden md:inline-block font-mono text-[11px] tracking-widest text-paper/50 mr-1.5 whitespace-nowrap">01 / 10</span>
+      <button id="btn-autoplay" type="button" title="自动演示 (快捷键 A)" class="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded text-[11px] sm:text-xs font-mono tracking-wider border border-paper/15 bg-ink/60 backdrop-blur-md text-paper/80 hover:border-ochre/60 hover:text-ochre transition whitespace-nowrap">
+        <span id="autoplay-dot" class="w-1.5 h-1.5 rounded-full bg-paper/40 shrink-0"></span>
+        <span>自动</span>
+        <kbd class="hud-hide-xs hidden sm:inline text-[10px] text-paper/40 ml-0.5">A</kbd>
+      </button>
+      <button id="btn-audio" type="button" title="星海配乐与清雅音效 (快捷键 M)" class="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded text-[11px] sm:text-xs font-mono tracking-wider border border-paper/15 bg-ink/60 backdrop-blur-md text-paper/80 hover:border-cyanwater/70 hover:text-cyanwater transition whitespace-nowrap">
+        <span id="audio-icon">✦</span>
+        <span id="audio-label">星乐</span>
+        <kbd class="hud-hide-xs hidden sm:inline text-[10px] text-paper/40 ml-0.5">M</kbd>
+      </button>
+      <button id="btn-fullscreen" type="button" title="全屏沉浸 (快捷键 F)" class="flex items-center gap-1 px-2 sm:px-3 py-1.5 rounded text-[11px] sm:text-xs font-mono tracking-wider border border-paper/15 bg-ink/60 backdrop-blur-md text-paper/80 hover:border-ochre/60 hover:text-ochre transition whitespace-nowrap">
+        <span>全屏</span>
+        <kbd class="hud-hide-xs hidden sm:inline text-[10px] text-paper/40 ml-0.5">F</kbd>
+      </button>
+    </div>
+  </header>
+
+  <!-- Minimal Side Navigation Arrows -->
+  <button id="btn-prev" type="button" aria-label="上一幕" class="side-nav-btn left-4 hidden-ui">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <button id="btn-next" type="button" aria-label="下一幕" class="side-nav-btn right-4 hidden-ui">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+
+  <!-- Bottom Timeline Chapter Rail -->
+  <nav id="bottom-dock" class="fixed bottom-0 left-0 right-0 z-30 px-3 sm:px-8 pt-2 transition-all duration-700 opacity-0 translate-y-4 pointer-events-none">
+    <div class="max-w-5xl mx-auto">
+      <!-- Subtle Mobile Swipe Hint (Auto-fades after first swipe) -->
+      <div id="mobile-swipe-hint" class="md:hidden text-center text-[10px] font-mono tracking-[0.22em] text-ochre/75 mb-1.5 whitespace-nowrap">
+        ← 左右滑动翻页 →
+      </div>
+      <div class="relative h-[1px] bg-paper/15 mb-2">
+        <div id="chapter-progress-line" class="absolute top-0 left-0 h-full bg-gradient-to-r from-[#9A2B22] via-ochre to-cyanwater transition-all duration-700" style="width: 0%;"></div>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <button id="btn-mobile-prev" type="button" aria-label="上一幕" class="md:hidden shrink-0 w-7 h-7 rounded border border-paper/15 bg-ink/70 text-paper/75 flex items-center justify-center active:border-ochre active:text-ochre">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div id="chapter-ticks" class="no-swipe h-scroll flex-1 flex items-center justify-between gap-1 overflow-x-auto custom-scroll pb-0.5">
+          <!-- Populated by JS -->
+        </div>
+        <button id="btn-mobile-next" type="button" aria-label="下一幕" class="md:hidden shrink-0 w-7 h-7 rounded border border-paper/15 bg-ink/70 text-paper/75 flex items-center justify-center active:border-ochre active:text-ochre">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================== ACT 0: THE LAST BORING SLIDE ==================== -->
+  <div id="act-0-boring">
+    <div id="boring-doc-card" class="boring-page">
+      <!-- Plain Office Header with Authentic Black-Text 龍鶴堂事務所 Lockup -->
+      <div class="flex flex-wrap items-center justify-between gap-2.5 border-b border-gray-300 pb-3.5 mb-4">
+        <div class="flex items-center gap-2.5 shrink-0">
+          <svg viewBox="0 0 100 100" class="w-9 h-9 shrink-0" xmlns="http://www.w3.org/2000/svg" aria-label="龍鶴堂事務所">
+            <rect width="100" height="100" fill="#050507"/>
+            <rect x="20" y="15" width="13" height="13" fill="#9A2B22"/>
+            <rect x="67" y="15" width="13" height="13" fill="#9A2B22"/>
+            <rect x="20" y="28" width="13" height="56" fill="#F8F6F0"/>
+            <rect x="67" y="28" width="13" height="56" fill="#F8F6F0"/>
+            <rect x="20" y="48" width="60" height="12" fill="#F8F6F0"/>
+            <rect x="20" y="72" width="60" height="12" fill="#F8F6F0"/>
+          </svg>
+          <div class="flex flex-col justify-center">
+            <div class="lht-lockup-cn text-[16px] sm:text-[17px] text-[#0A0A0D] whitespace-nowrap">龍鶴堂事務所</div>
+            <div class="lht-lockup-en text-[9.5px] sm:text-[10px] text-[#4B5563] mt-[1px] whitespace-nowrap">Dragon-Crane Hall Feng Shui Firm</div>
+          </div>
+        </div>
+        <div class="text-left sm:text-right text-[11px] text-gray-500 leading-snug">
+          <div class="whitespace-nowrap">探命诹祥_杨耀棋_校订重排版.pdf</div>
+          <div class="whitespace-nowrap">只读视图 · 第 1 / 21 页</div>
+        </div>
+      </div>
+
+      <h1 class="text-base sm:text-xl font-bold text-gray-800 text-center tracking-wide balance-text">
+        <span class="clause">八字命盘分析报告</span> <span class="clause">— 杨耀棋（乾造）</span>
+      </h1>
+      <p class="text-[11.5px] sm:text-xs text-gray-500 text-center mt-1.5 mb-4 leading-relaxed">
+        <span class="clause">公历：2008年5月8日 20:21（北京时间）</span>
+        <span class="hidden sm:inline mx-1">｜</span>
+        <span class="clause">农历：戊子年四月初四</span>
+        <span class="hidden sm:inline mx-1">｜</span>
+        <span class="clause">出生地：云南开远</span>
+      </p>
+
+      <!-- Deliberately Plain Table -->
+      <table class="boring-table">
+        <thead>
+          <tr>
+            <th>四柱项目</th>
+            <th>年柱</th>
+            <th>月柱</th>
+            <th>日柱</th>
+            <th>时柱</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bg-gray-50 font-medium">天干十神</td>
+            <td>比肩</td>
+            <td>正印</td>
+            <td>日元</td>
+            <td>偏财</td>
+          </tr>
+          <tr class="font-bold text-base text-gray-900">
+            <td class="bg-gray-50 text-xs font-medium text-gray-700">干支原局</td>
+            <td>戊 子</td>
+            <td>丁 巳</td>
+            <td>戊 申</td>
+            <td>壬 戌</td>
+          </tr>
+          <tr class="text-gray-600 text-xs">
+            <td class="bg-gray-50 font-medium">地支藏干</td>
+            <td>癸（正财）</td>
+            <td>丙、戊、庚</td>
+            <td>庚、壬、戊</td>
+            <td>戊、辛、丁</td>
+          </tr>
+          <tr class="text-gray-600 text-xs">
+            <td class="bg-gray-50 font-medium">十二长生</td>
+            <td>胎</td>
+            <td>临官</td>
+            <td>病</td>
+            <td>墓</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Dry Bullet Summary -->
+      <div class="border border-gray-300 bg-gray-50 p-3.5 text-xs text-gray-600 leading-relaxed mb-6 space-y-1">
+        <div class="font-semibold text-gray-700">【文档要点摘录】</div>
+        <ul class="list-disc pl-5 space-y-0.5">
+          <li>格局判定：戊土生于巳月，建禄为纲，印比偏厚，身旺不从。</li>
+          <li>取用方向：以财为用，食神通关；扶抑先取金水，调候重水润木疏。</li>
+          <li>运势节奏：阳男顺行，前两运火土偏厚宜立身积技，中年金水渐显。</li>
+        </ul>
+      </div>
+
+      <!-- Subtle Meta Line + Breakthrough Trigger -->
+      <div class="flex flex-col items-center pt-2 border-t border-dashed border-gray-300 text-center">
+        <p class="text-xs text-gray-400 tracking-wider mb-3.5">
+          <span class="clause">传统命理阅读，</span><span class="clause">往往止步于静态的纸面表格。</span>
+        </p>
+        <button id="btn-breakthrough" type="button" class="breakthrough-btn whitespace-nowrap">
+          打破平面维度 · 开启三维命盘 →
+        </button>
+        <p class="text-[11px] text-gray-400 mt-3 leading-relaxed">
+          <span class="clause">建议佩戴耳机感受星海配乐 ·</span>
+          <span class="clause">手机向左滑动或按 <span class="font-mono px-1 py-0.5 bg-gray-200 text-gray-600 rounded">→</span> 亦可破界启卷</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shatter VFX Layer -->
+  <div id="shatter-layer"></div>
+  <div id="crack-flash" class="crack-flash"></div>
+
+  <!-- ==================== ACT 1: 卷首立意 ==================== -->
+  <section id="slide-1" class="scene-slide">
+    <div class="w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-end max-h-full overflow-y-auto custom-scroll pr-1">
+      <div class="lg:col-span-7 space-y-4 sm:space-y-5">
+        <!-- Prominent Authentic Gallery Lockup -->
+        <div class="inline-flex items-center gap-3">
+          <svg viewBox="0 0 100 100" class="w-10 h-10 sm:w-11 sm:h-11 shrink-0 rounded-[2px] lht-emblem-dark" xmlns="http://www.w3.org/2000/svg" aria-label="龍鶴堂事務所">
+            <rect width="100" height="100" fill="#050507"/>
+            <rect x="20" y="15" width="13" height="13" fill="#9A2B22"/>
+            <rect x="67" y="15" width="13" height="13" fill="#9A2B22"/>
+            <rect x="20" y="28" width="13" height="56" fill="#F8F6F0"/>
+            <rect x="67" y="28" width="13" height="56" fill="#F8F6F0"/>
+            <rect x="20" y="48" width="60" height="12" fill="#F8F6F0"/>
+            <rect x="20" y="72" width="60" height="12" fill="#F8F6F0"/>
+          </svg>
+          <div>
+            <div class="lht-lockup-cn text-[17px] sm:text-xl text-[#F8F6F0] whitespace-nowrap">龍鶴堂事務所</div>
+            <div class="lht-lockup-en text-[10px] sm:text-[10.5px] text-paper/65 mt-0.5 whitespace-nowrap">Dragon-Crane Hall Feng Shui Firm</div>
+          </div>
+        </div>
+
+        <div>
+          <h1 class="font-serif font-semibold tracking-[0.12em] text-paper leading-tight" style="font-size: clamp(30px, 8.2vw, 56px);">
+            <span class="clause">厚土开渠<span class="text-ochre">，</span></span><span class="clause">因才立身</span>
+          </h1>
+          <p class="font-serif text-xs sm:text-sm tracking-[0.14em] text-ochre/90 mt-2.5 leading-relaxed">
+            <span class="clause">以月令察其势，</span><span class="clause">以生克明其机。</span><span class="clause">由命观人，</span><span class="clause">由理谋行。</span>
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm sm:text-base font-serif text-paper/85">
+          <span class="px-2.5 py-0.5 border border-ochre/45 bg-ochre/10 rounded text-ochre whitespace-nowrap">杨耀棋 · 乾造</span>
+          <span class="font-mono tracking-[0.16em] text-paper/90 whitespace-nowrap">戊子 · 丁巳 · 戊申 · 壬戌</span>
+          <span class="font-mono text-xs text-paper/55 whitespace-nowrap">二○二六年冬</span>
+        </div>
+
+        <div class="arch-panel rounded-lg p-4 sm:p-6 space-y-3 text-[13.5px] sm:text-sm leading-relaxed text-paper/85 max-w-2xl">
+          <p>
+            <strong class="text-ochre font-serif font-medium">此命有根基，也有出路。</strong>
+            戊土生于巳月，火气已盛，土又有根。所幸日坐申，年支见子，时干透壬，厚土之间自有水脉。
+          </p>
+          <p class="text-paper/75">
+            都江堰分水导流，借的是山川原有的地势。观此造，亦宜从疏导处着眼——根基深厚的人，学得勤，记得牢；及至亲手做成一件事，让旁人也能受用，所学才有了去处。
+          </p>
+          <div class="pt-3 border-t border-paper/10 flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
+            <span class="self-start shrink-0 text-[11px] font-mono tracking-widest px-2 py-0.5 border border-cyanwater/50 text-cyanwater rounded whitespace-nowrap">本造总旨</span>
+            <p class="font-serif text-paper tracking-wide leading-relaxed">
+              <span class="clause">禄旺宜泄，</span><span class="clause">财有其源，</span><span class="clause">木待其时。</span><span class="clause">以才立身，</span><span class="clause">以规矩保其成果。</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Index Blueprint -->
+      <div class="lg:col-span-5">
+        <div class="arch-panel rounded-lg p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-paper/10 pb-2.5">
+            <span class="font-serif text-sm tracking-[0.2em] text-ochre">全册篇目索引</span>
+            <span class="font-mono text-[11px] text-paper/45">子平格局 · 易理与人生</span>
+          </div>
+          <div class="grid grid-cols-2 lg:grid-cols-1 gap-2 text-xs">
+            <button onclick="goToSlide(2)" class="arch-card rounded p-3 text-left flex items-center justify-between group">
+              <div>
+                <div class="font-serif text-sm text-paper group-hover:text-ochre transition">上篇 · 察命</div>
+                <div class="text-paper/55 mt-0.5">四柱原局、格局与取用</div>
+              </div>
+              <span class="font-mono text-[11px] text-ochre/80">03–08 →</span>
+            </button>
+            <button onclick="goToSlide(5)" class="arch-card rounded p-3 text-left flex items-center justify-between group">
+              <div>
+                <div class="font-serif text-sm text-paper group-hover:text-ochre transition">中篇 · 观人</div>
+                <div class="text-paper/55 mt-0.5">性情、学习与立身之道</div>
+              </div>
+              <span class="font-mono text-[11px] text-ochre/80">09–13 →</span>
+            </button>
+            <button onclick="goToSlide(7)" class="arch-card rounded p-3 text-left flex items-center justify-between group">
+              <div>
+                <div class="font-serif text-sm text-paper group-hover:text-ochre transition">下篇 · 顺时</div>
+                <div class="text-paper/55 mt-0.5">八步大运与近年流年推演</div>
+              </div>
+              <span class="font-mono text-[11px] text-ochre/80">14–18 →</span>
+            </button>
+            <button onclick="goToSlide(9)" class="arch-card rounded p-3 text-left flex items-center justify-between group">
+              <div>
+                <div class="font-serif text-sm text-paper group-hover:text-ochre transition">终篇 · 行策</div>
+                <div class="text-paper/55 mt-0.5">人生规划、九十日实践与总断</div>
+              </div>
+              <span class="font-mono text-[11px] text-ochre/80">19–21 →</span>
+            </button>
+          </div>
+          <p class="text-[11px] text-paper/45 leading-relaxed pt-1">
+            注：传统子平观察视角，宜与命主及家人的现实观察相互印证。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ACT 2: 四柱原局与真太阳时 ==================== -->
+  <section id="slide-2" class="scene-slide">
+    <div class="w-full max-w-5xl mx-auto flex flex-col gap-4 max-h-full overflow-y-auto custom-scroll pr-1">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+        <div>
+          <div class="font-mono text-[11px] tracking-[0.22em] text-ochre">上篇 · 察命 / 01</div>
+          <h2 class="font-serif text-2xl sm:text-3xl tracking-[0.12em] text-paper mt-1">四柱原局与真太阳时校盘</h2>
+        </div>
+        <div class="text-xs text-paper/60 font-mono">点击四柱石碑 · 聚焦对应 3D 天体星柱</div>
+      </div>
+
+      <!-- 4 Interactive Pillars -->
+      <div id="pillars-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Active Pillar Detail + Interactive Solar Time Calibration -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5">
+        <div id="pillar-detail-box" class="lg:col-span-5 arch-panel rounded-lg p-4 sm:p-5 flex flex-col justify-between">
+          <!-- Updated dynamically -->
+        </div>
+
+        <div class="lg:col-span-7 arch-panel rounded-lg p-4 sm:p-5 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-paper/10 pb-2.5">
+            <span class="font-serif text-sm tracking-widest text-cyanwater">天文子午线校盘对照</span>
+            <!-- Interactive Solar Time Toggle -->
+            <div class="inline-flex rounded bg-ink/80 border border-paper/15 p-0.5 text-[11px] font-mono">
+              <button id="btn-time-bj" type="button" class="px-2.5 py-1 rounded transition">北京时间 20:21</button>
+              <button id="btn-time-solar" type="button" class="px-2.5 py-1 rounded transition bg-cyanwater/20 text-cyanwater">真太阳时 19:18</button>
+            </div>
+          </div>
+
+          <div id="solar-compare-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-center">
+            <!-- Dynamically updated on toggle -->
+          </div>
+
+          <p class="text-xs text-paper/72 leading-relaxed">
+            农历戊子年四月初四，出生已过立夏、尚未交芒种，取<span class="text-ochre">丁巳月</span>。戊日从壬子起时，顺数至戌得<span class="text-cyanwater">壬戌</span>；经度修正约 <span class="font-mono text-paper">-67分</span>、均时差 <span class="font-mono text-paper">+3分32秒</span> 后约为 <span class="font-mono text-cyanwater">19:18</span>，仍属戌时（距戌时起点约 18 分钟，两种计时四柱一致）。戊申日属<span class="text-paper">甲辰旬，寅卯空</span>；十二长生按戊土寄火法排列。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ACT 3: 建禄为纲与五行流通 ==================== -->
+  <section id="slide-3" class="scene-slide">
+    <div class="w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 items-center max-h-full overflow-y-auto custom-scroll pr-1">
+      <div class="lg:col-span-6 space-y-4">
+        <div>
+          <div class="font-mono text-[11px] tracking-[0.22em] text-ochre">上篇 · 察命 / 02–03</div>
+          <h2 class="font-serif text-2xl sm:text-3xl tracking-[0.12em] text-paper mt-1">建禄为纲，气脉流通</h2>
+        </div>
+
+        <div class="arch-panel rounded-lg p-4">
+          <div class="text-[11px] font-mono text-paper/50 tracking-widest mb-2.5">五行能量流通路径（3D 星环实时流转）</div>
+          <div class="flex items-center justify-between gap-1 text-center text-[11px] sm:text-xs">
+            <div class="flex-1 py-2 px-1 rounded border border-vermilion/45 bg-vermilion/10">
+              <div class="font-serif text-vermilion font-semibold whitespace-nowrap">火·印星</div>
+              <div class="font-mono text-[10px] text-paper/65 mt-0.5 whitespace-nowrap">丁、巳</div>
+            </div>
+            <span class="text-ochre/70 font-mono shrink-0">→</span>
+            <div class="flex-1 py-2 px-1 rounded border border-ochre/65 bg-ochre/15">
+              <div class="font-serif text-ochre font-semibold whitespace-nowrap">土·建禄</div>
+              <div class="font-mono text-[10px] text-paper/80 mt-0.5 whitespace-nowrap">戊、戌</div>
+            </div>
+            <span class="text-ochre/70 font-mono shrink-0">→</span>
+            <div class="flex-1 py-2 px-1 rounded border border-paper/45 bg-paper/10">
+              <div class="font-serif text-paper font-semibold whitespace-nowrap">金·食神</div>
+              <div class="font-mono text-[10px] text-paper/75 mt-0.5 whitespace-nowrap">申中庚</div>
+            </div>
+            <span class="text-cyanwater/80 font-mono shrink-0">→</span>
+            <div class="flex-1 py-2 px-1 rounded border border-cyanwater/60 bg-cyanwater/15">
+              <div class="font-serif text-cyanwater font-semibold whitespace-nowrap">水·财星</div>
+              <div class="font-mono text-[10px] text-paper/75 mt-0.5 whitespace-nowrap">壬、子</div>
+            </div>
+          </div>
+          <div class="mt-2.5 flex flex-wrap items-center justify-between gap-1 text-[11px] px-2.5 py-1.5 rounded bg-pine/10 border border-pine/35 text-pine">
+            <span class="whitespace-nowrap">木 · 原局不现（待时星轨）</span>
+            <span class="text-paper/70 whitespace-nowrap">有水滋木，木方能疏土</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="arch-panel rounded-lg p-3.5">
+            <div class="text-xs font-serif text-vermilion mb-1">生扶有势</div>
+            <p class="text-xs text-paper/75 leading-relaxed">丁印、戊比、巳戌之根。火得夏令，日元得令得根得势。</p>
+          </div>
+          <div class="arch-panel rounded-lg p-3.5">
+            <div class="text-xs font-serif text-cyanwater mb-1">泄耗有源</div>
+            <p class="text-xs text-paper/75 leading-relaxed">申中庚金、时壬、年支子水。金有根、水未枯，身旺而不入从旺。</p>
+          </div>
+        </div>
+
+        <div class="arch-panel rounded-lg p-4 border-l-2 border-l-ochre">
+          <div class="text-xs font-serif text-ochre mb-1">由命观人 · 器物之喻</div>
+          <p class="text-xs text-paper/80 leading-relaxed">
+            学过机械原理是土有积蓄；拿起工具修好故障器物是<span class="text-paper">土生金</span>；器物交还让人顺手、手艺换得报酬便是<span class="text-cyanwater">金生水</span>。每学一段，留下一件经得起检验的作品。
+          </p>
+        </div>
+      </div>
+
+      <!-- Right: 用神三义 Tabs -->
+      <div class="lg:col-span-6 arch-panel rounded-lg p-5 sm:p-6 space-y-4">
+        <div>
+          <div class="font-mono text-[11px] text-ochre tracking-widest">用神须分三义</div>
+          <h3 class="font-serif text-lg sm:text-xl text-paper mt-0.5">格局、扶抑与调候，各有所指</h3>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2" id="yongshen-tabs">
+          <button data-tab="geju" class="yongshen-tab arch-card active rounded py-2.5 px-2 text-center font-serif text-sm">格局取用</button>
+          <button data-tab="fuyi" class="yongshen-tab arch-card rounded py-2.5 px-2 text-center font-serif text-sm">扶抑取用</button>
+          <button data-tab="tiaohou" class="yongshen-tab arch-card rounded py-2.5 px-2 text-center font-serif text-sm">调候取用</button>
+        </div>
+
+        <div id="yongshen-content" class="min-h-[146px] bg-ink/55 border border-paper/10 rounded-lg p-4 flex flex-col justify-between">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="pt-3 border-t border-paper/10 space-y-2">
+          <div class="grid grid-cols-3 gap-2 text-center text-xs">
+            <div class="p-2 rounded bg-paper/5 border border-paper/10">
+              <div class="font-serif text-paper font-medium">金</div>
+              <div class="text-[11px] text-paper/60 mt-0.5">泄土，护其水源</div>
+            </div>
+            <div class="p-2 rounded bg-cyanwater/10 border border-cyanwater/30">
+              <div class="font-serif text-cyanwater font-medium">水</div>
+              <div class="text-[11px] text-paper/70 mt-0.5">润燥，使土得养</div>
+            </div>
+            <div class="p-2 rounded bg-pine/10 border border-pine/30">
+              <div class="font-serif text-pine font-medium">木</div>
+              <div class="text-[11px] text-paper/70 mt-0.5">得水，方能疏土</div>
+            </div>
+          </div>
+          <p class="text-[11px] text-paper/55 leading-relaxed">
+            取用总断：格局用财，食神相辅；扶抑先取金水，木须得宜；调候重水润土、木疏土，火土贵在有度。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ACT 4: 干支合绊与四处疏导关节 ==================== -->
+  <section id="slide-4" class="scene-slide">
+    <div class="w-full max-w-5xl mx-auto flex flex-col gap-4 max-h-full overflow-y-auto custom-scroll pr-1">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+        <div>
+          <div class="font-mono text-[11px] tracking-[0.22em] text-ochre">上篇 · 察命 / 04 & 06</div>
+          <h2 class="font-serif text-2xl sm:text-3xl tracking-[0.12em] text-paper mt-1">干支合绊与四处疏导关节</h2>
+        </div>
+        <div class="text-xs text-paper/60 font-mono leading-relaxed">
+          <span class="clause">巳申合而未化 ·</span>
+          <span class="clause">申子有情未成局 ·</span>
+          <span class="clause">丁壬遥合不化木</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+        <div class="lg:col-span-5 grid grid-cols-2 gap-2.5" id="joints-selector">
+          <!-- Populated by JS -->
+        </div>
+        <div id="joint-detail-panel" class="lg:col-span-7 arch-panel rounded-lg p-5 flex flex-col justify-between">
+          <!-- Updated by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ACT 5: 性情标尺（实时 3D 浑天仪滑块）& 食神泄秀 ==================== -->
+  <section id="slide-5" class="scene-slide">
+    <div class="w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch max-h-full overflow-y-auto custom-scroll pr-1">
+      <!-- Left: 3 Real-Time Calibration Sliders Driving the 3D Armillary Gyroscope -->
+      <div class="lg:col-span-6 arch-panel rounded-lg p-5 flex flex-col justify-between space-y-3.5">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <div class="font-mono text-[11px] tracking-[0.22em] text-ochre">中篇 · 观人 / 07</div>
+            <h2 class="font-serif text-2xl text-paper mt-1">稳重与执着，只隔一念</h2>
+            <p class="text-xs text-paper/68 mt-1 leading-relaxed">
+              拖动下方三组性情校准滑块，实时驱动左侧 3D 星空浑天仪的倾角与稳态平衡。
+            </p>
+          </div>
+          <span id="gyro-status-badge" class="shrink-0 font-mono text-[10px] px-2 py-1 rounded border border-cyanwater/50 bg-cyanwater/10 text-cyanwater">
+            浑天仪：中和稳态
+          </span>
+        </div>
+
+        <div id="trait-sliders-wrap" class="space-y-3">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="p-3 rounded bg-ink/60 border border-paper/10 text-xs text-paper/72 leading-relaxed">
+          <span class="text-ochre font-serif">练投篮之喻：</span>若姿势有偏差，每天练百次反把错误练牢。被人指出问题时，愿放慢动作重学一次，比多练十次更见韧性。
+        </div>
+      </div>
+
+      <!-- Right: 食神泄秀闭环 -->
+      <div class="lg:col-span-6 arch-panel rounded-lg p-5 flex flex-col justify-between space-y-4">
+        <div>
+          <div class="font-mono text-[11px] tracking-[0.22em] text-cyanwater">中篇 · 观人 / 08</div>
+          <h2 class="font-serif text-2xl text-paper mt-1">读书以致用 · 食神泄秀闭环</h2>
+          <p class="text-xs text-paper/68 mt-1 leading-relaxed">
+            印主吸收，食神主泄秀。此造印旺而食神藏支，读书宜给所学留一个可以动手的去处，方成随身本领。
+          </p>
+        </div>
+
+        <div id="learning-loop" class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <!-- Populated by JS -->
+        </div>
+        <div id="learning-loop-detail" class="p-4 rounded-lg bg-cyanwater/10 border border-cyanwater/35 text-xs text-paper/90 leading-relaxed min-h-[82px]">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="space-y-1.5 pt-2 border-t border-paper/10">
+          <div class="text-xs font-serif text-ochre">每学期成长作品档案建议</div>
+          <p class="text-xs text-paper/75 leading-relaxed">
+            每学期选一件愿做的作品（报告、模型、实验或程序），做完记下：<span class="text-paper">最初目标 · 遇到困难 · 他人反馈 · 改动之处</span>。几年之后，便有一份看得见成长的真实档案。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ACT 6: 择业试探、守财有道与家庭协作 ==================== -->
+  <section id="slide-6" class="scene-slide">
+    <div class="w-full max-w-5xl mx-auto flex flex-col gap-4 max-h-full overflow-y-auto custom-scroll pr-1">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+        <div>
+          <div class="font-mono text-[11px] tracking-[0.22em] text-ochre">中篇 · 观人 / 09–11</div>
+          <h2 class="font-serif text-2xl sm:text-3xl tracking-[0.12em] text-paper mt-1">择业试探、守财有道与家庭协作</h2>
+        </div>
+        <div class="flex items-center gap-1.5" id="act6-tabs">
+          <button data-a6="0" class="a6-tab arch-card active px-3 py-1.5 rounded text-xs font-serif">01 择业试探</button>
+          <button data-a6="1" class="a6-tab arch-card px-3 py-1.5 rounded text-xs font-serif">02 守财有道</button>
+          <button data-a6="2" class="a6-tab arch-card px-3 py-1.5 rounded text-xs font-serif">03 家庭边界</button>
+        </div>
+      </div>
+
+      <!-- Focused Interactive Showcase + Tri-Pillar Overview -->
+      <div id="act6-detail-stage" class="arch-panel rounded-lg p-5 sm:p-6">
+        <!-- Updated dynamically -->
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+        <button type="button" onclick="selectAct6Tab(0)" class="arch-card rounded-lg p-3.5 text-left">
+          <div class="font-mono text-[10px] text-ochre">15小时小事法则</div>
+          <div class="font-serif text-sm text-paper mt-0.5">先求一门立身本领</div>
+          <p class="text-paper/60 mt-1">职业方向可以调整，已有的本领与信用，也能带到下一份工作中。</p>
+        </button>
+        <button type="button" onclick="selectAct6Tab(1)" class="arch-card rounded-lg p-3.5 text-left">
+          <div class="font-mono text-[10px] text-cyanwater">古人修仓储粮</div>
+          <div class="font-serif text-sm text-paper mt-0.5">越重情义越明规矩</div>
+          <p class="text-paper/60 mt-1">才能带来收入，清楚的约定有助于保住所成；大额借贷隔夜复核。</p>
+        </button>
+        <button type="button" onclick="selectAct6Tab(2)" class="arch-card rounded-lg p-3.5 text-left">
+          <div class="font-mono text-[10px] text-pine">木待自订尺度</div>
+          <div class="font-serif text-sm text-paper mt-0.5">守得住主见，听得见需要</div>
+          <p class="text-paper/60 mt-1">交予真实家庭事务与月度预算，每月约一次共同回顾得失。</p>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ACT 7: 八步大运 80 年光柱长河 ==================== -->
+  <section id="slide-7" class="scene-slide">
+    <div class="w-full max-w-5xl mx-auto flex flex-col justify-between gap-3.5 sm:gap-4 max-h-full overflow-y-auto custom-scroll pr-1">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-1.5">
+        <div>
+          <div class="font-mono text-[11px] tracking-[0.22em] text-ochre">下篇 · 顺时 / 12–14</div>
+          <h2 class="font-serif text-2xl sm:text-3xl tracking-[0.12em] text-paper mt-1">八步大运 · 八十年光柱长河</h2>
+        </div>
+        <div class="text-xs text-paper/65 font-mono leading-relaxed">
+          <span class="clause">阳男顺行 · 约9岁3个月起运（2017.08交运）</span>
+        </div>
+      </div>
+
+      <div class="min-h-[3vh] sm:min-h-[12vh] pointer-events-none flex items-center justify-center py-1">
+        <div class="px-3.5 py-1.5 rounded-lg sm:rounded-full bg-ink/55 border border-ochre/35 backdrop-blur-sm text-[11px] sm:text-xs font-mono tracking-wider text-ochre text-center leading-relaxed">
+          <span class="clause">先行火土（早年积技立身）·</span>
+          <span class="clause">继行金水（中年施展所长）·</span>
+          <span class="clause">晚归松木</span>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <div id="dayun-selector" class="grid grid-cols-4 sm:grid-cols-8 gap-1.5 sm:gap-2">
+          <!-- Populated by JS -->
+        </div>
+        <div id="dayun-detail" class="arch-panel rounded-lg p-4 sm:p-5 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+          <!-- Updated dynamically -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ACT 8: 近年流年研判 2026–2033 ==================== -->
+  <section id="slide-8" class="scene-slide">
+    <div class="w-full max-w-5xl mx-auto flex flex-col justify-between gap-3.5 sm:gap-4 max-h-full overflow-y-auto custom-scroll pr-1">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-1.5">
+        <div>
+          <div class="font-mono text-[11px] tracking-[0.22em] text-ochre">下篇 · 顺时 / 15–16</div>
+          <h2 class="font-serif text-2xl sm:text-3xl tracking-[0.12em] text-paper mt-1">近年流年研判（2026–2033）</h2>
+        </div>
+        <div class="text-xs text-paper/60 font-mono leading-relaxed">
+          <span class="clause">流年以立春为界 ·</span>
+          <span class="clause">年龄为当年5月8日满周岁</span>
+        </div>
+      </div>
+
+      <div class="min-h-[3vh] sm:min-h-[10vh] pointer-events-none"></div>
+
+      <div class="space-y-3">
+        <div id="liunian-selector" class="grid grid-cols-4 sm:grid-cols-8 gap-1.5 sm:gap-2">
+          <!-- Populated by JS -->
+        </div>
+        <div id="liunian-detail" class="arch-panel rounded-lg p-5 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+          <!-- Updated dynamically -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ACT 9: 四阶规划与九十日实践沙盘 ==================== -->
+  <section id="slide-9" class="scene-slide">
+    <div class="w-full max-w-5xl mx-auto flex flex-col gap-4 max-h-full overflow-y-auto custom-scroll pr-1">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+        <div>
+          <div class="font-mono text-[11px] tracking-[0.22em] text-ochre">终篇 · 行策 / 17–18</div>
+          <h2 class="font-serif text-2xl sm:text-3xl tracking-[0.12em] text-paper mt-1">以一门本领立身 · 远近行策</h2>
+        </div>
+        <!-- Clean Mode Switcher -->
+        <div class="inline-flex rounded bg-ink/80 border border-paper/15 p-0.5 text-xs font-serif">
+          <button id="btn-a9-stages" type="button" class="px-3.5 py-1.5 rounded transition bg-ochre/20 text-ochre">A · 人生四阶段</button>
+          <button id="btn-a9-ninety" type="button" class="px-3.5 py-1.5 rounded transition text-paper/65 hover:text-paper">B · 九十日实践沙盘</button>
+        </div>
+      </div>
+
+      <!-- Mode A: Four Life Stages -->
+      <div id="a9-panel-stages" class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div class="arch-panel rounded-lg p-4 border-l-2 border-l-vermilion">
+            <div class="flex justify-between font-serif mb-1.5">
+              <span class="text-paper text-base">18–20岁 · 辨方向</span>
+              <span class="font-mono text-[10px] text-vermilion">一阶</span>
+            </div>
+            <p class="text-paper/75 leading-relaxed">选出一个主方向与一个备选，建立稳定作息，完成两件小作品。</p>
+          </div>
+          <div class="arch-panel rounded-lg p-4 border-l-2 border-l-ochre">
+            <div class="flex justify-between font-serif mb-1.5">
+              <span class="text-paper text-base">21–24岁 · 练本领</span>
+              <span class="font-mono text-[10px] text-ochre">二阶</span>
+            </div>
+            <p class="text-paper/75 leading-relaxed">争取学历、认证或实践机会，留存作品与真实反馈，观察哪项技能最值得深练。</p>
+          </div>
+          <div class="arch-panel rounded-lg p-4 border-l-2 border-l-cyanwater">
+            <div class="flex justify-between font-serif mb-1.5">
+              <span class="text-paper text-base">25–29岁 · 独当一面</span>
+              <span class="font-mono text-[10px] text-cyanwater">三阶</span>
+            </div>
+            <p class="text-paper/75 leading-relaxed">从参与任务走向独立承担，逐步形成个人专长，建立经济独立的基础。</p>
+          </div>
+          <div class="arch-panel rounded-lg p-4 border-l-2 border-l-pine">
+            <div class="flex justify-between font-serif mb-1.5">
+              <span class="text-paper text-base">30岁以后 · 深耕拓展</span>
+              <span class="font-mono text-[10px] text-pine">四阶</span>
+            </div>
+            <p class="text-paper/75 leading-relaxed">把专业做深，或尝试拓展业务。扩大之前，先看需求、能力与风险准备。</p>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 arch-panel rounded-lg p-5 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="font-mono text-[11px] text-ochre tracking-widest mb-2">周期三问自检</div>
+            <ul class="space-y-2.5 text-xs sm:text-sm text-paper/85">
+              <li class="flex gap-2.5"><span class="font-mono text-ochre">01</span><span>自己如今掌握了什么本领？</span></li>
+              <li class="flex gap-2.5"><span class="font-mono text-cyanwater">02</span><span>这些本领能解决谁的实际问题？</span></li>
+              <li class="flex gap-2.5"><span class="font-mono text-pine">03</span><span>若要再往前一步，还缺少什么条件？</span></li>
+            </ul>
+          </div>
+          <div class="p-3.5 rounded bg-ochre/10 border border-ochre/30 text-xs text-paper/85 leading-relaxed">
+            <div class="font-serif text-ochre mb-1">行策纲领</div>
+            一条主线，一个备选。每年留有可见的成果，每次重大选择留有回旋的余地。答案发生了变化，原先的计划也就应当随之调整。
+          </div>
+        </div>
+      </div>
+
+      <!-- Mode B: 90-Day Action Sandbox -->
+      <div id="a9-panel-ninety" class="hidden grid-cols-1 lg:grid-cols-12 gap-4">
+        <div class="lg:col-span-7 arch-panel rounded-lg p-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="font-serif text-base text-cyanwater">九十日四段行动节奏</span>
+            <span class="font-mono text-[11px] text-paper/50">点击阶段联动 3D 光环</span>
+          </div>
+          <div id="ninety-selector" class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <!-- Populated by JS -->
+          </div>
+          <div id="ninety-detail" class="p-4 rounded-lg bg-ink/65 border border-cyanwater/35 min-h-[110px] flex flex-col justify-center">
+            <!-- Updated by JS -->
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 arch-panel rounded-lg p-5 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="font-serif text-sm text-ochre tracking-widest mb-3">九十天后的四项交付检验清单</div>
+            <div class="space-y-2 text-xs">
+              <div class="flex items-center gap-2.5 p-2.5 rounded bg-paper/5 border border-paper/10">
+                <span class="w-2 h-2 rounded-full bg-ochre shrink-0"></span>
+                <span><strong>两件小作品：</strong>两个兴趣方向各投入 15 小时的可用成果</span>
+              </div>
+              <div class="flex items-center gap-2.5 p-2.5 rounded bg-paper/5 border border-paper/10">
+                <span class="w-2 h-2 rounded-full bg-cyanwater shrink-0"></span>
+                <span><strong>两份外部意见：</strong>来自老师或一线从业者的真实评价</span>
+              </div>
+              <div class="flex items-center gap-2.5 p-2.5 rounded bg-paper/5 border border-paper/10">
+                <span class="w-2 h-2 rounded-full bg-pine shrink-0"></span>
+                <span><strong>一份方向比较表：</strong>兴趣、质量、机会与成本并列对照</span>
+              </div>
+              <div class="flex items-center gap-2.5 p-2.5 rounded bg-paper/5 border border-paper/10">
+                <span class="w-2 h-2 rounded-full bg-vermilion shrink-0"></span>
+                <span><strong>一份简单预算：</strong>并排出下一季度的时间安排</span>
+              </div>
+            </div>
+          </div>
+          <div class="text-[11px] text-paper/55">余下的事，从时间、资源或方法上找原因，再作调整。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ACT 10: 卷末总断 ==================== -->
+  <section id="slide-10" class="scene-slide">
+    <div class="w-full max-w-3xl mx-auto max-h-full overflow-y-auto custom-scroll py-2 px-1 text-center space-y-5 sm:space-y-6">
+      <div class="poetic-line d1 inline-flex items-center justify-center gap-2.5 sm:gap-3 font-mono text-[11px] sm:text-xs tracking-[0.22em] text-ochre/90">
+        <span class="w-7 sm:w-10 h-[1px] bg-ochre/60 shrink-0"></span>
+        <span><span class="clause">卷末总断 ·</span> <span class="clause">厚土有根，流水有路</span></span>
+        <span class="w-7 sm:w-10 h-[1px] bg-ochre/60 shrink-0"></span>
+      </div>
+
+      <p class="poetic-line d2 text-[13px] sm:text-sm text-paper/80 leading-loose max-w-2xl mx-auto font-sans">
+        命局的长处，贵在能用；人生的远近，贵在能行。家长给予资源与经验，如同为土地蓄养肥力；命主亲自耕作，才有属于自己的收成。遇到难处可回头检点方法，事情顺遂亦记下做对了什么——这样得来的信心，往后皆有凭据。
+      </p>
+
+      <!-- Semantic Clause-Locked Poetic Conclusion (Never breaks mid-clause or leaves orphans) -->
+      <div class="py-2 sm:py-3 space-y-3 sm:space-y-4">
+        <div class="poetic-line d3 font-serif tracking-[0.14em] sm:tracking-[0.18em] text-paper leading-snug" style="font-size: clamp(20px, 5.4vw, 36px);">
+          <span class="clause">有根而不滞，</span><span class="clause">有才而能用。</span>
+        </div>
+        <div class="poetic-line d4 font-serif tracking-[0.12em] sm:tracking-[0.16em] text-ochre leading-snug" style="font-size: clamp(18px, 4.7vw, 30px);">
+          <span class="clause">以规矩护其所成，</span><span class="clause">以见识广其所行。</span>
+        </div>
+        <div class="poetic-line d5 font-serif tracking-[0.12em] sm:tracking-[0.16em] text-cyanwater leading-snug" style="font-size: clamp(18px, 4.7vw, 30px);">
+          <span class="clause">知命不以命自限，</span><span class="clause">知时不以时自安。</span>
+        </div>
+      </div>
+
+      <!-- Open, Borderless Minimalist Closing Brand Lockup Floating Over Cosmic Terrain -->
+      <div class="poetic-line d5 pt-2 flex flex-col items-center">
+        <div class="w-36 sm:w-48 h-[1px] bg-gradient-to-r from-transparent via-ochre/70 to-transparent mb-5"></div>
+
+        <!-- Row 1: Vector Emblem + Chinese Brand Name (strictly single-line, frameless) -->
+        <div class="inline-flex items-center justify-center gap-2.5 sm:gap-3 whitespace-nowrap">
+          <svg viewBox="0 0 100 100" class="w-8 h-8 sm:w-9 sm:h-9 shrink-0 rounded-[2px] lht-emblem-dark" xmlns="http://www.w3.org/2000/svg" aria-label="龍鶴堂事務所">
+            <rect width="100" height="100" fill="#050507"/>
+            <rect x="20" y="15" width="13" height="13" fill="#9A2B22"/>
+            <rect x="67" y="15" width="13" height="13" fill="#9A2B22"/>
+            <rect x="20" y="28" width="13" height="56" fill="#F8F6F0"/>
+            <rect x="67" y="28" width="13" height="56" fill="#F8F6F0"/>
+            <rect x="20" y="48" width="60" height="12" fill="#F8F6F0"/>
+            <rect x="20" y="72" width="60" height="12" fill="#F8F6F0"/>
+          </svg>
+          <span class="lht-lockup-cn text-[#F8F6F0] whitespace-nowrap" style="font-size: clamp(18px, 5vw, 24px);">龍鶴堂事務所</span>
+        </div>
+
+        <!-- Row 2: English Firm Title (strictly single-line) -->
+        <div class="lht-lockup-en text-paper/65 tracking-[0.08em] mt-2 whitespace-nowrap" style="font-size: clamp(10px, 2.7vw, 12px);">
+          Dragon-Crane Hall Feng Shui Firm
+        </div>
+
+        <!-- Row 3: Colophon Date (strictly single-line, warm gold-gray) -->
+        <div class="font-serif text-xs tracking-[0.24em] text-ochre/85 mt-2.5 whitespace-nowrap">
+          二○二六年十一月
+        </div>
+
+        <button id="btn-restart" type="button" class="mt-6 px-6 py-2.5 rounded border border-ochre/55 bg-ink/70 hover:bg-ochre/15 hover:border-ochre text-xs font-serif tracking-[0.22em] text-paper transition whitespace-nowrap">
+          重温开篇 · 再历破界 ↺
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MAIN ENGINE SCRIPT ==================== -->
+  <script>
+    /**
+     * =========================================================================
+     * 1. STRUCTURED AUTHORITATIVE DATA (100% Faithful to 21-Page PDF)
+     * =========================================================================
+     */
+    const CHAPTERS = [
+      { id: 0, short: '序', title: '平面之囿' },
+      { id: 1, short: '卷首', title: '厚土开渠' },
+      { id: 2, short: '四柱', title: '原局校盘' },
+      { id: 3, short: '流通', title: '建禄取用' },
+      { id: 4, short: '合绊', title: '四处关节' },
+      { id: 5, short: '性情', title: '学以致用' },
+      { id: 6, short: '立业', title: '择业守财' },
+      { id: 7, short: '大运', title: '八运长河' },
+      { id: 8, short: '流年', title: '八年推演' },
+      { id: 9, short: '行策', title: '九十日行' },
+      { id: 10, short: '总断', title: '流水有路' },
+    ];
+
+    const PILLARS_DATA = [
+      {
+        key: 'year', name: '年柱', gan: '戊', zhi: '子', shishen: '比肩',
+        canggan: '癸（正财）', changsheng: '胎', color: '#C89B54',
+        desc: '年干戊土帮身立根，年支子水藏癸为财根。厚土之中遥伏水源，虽受月令火土克制，水脉未枯。'
+      },
+      {
+        key: 'month', name: '月柱', gan: '丁', zhi: '巳', shishen: '正印',
+        canggan: '丙（偏印）、戊（比肩）、庚（食神）', changsheng: '临官', color: '#C44536',
+        desc: '立夏之后巳火当令，戊土临官建禄于巳；月干丁印透出，印禄相资，奠定身旺根基与勤学吸收之性。'
+      },
+      {
+        key: 'day', name: '日柱', gan: '戊', zhi: '申', shishen: '日元',
+        canggan: '庚（食神）、壬（偏财）、戊（比肩）', changsheng: '病', color: '#EAE4D7',
+        desc: '戊土日元自坐申金食神为本气，庚金泄秀、壬水有根。甲辰旬，寅卯空亡。日支正是厚土开渠之枢纽。'
+      },
+      {
+        key: 'hour', name: '时柱', gan: '壬', zhi: '戌', shishen: '偏财',
+        canggan: '戊（比肩）、辛（伤官）、丁（正印）', changsheng: '墓', color: '#49A6A8',
+        desc: '时干壬水偏财高透，与申中壬水呼应，戌中辛金伤官亦有泄秀之意，昭示才华化为成果与回报的远路。'
+      }
+    ];
+
+    const YONGSHEN_TABS = {
+      geju: {
+        badge: '格局取用 · 建禄用财',
+        color: 'text-ochre',
+        body: '建禄之格以财为用。时干壬水透出而在申子有根，日支申中庚金食神为生财之相神。原局官杀之木不现，财官相生尚无从谈起，故重在食神通关、护其财源。',
+        note: '成格有路，贵在护其流通。'
+      },
+      fuyi: {
+        badge: '扶抑取用 · 喜金水泄耗',
+        color: 'text-cyanwater',
+        body: '日元得令得根得势，断为身旺而不从。扶抑先取金以泄厚土之秀，水以耗土润土。木虽能制比疏土，但须先得水滋，亦要防木生火而反助印星，并兼察金木相战。',
+        note: '厚土无泄则滞，金水相续则活。'
+      },
+      tiaohou: {
+        badge: '调候取用 · 水润木疏',
+        color: 'text-pine',
+        body: '巳月夏令戊土偏燥，传统调候以甲木疏土、癸水润燥各有其用。局中火气已足，无须拘例增添丙火；壬癸虽见而失令，宜先护水源，待木得势再展疏土之功。',
+        note: '火土贵在有度，重水润土、木疏土。'
+      }
+    };
+
+    const JOINTS_DATA = [
+      {
+        title: '印比偏厚', subtitle: '积蓄有余，流通偏少',
+        method: '金以泄秀', color: '#C89B54',
+        action: '给学过的知识找个用处；以具体项目或作品检验所学，避免只蓄不出。',
+        check: '问问自己：这门功课上次交出了什么？谁用过？哪一处改得更好？'
+      },
+      {
+        title: '财水受制', subtitle: '土能制水，财源须护',
+        method: '金水相续', color: '#49A6A8',
+        action: '让技能与作品带来持续回报；养成记录收入、支出与余款的习惯。',
+        check: '技能能否稳定换得外部认可或报酬？所得是否妥善留存？'
+      },
+      {
+        title: '木不显', subtitle: '原局少直接疏制之力',
+        method: '水木有情', color: '#5C8D6B',
+        action: '以清晰的时间表、规则与书面契约定向，主动为自己设立边界。',
+        check: '和自己或他人订下的约定，到期是否真正落实？'
+      },
+      {
+        title: '巳申合绊', subtitle: '食神之用有所牵引',
+        method: '分清先后', color: '#C44536',
+        action: '将学习吸收与交付产出分开排期，各定期限，到期务必交出可用成果。',
+        check: '是否因为总想“再准备充分一点”，而迟迟未交付第一版？'
+      }
+    ];
+
+    const TRAIT_SLIDERS = [
+      {
+        id: 't0', good: '坚持', bad: '固守', val: 32,
+        scale: '遇到新证据时，能否改变方法？',
+        goodText: '能安下心来长久打磨一件事，厚积薄发。',
+        badText: '若姿势已偏却拒绝调整，勤奋反把错处练牢。'
+      },
+      {
+        id: 't1', good: '谨慎', bad: '迟疑', val: 36,
+        scale: '尚无十足把握时，能否先作小范围试验？',
+        goodText: '思虑周全、留有回旋余地，不易轻率冒进。',
+        badText: '等待万无一失才动手，所学容易滞于纸面。'
+      },
+      {
+        id: 't2', good: '自持', bad: '封闭', val: 28,
+        scale: '意见不合时，能否把自己的理由说清？',
+        goodText: '情绪稳定、不随波逐流，具内在独立定力。',
+        badText: '闷在心里不愿沟通，便难得外部真实反馈。'
+      }
+    ];
+
+    const LOOP_STEPS = [
+      { key: '学', title: '理解原理', desc: '发挥印旺长处，读懂底层逻辑与脉络，把知识记得牢、理得清。' },
+      { key: '做', title: '完成任务', desc: '食神泄秀的关键一步：先做出一个小工具、模型或文章初稿，切忌只背语法不写程序。' },
+      { key: '验', title: '接受反馈', desc: '交由同学、老师或实际使用者试用，直面不顺手的地方，以真实评价检验本领。' },
+      { key: '改', title: '修正方法', desc: '依据反馈迭代打磨并记录修改轨迹，知识由此真正转化为可迁移的能力。' }
+    ];
+
+    const ACT6_DATA = [
+      {
+        eyebrow: '01 · 择业先择其所长（15小时小事法则）',
+        title: '火土为根，金水为用 · 三向实地试探',
+        lead: '适于需要扎实基础、能够交付具体成果的方向（工程制造、计算机、数据分析、设计实施、产品与经营，或人文研究与创作）。选专业前先拿 15 小时做一件小事，带着作品请教从业者。',
+        items: [
+          { tag: '技术试探', col: '#C89B54', desc: '写一个小程序、修好一件器物或制作一个模型。留意自己是否愿意反复查错、测试、改进。' },
+          { tag: '创作试探', col: '#49A6A8', desc: '完成一份设计、一篇文章或一项策划。请实际使用的人提出意见，看自己是否愿意修改。' },
+          { tag: '经营试探', col: '#5C8D6B', desc: '访谈一位店主，了解客户、成本与收入，再为一项小计划编一份收支预算。' }
+        ]
+      },
+      {
+        eyebrow: '02 · 财从才来，守之有道',
+        title: '能力 → 收入 → 留存 · 财务边界与契约',
+        lead: '壬财透时而有子根，申庚生财；然年干戊比透出制财。故论财须看本领能否持续创收，也须看所得能否妥善保留。',
+        items: [
+          { tag: '分账留存', col: '#C89B54', desc: '初有工资先分清基本开支、学习投入与储蓄；待收入稳定再建应急储备、辨别风险。' },
+          { tag: '合伙先明', col: '#49A6A8', desc: '朋友合伙，谁出资、谁出力、如何分配、何时退出，皆宜在开头白纸黑字说清。' },
+          { tag: '隔夜复核', col: '#C44536', desc: '借贷、担保及重要大额支出，务必隔一夜再作复核；交情深厚也各有生活承担。' }
+        ]
+      },
+      {
+        eyebrow: '03 · 有主见，也有回旋',
+        title: '秩序、沟通与家庭协作机制',
+        lead: '原局甲乙官杀不见，随着父母提醒渐少，命主需逐步为自己的取舍订下尺度。守得住主见，也听得见对方需要。',
+        items: [
+          { tag: '父母角色', col: '#EAE4D7', desc: '提供边界、经验参考与必要资源支持，不代替命主做全部具体决策。' },
+          { tag: '命主角色', col: '#C89B54', desc: '遇分歧时先说清为何这样选、需要什么帮助、不成如何收拾，提出方案并担责。' },
+          { tag: '共同试行', col: '#5C8D6B', desc: '约定有限的试行期限，按结果复盘调整；在家可从负责一项真实事务与月度预算开始。' }
+        ]
+      }
+    ];
+
+    const DAYUN_DATA = [
+      { gz: '戊午', years: '2017.08–2027.08', age: '9–19岁', elem: '火土', color: '#C44536', tag: '比印旺 · 午冲子', theme: '学习、适应与自主', detail: '戊比透出、午冲原局子水且午戌半合火意，身势更厚而财根受牵。十八岁正值升学或过渡期，宜先顾好学业与日常节奏，以实际表现校验下一步方向。' },
+      { gz: '己未', years: '2027.08–2037.08', age: '19–29岁', elem: '厚土', color: '#C89B54', tag: '劫印仍厚 · 乙官藏', theme: '定向、技能与责任', detail: '土气仍重，未中暗藏乙木正官，子未有害、未戌有刑意。前两运先立其身：二十出头争取实习与项目，二十五前后练习独立承担完整任务，收入秩序稳定后再议大责。' },
+      { gz: '庚申', years: '2037.08–2047.08', age: '29–39岁', elem: '纯金', color: '#E2DCC8', tag: '食神透 · 泄秀生财', theme: '金气渐明 · 精业施展', detail: '庚金食神透干临禄，与日支申重叠，泄厚土而生财源更有条件。若早年已积下扎实专业本领，此时可依实际需求承接更成熟的项目与专业服务。' },
+      { gz: '辛酉', years: '2047.08–2057.08', age: '39–49岁', elem: '清金', color: '#CBD5E1', tag: '伤官透 · 三会金形', theme: '深耕专长 · 团队拓展', detail: '伤官透出，酉与原局申戌构成三会金之形（能否化金仍察火土制约）。表达力与专业纵深显露，是深化事业版图、带领团队或独立精进的重要十年。' },
+      { gz: '壬戌', years: '2057.08–2067.08', age: '49–59岁', elem: '水土', color: '#49A6A8', tag: '财透 · 与时柱伏吟', theme: '重审资产与生活节奏', detail: '壬水偏财透干，与时柱壬戌伏吟，财星显明而土仍有根。宜系统重审职业结构、资产配置、家庭责任与长期生活节奏，稳健守成。' },
+      { gz: '癸亥', years: '2067.08–2077.08', age: '59–69岁', elem: '深水', color: '#2F8F9D', tag: '财旺 · 亥冲巳害申', theme: '量度风险余地', detail: '财星更显，同时亥水冲月支巳火、害日支申金，原局随之牵动。见财星亦须量度自身承担风险的余地，避免过度激进，以从容为贵。' },
+      { gz: '甲子', years: '2077.08–2087.08', age: '69–79岁', elem: '水木', color: '#5C8D6B', tag: '七杀临财 · 木显', theme: '生活质量与经验传承', detail: '官杀之木始透，须随岁运兼察财生官与金木制化。现实关切自然转向身心颐养、家人相处与将一生经验心得传承后人。' },
+      { gz: '乙丑', years: '2087.08–2097.08', age: '79–89岁', elem: '木土', color: '#6E9E7A', tag: '正官透 · 刑合待察', theme: '归整与传承', detail: '正官乙木透出，地支刑合随岁运参看。归整生活秩序，享受平宁岁月（传统寿限不在本案推论之列）。' }
+    ];
+
+    const LIUNIAN_DATA = [
+      { year: '2026', gz: '丙午', age: '满18周岁', color: '#C44536', keyword: '午午重叠 · 先安节奏', structure: '丙偏印透，流年午与大运午重叠，子午冲及午戌半合火意加深。', advice: '先安顿学习、作息与手头任务。遇到重要选择，把主线与备选分别列出，给自己留足思考时间。' },
+      { year: '2027', gz: '丁未', age: '满19周岁', color: '#D17A47', keyword: '8月交己未运 · 多维复核', structure: '丁印透，未土入局；约于8月交己未运，此后流年未与运支未重叠。', advice: '比较升学或就业去向时，把成绩、学费、就业机会与个人兴趣写在一处，让每个选择皆有可复核依据。' },
+      { year: '2028', gz: '戊申', age: '满20周岁', color: '#C89B54', keyword: '日柱伏吟 · 交付作品', structure: '流年与日柱戊申伏吟，申金复见，食神有根，比肩亦增。', advice: '完成一件较完整的作品，或承担一项实习任务，检验能否把所学做成别人用得上的成果。' },
+      { year: '2029', gz: '己酉', age: '满21周岁', color: '#DCD5C3', keyword: '三会金形 · 明定权责', structure: '劫财透出；酉与原局申、戌构成三会金之形，才华施展与利益分配并见。', advice: '主动让作品接受外部评价；与人合作时，务必先议定各人的责任、成本与成果归属。' },
+      { year: '2030', gz: '庚戌', age: '满22周岁', color: '#E2DCC8', keyword: '食神透出 · 实绩衡量', structure: '食神庚金透出，戌土再见，须察运支未与原局戌、流年戌间的作用。', advice: '若学业与技能已具条件，可考虑就业、推进项目或承担更完整职责，以实际完成的事衡量进步。' },
+      { year: '2031', gz: '辛亥', age: '满23周岁', color: '#49A6A8', keyword: '亥冲巳害申 · 审慎变动', structure: '伤官透出，亥冲巳又害申，食伤表现与外部环境变动并见。', advice: '若有升学、转岗或迁居的真实机会，先算成本、细查合同、留好备选，去留皆须有现实理由。' },
+      { year: '2032', gz: '壬子', age: '满24周岁', color: '#3898A8', keyword: '偏财透出 · 留存余地', structure: '偏财透干，子水复见；子与大运未有相害之意，原局比劫牵制仍在。', advice: '若已有稳定收入，留心现金流、预算与抗风险能力；安排长期开支时，给收入起伏留出余地。' },
+      { year: '2033', gz: '癸丑', age: '满25周岁', color: '#5C8D6B', keyword: '正财三刑 · 逐项复核', structure: '正财透出，戊癸有合意未必化火；丑未冲且岁支丑、运支未与原局戌具三刑条件。', advice: '重要债务、长期合同与合伙约定宜逐项复核。岁运只提供传统线索，现实取舍仍凭实在证据。' }
+    ];
+
+    const NINETY_PHASES = [
+      { range: '第1–14天', weeks: '第1–2周', title: '盘点', color: '#C44536', task: '写下眼前的学业或工作现状、三项自己最稳的长处、两个真实兴趣方向，以及目前面临的最大困难。' },
+      { range: '第15–42天', weeks: '第3–6周', title: '实践', color: '#C89B54', task: '针对两个兴趣方向，各投入约 15 小时完成一件可用小作品。先做出能跑通的初稿，再着手反复修改。' },
+      { range: '第43–70天', weeks: '第7–10周', title: '求证', color: '#49A6A8', task: '带着作品向老师或从业者取得两份真实外部反馈；如有机会，再安排一次实地参观、实习或兼职。' },
+      { range: '第71–90天', weeks: '第11–13周', title: '定向', color: '#5C8D6B', task: '综合比较兴趣、完成质量、现实机会与时间费用成本；定下主方向与备选方案，排出下一季度时间表。' }
+    ];
+
+    /**
+     * =========================================================================
+     * 2. COSMIC STARRY-SKY MELODIC SOUNDTRACK & QINGYA (清雅) SFX ENGINE
+     *    - Zero muddy low-end drone ("呜呜呜" completely eliminated)
+     *    - Procedural 4.2s stereo deep-space convolution reverb
+     *    - Dotted-eighth 2400Hz damped stereo space delay
+     *    - 64 BPM Dmaj9/Bm9/Gmaj9/Asus2 cosmic celesta + crystal harp + airy shimmer swells
+     * =========================================================================
+     */
+    class CosmicAudioEngine {
+      constructor() {
+        this.ctx = null;
+        this.masterGain = null;
+        this.compressor = null;
+        this.reverbNode = null;
+        this.reverbSend = null;
+        this.delaySend = null;
+        this.padHighPass = null;
+
+        this.initialized = false;
+        this.enabled = false;
+        this.isPlayingMusic = false;
+        this.schedulerTimer = null;
+
+        this.tempo = 64; // Serene starry observatory pulse
+        this.eighthDur = (60 / this.tempo) / 2; // ~0.46875s
+        this.nextNoteTime = 0;
+        this.stepIndex = 0; // 0..63 (8 bars * 8 eighth-notes)
+        this.currentAct = 1;
+        this.lastClickPitch = 0;
+
+        // Note frequencies in Hz (clean, airy upper-mid & crystal registers)
+        this.N = {
+          F3: 185.00, G3: 196.00, A3: 220.00, B3: 246.94,
+          Cs4: 277.18, D4: 293.66, E4: 329.63, Fs4: 369.99, G4: 392.00, A4: 440.00, B4: 493.88,
+          Cs5: 554.37, D5: 587.33, E5: 659.25, Fs5: 739.99, G5: 783.99, A5: 880.00, B5: 987.77,
+          Cs6: 1108.73, D6: 1174.66, E6: 1318.51, Fs6: 1479.98
+        };
+
+        // 8-Bar Cosmic Harmony Cycle: Dmaj9 → Bm9 → Gmaj9 → Asus2 → F#m7 → Gmaj7 → A6 → Dmaj9
+        const n = this.N;
+        this.chords = [
+          { name: 'Dmaj9', pad: [n.D4, n.A4, n.E5],  arp: [n.D4, n.A4, n.Fs5, n.E5, n.Cs5, n.A4, n.D5, n.Fs5], harp: [n.A5, n.E6] },
+          { name: 'Bm9',   pad: [n.B3, n.Fs4, n.Cs5], arp: [n.B3, n.Fs4, n.D5, n.Cs5, n.A4, n.Fs4, n.B4, n.D5],  harp: [n.Fs5, n.Cs6] },
+          { name: 'Gmaj9', pad: [n.G3, n.D4, n.A4],  arp: [n.G3, n.D4, n.B4, n.A4, n.Fs4, n.D4, n.G4, n.B4],   harp: [n.D6, n.A5] },
+          { name: 'Asus2', pad: [n.A3, n.E4, n.B4],  arp: [n.A3, n.E4, n.B4, n.A4, n.E5, n.B4, n.A4, n.E4],    harp: [n.E6, n.B5] },
+          { name: 'F#m7',  pad: [n.Fs4, n.A4, n.E5], arp: [n.A3, n.Cs4, n.A4, n.E5, n.Cs5, n.A4, n.Fs4, n.Cs5], harp: [n.A5, n.Cs6] },
+          { name: 'Gmaj7', pad: [n.G3, n.D4, n.Fs4], arp: [n.G3, n.B3, n.D4, n.Fs4, n.B4, n.D5, n.A4, n.Fs4],   harp: [n.B5, n.Fs6] },
+          { name: 'A6',    pad: [n.A3, n.E4, n.Fs4], arp: [n.A3, n.Cs4, n.E4, n.Fs4, n.A4, n.Cs5, n.E5, n.A4],  harp: [n.Cs6, n.E6] },
+          { name: 'Dmaj9', pad: [n.D4, n.A4, n.Fs5], arp: [n.D4, n.A4, n.E5, n.Fs5, n.A5, n.Fs5, n.E5, n.A4],   harp: [n.D6, n.Fs6] }
+        ];
+
+        // Pentatonic Qingya scale for crisp jade-drop UI clicks
+        this.jadeNotes = [n.D5, n.E5, n.Fs5, n.A5, n.B5, n.D6];
+      }
+
+      init() {
+        if (this.initialized) return;
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        try {
+          this.ctx = new AudioCtx();
+
+          // Soft Master Dynamics Compressor -> Master Gain -> Destination
+          this.compressor = this.ctx.createDynamicsCompressor();
+          this.compressor.threshold.value = -16;
+          this.compressor.knee.value = 18;
+          this.compressor.ratio.value = 3.2;
+          this.compressor.attack.value = 0.015;
+          this.compressor.release.value = 0.25;
+
+          this.masterGain = this.ctx.createGain();
+          this.masterGain.gain.value = 0.0001;
+
+          this.compressor.connect(this.masterGain);
+          this.masterGain.connect(this.ctx.destination);
+
+          // Procedural Stereo 4.2s Deep-Space Reverb (Warm high-damped + clean 140Hz HPF)
+          this.reverbNode = this.ctx.createConvolver();
+          this.reverbNode.buffer = this._createStarlightImpulse(4.2);
+
+          const reverbHPF = this.ctx.createBiquadFilter();
+          reverbHPF.type = 'highpass';
+          reverbHPF.frequency.value = 140;
+
+          const reverbLPF = this.ctx.createBiquadFilter();
+          reverbLPF.type = 'lowpass';
+          reverbLPF.frequency.value = 4600;
+
+          this.reverbSend = this.ctx.createGain();
+          this.reverbSend.gain.value = 0.52;
+          this.reverbSend.connect(reverbHPF);
+          reverbHPF.connect(this.reverbNode);
+          this.reverbNode.connect(reverbLPF);
+          reverbLPF.connect(this.compressor);
+
+          // Dotted-Eighth Stereo Feedback Delay (2400Hz LPF)
+          const delayTime = this.eighthDur * 1.5; // dotted eighth ~0.703s
+          const delayL = this.ctx.createDelay(2.0);
+          const delayR = this.ctx.createDelay(2.0);
+          delayL.delayTime.value = delayTime;
+          delayR.delayTime.value = delayTime * 1.04; // subtle stereo shimmer spread
+
+          const delayFilter = this.ctx.createBiquadFilter();
+          delayFilter.type = 'lowpass';
+          delayFilter.frequency.value = 2400;
+
+          const delayFeedback = this.ctx.createGain();
+          delayFeedback.gain.value = 0.32;
+
+          const delayWet = this.ctx.createGain();
+          delayWet.gain.value = 0.34;
+
+          this.delaySend = this.ctx.createGain();
+          this.delaySend.gain.value = 0.42;
+
+          this.delaySend.connect(delayL);
+          delayL.connect(delayFilter);
+          delayFilter.connect(delayR);
+          delayR.connect(delayFeedback);
+          delayFeedback.connect(delayL);
+
+          // Sum delay into compressor & space reverb
+          delayL.connect(delayWet);
+          delayR.connect(delayWet);
+          delayWet.connect(this.compressor);
+          delayWet.connect(this.reverbSend);
+
+          // Clean 115Hz High-Pass Bus for Airy Shimmer Pads (guarantees zero low-end hum)
+          this.padHighPass = this.ctx.createBiquadFilter();
+          this.padHighPass.type = 'highpass';
+          this.padHighPass.frequency.value = 115;
+          this.padHighPass.connect(this.compressor);
+          this.padHighPass.connect(this.reverbSend);
+
+          this.initialized = true;
+          this.enabled = true;
+          this.masterGain.gain.exponentialRampToValueAtTime(0.85, this.ctx.currentTime + 1.0);
+          this._updateAudioUI();
+        } catch (err) {
+          console.warn('Web Audio init skipped:', err);
+        }
+      }
+
+      /** Synthesize 4.2s lush stereo starry-space reverb impulse response */
+      _createStarlightImpulse(durationSec) {
+        const rate = this.ctx.sampleRate;
+        const length = Math.floor(rate * durationSec);
+        const impulse = this.ctx.createBuffer(2, length, rate);
+        for (let ch = 0; ch < 2; ch++) {
+          const data = impulse.getChannelData(ch);
+          let lp = 0;
+          for (let i = 0; i < length; i++) {
+            const t = i / length;
+            // Smooth pre-bloom + long exponential starry decay
+            const env = Math.min(1, i / (rate * 0.04)) * Math.pow(1 - t, 2.8);
+            const white = (Math.random() * 2 - 1);
+            // Progressive high-frequency warmth damping
+            const coeff = 0.16 + 0.65 * t;
+            lp = lp + (1 - coeff) * (white - lp);
+            data[i] = lp * env * 0.55;
+          }
+        }
+        return impulse;
+      }
+
+      /** Start the 64 BPM Cosmic Melodic Sequencer */
+      startCosmicMusic() {
+        if (!this.initialized) this.init();
+        if (!this.ctx || this.isPlayingMusic) return;
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+
+        this.isPlayingMusic = true;
+        this.stepIndex = 0;
+        this.nextNoteTime = this.ctx.currentTime + 0.35;
+
+        this.schedulerTimer = setInterval(() => this._scheduleLoop(), 75);
+      }
+
+      stopCosmicMusic() {
+        this.isPlayingMusic = false;
+        if (this.schedulerTimer) {
+          clearInterval(this.schedulerTimer);
+          this.schedulerTimer = null;
+        }
+      }
+
+      setActMood(actIdx) {
+        this.currentAct = actIdx;
+      }
+
+      _scheduleLoop() {
+        if (!this.ctx || !this.isPlayingMusic) return;
+        const lookahead = 0.25;
+        while (this.nextNoteTime < this.ctx.currentTime + lookahead) {
+          if (this.enabled) {
+            this._scheduleStep(this.stepIndex, this.nextNoteTime);
+          }
+          this.nextNoteTime += this.eighthDur;
+          this.stepIndex = (this.stepIndex + 1) % 64;
+        }
+      }
+
+      _scheduleStep(step, time) {
+        const bar = Math.floor(step / 8); // 0..7
+        const beat = step % 8;            // 0..7
+        const chord = this.chords[bar];
+
+        // Act-dependent register shimmer: higher acts bloom subtly brighter
+        const octaveLift = (this.currentAct === 7 || this.currentAct === 8 || this.currentAct === 10) ? 1.0 : 1.0;
+
+        // Voice 3: Airy Shimmer Pad Swell on downbeat of each bar (NOT a continuous drone!)
+        if (beat === 0) {
+          this._playShimmerPad(chord.pad, time);
+        }
+
+        // Voice 1: Starlight Celesta / Glass Piano Arpeggio & Meditative Melody
+        // Leave intentional poetic breathing rests on some steps for spacious Interstellar/Eno feel
+        const playMask = [1, 0, 1, 1, 0, 1, 1, 0];
+        const altMask  = [1, 1, 0, 1, 1, 0, 1, 0];
+        const mask = (bar % 2 === 0) ? playMask : altMask;
+
+        if (mask[beat]) {
+          const freq = chord.arp[beat] * octaveLift;
+          const pan = ((beat - 3.5) / 4.2) * 0.65;
+          const vel = (beat === 0) ? 0.115 : (beat === 3 ? 0.095 : 0.072);
+          this._playStarlightCelesta(freq, time, vel, 2.5, pan);
+        }
+
+        // Voice 2: Ethereal Crystal Harp Sparkle on selected off-beats
+        if (beat === 4 || (beat === 7 && bar % 2 === 1)) {
+          const harpFreq = chord.harp[beat === 4 ? 0 : 1];
+          const pan = beat === 4 ? 0.55 : -0.55;
+          this._playCrystalHarp(harpFreq, time + 0.01, 0.048, pan);
+        }
+      }
+
+      /** Voice 1: Starlight Celesta / Glass Piano (Pure sine + delicate 2nd & 3rd crystal partials) */
+      _playStarlightCelesta(freq, time, gainPeak = 0.09, decay = 2.6, panVal = 0) {
+        const osc1 = this.ctx.createOscillator();
+        const osc2 = this.ctx.createOscillator();
+        const osc3 = this.ctx.createOscillator();
+
+        osc1.type = 'sine';
+        osc2.type = 'sine';
+        osc3.type = 'triangle';
+
+        osc1.frequency.setValueAtTime(freq, time);
+        osc2.frequency.setValueAtTime(freq * 2.0, time);
+        osc3.frequency.setValueAtTime(freq * 3.0, time);
+
+        const g1 = this.ctx.createGain();
+        const g2 = this.ctx.createGain();
+        const g3 = this.ctx.createGain();
+        g1.gain.value = 1.0;
+        g2.gain.value = 0.18;
+        g3.gain.value = 0.055;
+
+        const env = this.ctx.createGain();
+        env.gain.setValueAtTime(0.0001, time);
+        env.gain.linearRampToValueAtTime(gainPeak, time + 0.012); // Crisp 12ms attack
+        env.gain.exponentialRampToValueAtTime(0.0001, time + decay);
+
+        osc1.connect(g1).connect(env);
+        osc2.connect(g2).connect(env);
+        osc3.connect(g3).connect(env);
+
+        const outNode = this._connectPanner(env, panVal);
+        outNode.connect(this.compressor);
+        outNode.connect(this.reverbSend);
+        outNode.connect(this.delaySend);
+
+        osc1.start(time); osc2.start(time); osc3.start(time);
+        osc1.stop(time + decay + 0.08);
+        osc2.stop(time + decay + 0.08);
+        osc3.stop(time + decay + 0.08);
+      }
+
+      /** Voice 2: Ethereal Plucked Crystal Harp */
+      _playCrystalHarp(freq, time, gainPeak = 0.045, panVal = 0) {
+        const osc = this.ctx.createOscillator();
+        const shimmer = this.ctx.createOscillator();
+        osc.type = 'sine';
+        shimmer.type = 'sine';
+        osc.frequency.setValueAtTime(freq, time);
+        shimmer.frequency.setValueAtTime(freq * 2.002, time);
+
+        const shimG = this.ctx.createGain();
+        shimG.gain.value = 0.22;
+
+        const env = this.ctx.createGain();
+        env.gain.setValueAtTime(0.0001, time);
+        env.gain.linearRampToValueAtTime(gainPeak, time + 0.008);
+        env.gain.exponentialRampToValueAtTime(0.0001, time + 1.9);
+
+        osc.connect(env);
+        shimmer.connect(shimG).connect(env);
+
+        const outNode = this._connectPanner(env, panVal);
+        outNode.connect(this.reverbSend);
+        outNode.connect(this.delaySend);
+
+        osc.start(time); shimmer.start(time);
+        osc.stop(time + 2.0); shimmer.stop(time + 2.0);
+      }
+
+      /** Voice 3: Silky Airy Shimmer Pad (4s fade-in, 5s fade-out, mid-high triad, zero drone hum) */
+      _playShimmerPad(notes, time) {
+        notes.forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const detuneOsc = this.ctx.createOscillator();
+          osc.type = 'sine';
+          detuneOsc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, time);
+          detuneOsc.frequency.setValueAtTime(freq * 1.0018, time); // delicate celestial chorus
+
+          const lpf = this.ctx.createBiquadFilter();
+          lpf.type = 'lowpass';
+          lpf.frequency.setValueAtTime(1600, time);
+
+          const env = this.ctx.createGain();
+          const peak = 0.022; // Very velvety & subtle
+          env.gain.setValueAtTime(0.0001, time);
+          env.gain.linearRampToValueAtTime(peak, time + 3.6);
+          env.gain.exponentialRampToValueAtTime(0.0001, time + 8.6);
+
+          const detG = this.ctx.createGain();
+          detG.gain.value = 0.35;
+
+          osc.connect(lpf);
+          detuneOsc.connect(detG).connect(lpf);
+          lpf.connect(env);
+
+          const panVal = (idx - 1) * 0.45;
+          const outNode = this._connectPanner(env, panVal);
+          outNode.connect(this.padHighPass);
+
+          osc.start(time); detuneOsc.start(time);
+          osc.stop(time + 8.8); detuneOsc.stop(time + 8.8);
+        });
+      }
+
+      _connectPanner(sourceNode, panVal) {
+        if (typeof this.ctx.createStereoPanner === 'function') {
+          const panner = this.ctx.createStereoPanner();
+          panner.pan.value = Math.max(-0.9, Math.min(0.9, panVal));
+          sourceNode.connect(panner);
+          return panner;
+        }
+        return sourceNode;
+      }
+
+      /** Mobile iOS/Android AudioContext unlock on first user gesture */
+      unlock() {
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume().catch(() => {});
+        }
+      }
+
+      toggle() {
+        if (!this.initialized) {
+          this.init();
+          if (hasBrokenThrough) this.startCosmicMusic();
+          return;
+        }
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+        this.enabled = !this.enabled;
+        const now = this.ctx.currentTime;
+        this.masterGain.gain.cancelScheduledValues(now);
+        this.masterGain.gain.setValueAtTime(Math.max(this.masterGain.gain.value, 0.0001), now);
+        this.masterGain.gain.exponentialRampToValueAtTime(this.enabled ? 0.85 : 0.0001, now + 0.45);
+        this._updateAudioUI();
+        showToast(this.enabled ? '星海配乐与清雅音效已开启' : '已静音');
+      }
+
+      _updateAudioUI() {
+        const label = document.getElementById('audio-label');
+        const btn = document.getElementById('btn-audio');
+        if (!label || !btn) return;
+        label.textContent = this.enabled ? '星乐开' : '已静音';
+        btn.classList.toggle('border-cyanwater/60', this.enabled);
+        btn.classList.toggle('text-cyanwater', this.enabled);
+      }
+
+      /**
+       * QINGYA SFX 1: Celestial Awakening (Act 0 -> Act 1)
+       * Silky ascending crystalline chime glissando (D5–E5–F#5–A5–B5–D6–E6)
+       * + Warm translucent singing-bowl harmonic bloom (zero harsh noise or booming bass)
+       */
+      playBreakthrough() {
+        if (!this.initialized) this.init();
+        if (!this.ctx || !this.enabled) return;
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+        const now = this.ctx.currentTime;
+        const n = this.N;
+
+        // 1. Warm resonant singing-bowl bloom (D4 + A4 + F#5)
+        const bowlPartials = [
+          { freq: n.D4, amp: 0.14, dur: 4.5 },
+          { freq: n.A4, amp: 0.09, dur: 4.0 },
+          { freq: n.Fs5, amp: 0.055, dur: 3.4 }
+        ];
+        bowlPartials.forEach(p => {
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(p.freq, now);
+          g.gain.setValueAtTime(0.0001, now);
+          g.gain.linearRampToValueAtTime(p.amp, now + 0.18);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + p.dur);
+          osc.connect(g);
+          g.connect(this.compressor);
+          g.connect(this.reverbSend);
+          osc.start(now);
+          osc.stop(now + p.dur + 0.1);
+        });
+
+        // 2. Silky Ascending Crystal Chime Glissando
+        const gliss = [n.D5, n.E5, n.Fs5, n.A5, n.B5, n.D6, n.E6];
+        gliss.forEach((freq, i) => {
+          const t = now + 0.04 + i * 0.072;
+          const pan = -0.6 + (i / (gliss.length - 1)) * 1.2;
+          this._playStarlightCelesta(freq, t, 0.085, 2.8, pan);
+        });
+
+        // 3. Bloom smoothly into the Cosmic Melodic Sequencer
+        this.startCosmicMusic();
+      }
+
+      /**
+       * QINGYA SFX 2: Scene Transition
+       * Soft airy silk-wind breath sweep (1200–2200Hz bandpass at delicate gain)
+       * + Pure harmonic bell fifth (A4 + E5) fading gracefully into space reverb
+       */
+      playSceneTransition(sceneIdx) {
+        this.setActMood(sceneIdx);
+        if (!this.ctx || !this.enabled) return;
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+        const now = this.ctx.currentTime;
+
+        // 1. Airy Silk-Wind Breath Sweep
+        const dur = 0.68;
+        const bufLen = Math.floor(this.ctx.sampleRate * dur);
+        const buf = this.ctx.createBuffer(1, bufLen, this.ctx.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < bufLen; i++) {
+          data[i] = (Math.random() * 2 - 1);
+        }
+        const noise = this.ctx.createBufferSource();
+        noise.buffer = buf;
+
+        const bp = this.ctx.createBiquadFilter();
+        bp.type = 'bandpass';
+        bp.frequency.setValueAtTime(1200, now);
+        bp.frequency.exponentialRampToValueAtTime(2200, now + dur * 0.65);
+        bp.Q.value = 3.2;
+
+        const nEnv = this.ctx.createGain();
+        nEnv.gain.setValueAtTime(0.0001, now);
+        nEnv.gain.linearRampToValueAtTime(0.028, now + 0.16);
+        nEnv.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+
+        noise.connect(bp).connect(nEnv).connect(this.reverbSend);
+        noise.start(now);
+
+        // 2. Pure Harmonic Bell Fifth
+        const pairs = [
+          [this.N.A4, this.N.E5],
+          [this.N.D5, this.N.A5],
+          [this.N.E4, this.N.B4],
+          [this.N.Fs4, this.N.Cs5]
+        ];
+        const [f1, f2] = pairs[sceneIdx % pairs.length];
+        this._playStarlightCelesta(f1, now + 0.02, 0.068, 2.2, -0.25);
+        this._playStarlightCelesta(f2, now + 0.08, 0.056, 2.4, 0.25);
+      }
+
+      /**
+       * QINGYA SFX 3: Delicate Jade-Drop / Celesta Ping on UI Click or Slider Calibration
+       */
+      playClick(pitchIndex = null) {
+        if (!this.ctx || !this.enabled) return;
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+        const now = this.ctx.currentTime;
+        const idx = (pitchIndex !== null)
+          ? Math.abs(pitchIndex) % this.jadeNotes.length
+          : (this.lastClickPitch++) % this.jadeNotes.length;
+        const freq = this.jadeNotes[idx];
+
+        const osc = this.ctx.createOscillator();
+        const over = this.ctx.createOscillator();
+        osc.type = 'sine';
+        over.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now);
+        over.frequency.setValueAtTime(freq * 2.0, now);
+
+        const overG = this.ctx.createGain();
+        overG.gain.value = 0.14;
+
+        const env = this.ctx.createGain();
+        env.gain.setValueAtTime(0.0001, now);
+        env.gain.linearRampToValueAtTime(0.062, now + 0.006); // 6ms silky jade attack
+        env.gain.exponentialRampToValueAtTime(0.0001, now + 0.48);
+
+        osc.connect(env);
+        over.connect(overG).connect(env);
+        env.connect(this.compressor);
+        env.connect(this.reverbSend);
+
+        osc.start(now); over.start(now);
+        osc.stop(now + 0.55); over.stop(now + 0.55);
+      }
+    }
+
+    const audioEngine = new CosmicAudioEngine();
+
+    /**
+     * =========================================================================
+     * 3. THREE.JS WEBGL 3D STARRY COSMOS & ARCHITECTURAL SPACE STAGE
+     * =========================================================================
+     */
+    const canvas = document.getElementById('webgl-canvas');
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: false,
+      powerPreference: 'high-performance'
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x07090F, 1);
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x07090F, 0.0135);
+
+    const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 360);
+    camera.position.set(0, 6, 36);
+
+    // Architectural & Celestial Lighting
+    const ambientLight = new THREE.AmbientLight(0xEAE4D7, 0.45);
+    scene.add(ambientLight);
+    const keyLight = new THREE.DirectionalLight(0xC89B54, 1.32);
+    keyLight.position.set(18, 28, 22);
+    scene.add(keyLight);
+    const rimLight = new THREE.PointLight(0x49A6A8, 2.4, 95);
+    rimLight.position.set(-18, 14, -10);
+    scene.add(rimLight);
+    const starLight = new THREE.PointLight(0x7DA8D6, 1.5, 90);
+    starLight.position.set(16, 18, -24);
+    scene.add(starLight);
+
+    // Procedural Soft Starlight Sprite Texture (Zero External Assets)
+    function createGlowSpriteTexture() {
+      const c = document.createElement('canvas');
+      c.width = 64;
+      c.height = 64;
+      const ctx = c.getContext('2d');
+      const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+      g.addColorStop(0, 'rgba(255,255,255,1)');
+      g.addColorStop(0.24, 'rgba(255,255,255,0.8)');
+      g.addColorStop(0.60, 'rgba(255,255,255,0.16)');
+      g.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, 64, 64);
+      return new THREE.CanvasTexture(c);
+    }
+    const glowTex = createGlowSpriteTexture();
+
+    // ----- A0. DEEP-SPACE STARRY COSMOS CANOPY (2,200 Background Stars) -----
+    const STAR_COUNT = 2200;
+    const starPos = new Float32Array(STAR_COUNT * 3);
+    const starCol = new Float32Array(STAR_COUNT * 3);
+    const starPalette = [
+      new THREE.Color('#EAE4D7'),
+      new THREE.Color('#A8C9EC'),
+      new THREE.Color('#C89B54'),
+      new THREE.Color('#6CC4C7')
+    ];
+    for (let i = 0; i < STAR_COUNT; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      const r = 68 + Math.random() * 110;
+      starPos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      starPos[i * 3 + 1] = r * Math.cos(phi);
+      starPos[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta) - 10;
+      const col = starPalette[i % starPalette.length];
+      col.toArray(starCol, i * 3);
+    }
+    const starGeo = new THREE.BufferGeometry();
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+    starGeo.setAttribute('color', new THREE.BufferAttribute(starCol, 3));
+    const starfield = new THREE.Points(starGeo, new THREE.PointsMaterial({
+      size: 0.52,
+      map: glowTex,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.72,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
+    }));
+    scene.add(starfield);
+
+    // ----- A. MORPHING HERO PARTICLE FIELD (6,000 Luminous Particles) -----
+    const PARTICLE_COUNT = 6000;
+    const pPositions = new Float32Array(PARTICLE_COUNT * 3);
+    const pTargetPositions = new Float32Array(PARTICLE_COUNT * 3);
+    const pColors = new Float32Array(PARTICLE_COUNT * 3);
+    const pTargetColors = new Float32Array(PARTICLE_COUNT * 3);
+    const pSeeds = new Float32Array(PARTICLE_COUNT);
+
+    const COL_OCHRE = new THREE.Color('#C89B54');
+    const COL_CYAN = new THREE.Color('#49A6A8');
+    const COL_CINNABAR = new THREE.Color('#C44536');
+    const COL_PINE = new THREE.Color('#5C8D6B');
+    const COL_PAPER = new THREE.Color('#EAE4D7');
+    const COL_STAR = new THREE.Color('#8AB4E8');
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      pSeeds[i] = Math.random() * Math.PI * 2;
+      pPositions[i * 3] = (Math.random() - 0.5) * 60;
+      pPositions[i * 3 + 1] = (Math.random() - 0.5) * 40;
+      pPositions[i * 3 + 2] = (Math.random() - 0.5) * 40;
+      pTargetPositions[i * 3] = pPositions[i * 3];
+      pTargetPositions[i * 3 + 1] = pPositions[i * 3 + 1];
+      pTargetPositions[i * 3 + 2] = pPositions[i * 3 + 2];
+      COL_OCHRE.toArray(pColors, i * 3);
+      COL_OCHRE.toArray(pTargetColors, i * 3);
+    }
+
+    const particleGeo = new THREE.BufferGeometry();
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(pPositions, 3));
+    particleGeo.setAttribute('color', new THREE.BufferAttribute(pColors, 3));
+
+    const particleMat = new THREE.PointsMaterial({
+      size: 0.34,
+      map: glowTex,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.9,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
+    });
+    const particleSystem = new THREE.Points(particleGeo, particleMat);
+    scene.add(particleSystem);
+
+    function setParticleMorph(sceneIndex, accentHex = null) {
+      const cTmp = new THREE.Color();
+      const accent = accentHex ? new THREE.Color(accentHex) : null;
+
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const idx = i * 3;
+        const u = i / PARTICLE_COUNT;
+        let x = 0, y = 0, z = 0;
+
+        if (sceneIndex === 0) {
+          const side = Math.sqrt(PARTICLE_COUNT);
+          const gx = (i % side) / side - 0.5;
+          const gy = Math.floor(i / side) / side - 0.5;
+          x = gx * 56; y = gy * 34; z = 0;
+          cTmp.copy(COL_PAPER);
+        } else if (sceneIndex === 1 || sceneIndex === 10) {
+          if (u < 0.25) {
+            const t = (u / 0.25) * 2 - 1;
+            z = t * 44;
+            x = Math.sin(t * 3.2) * 3.8 + (Math.random() - 0.5) * 2.2;
+            y = -5.6 + Math.sin(t * 6.0) * 0.25 + (Math.random() - 0.5) * 0.4;
+            cTmp.copy(COL_CYAN).lerp(COL_PAPER, Math.random() * 0.35);
+          } else if (u < 0.76) {
+            const side = (i % 2 === 0) ? 1 : -1;
+            const zPos = (Math.random() - 0.5) * 86;
+            const riverCenter = Math.sin((zPos / 44) * 3.2) * 3.8;
+            const distFromBank = 3.4 + Math.pow(Math.random(), 0.78) * 34;
+            x = riverCenter + side * distFromBank;
+            const ridge = Math.sin(x * 0.14) * Math.cos(zPos * 0.11) * 5.2 + Math.sin(x * 0.06 + zPos * 0.05) * 4.5;
+            y = -5.4 + Math.max(0, ridge + distFromBank * 0.22);
+            z = zPos;
+            cTmp.copy(COL_OCHRE).lerp(COL_CINNABAR, Math.max(0, (y - 1) / 14) * 0.4);
+          } else {
+            // Swirling starry nebula galaxy canopy
+            const spiral = (u - 0.76) * Math.PI * 22;
+            const r = 10 + Math.random() * 44;
+            x = Math.cos(spiral) * r + (Math.random() - 0.5) * 5;
+            z = Math.sin(spiral) * r - 12;
+            y = 7 + Math.sin(r * 0.12) * 5 + Math.random() * 14;
+            cTmp.copy(sceneIndex === 10 ? COL_STAR : COL_PAPER).lerp(COL_CYAN, Math.random() * 0.45);
+          }
+        } else if (sceneIndex === 2) {
+          const ring = i % 4;
+          const angle = Math.random() * Math.PI * 2;
+          const rad = 10 + ring * 5.2 + (Math.random() - 0.5) * 1.4;
+          x = Math.cos(angle) * rad;
+          z = Math.sin(angle) * rad - 4;
+          y = (Math.random() - 0.5) * (ring === 0 ? 12 : 2.2) + Math.sin(angle * 2) * 1.8;
+          cTmp.copy(ring % 2 === 0 ? COL_OCHRE : COL_CYAN);
+        } else if (sceneIndex === 3) {
+          const t = u * Math.PI * 6;
+          const rad = 7 + (i % 7) * 2.1 + Math.sin(t * 2) * 1.5;
+          x = Math.cos(t) * rad;
+          y = Math.sin(t * 0.5) * 5.5 + (Math.random() - 0.5) * 1.6;
+          z = Math.sin(t) * rad - 4;
+          if (u < 0.24) cTmp.copy(COL_CINNABAR);
+          else if (u < 0.52) cTmp.copy(COL_OCHRE);
+          else if (u < 0.74) cTmp.copy(COL_PAPER);
+          else if (u < 0.92) cTmp.copy(COL_CYAN);
+          else cTmp.copy(COL_PINE);
+        } else if (sceneIndex === 4) {
+          const orbit = i % 3;
+          const a = Math.random() * Math.PI * 2;
+          const r = 11 + orbit * 4.5;
+          const tilt = orbit === 0 ? 0.5 : (orbit === 1 ? -0.6 : 1.1);
+          x = Math.cos(a) * r;
+          y = Math.sin(a) * r * Math.sin(tilt) + (Math.random() - 0.5) * 1.1;
+          z = Math.sin(a) * r * Math.cos(tilt) - 4;
+          cTmp.copy(orbit === 0 ? COL_CINNABAR : (orbit === 1 ? COL_CYAN : COL_PINE));
+        } else if (sceneIndex === 5) {
+          const a = Math.random() * Math.PI * 2;
+          const b = Math.random() * Math.PI * 2;
+          if (i % 2 === 0) {
+            const R = 8.5, r = 1.6;
+            x = -9 + (R + r * Math.cos(b)) * Math.cos(a);
+            y = (R + r * Math.cos(b)) * Math.sin(a);
+            z = r * Math.sin(b) - 5;
+            cTmp.copy(COL_OCHRE);
+          } else {
+            const R = 7.5, r = 2.0;
+            x = 9 + (R + r * Math.cos(b)) * Math.cos(a);
+            y = r * Math.sin(b);
+            z = (R + r * Math.cos(b)) * Math.sin(a) - 5;
+            cTmp.copy(COL_CYAN);
+          }
+        } else if (sceneIndex === 6) {
+          const gx = ((i % 85) / 85 - 0.5) * 54;
+          const gz = (Math.floor(i / 85) / 76 - 0.5) * 46;
+          x = gx; z = gz - 6;
+          y = -6.5 + Math.sin(gx * 0.25) * Math.cos(gz * 0.25) * 1.4;
+          if (u > 0.72) {
+            y = (Math.random() - 0.3) * 16;
+            cTmp.copy(COL_OCHRE).lerp(COL_STAR, 0.35);
+          } else {
+            cTmp.copy(i % 3 === 0 ? COL_CYAN : COL_PINE);
+          }
+        } else if (sceneIndex === 7) {
+          const t = u;
+          x = (t - 0.5) * 52;
+          const wave = Math.sin(t * Math.PI * 2.2) * 3.8;
+          y = -2.5 + Math.sin(t * Math.PI * 1.4) * 3.0 + (Math.random() - 0.5) * 2.4;
+          z = wave - 6 + (Math.random() - 0.5) * 6.5;
+          if (t < 0.28) cTmp.copy(COL_CINNABAR).lerp(COL_OCHRE, t / 0.28);
+          else if (t < 0.55) cTmp.copy(COL_OCHRE).lerp(COL_PAPER, (t - 0.28) / 0.27);
+          else if (t < 0.80) cTmp.copy(COL_PAPER).lerp(COL_CYAN, (t - 0.55) / 0.25);
+          else cTmp.copy(COL_CYAN).lerp(COL_PINE, (t - 0.80) / 0.20);
+        } else if (sceneIndex === 8) {
+          const angle = (u - 0.5) * Math.PI * 1.25;
+          const r = 16 + (Math.random() - 0.5) * 9;
+          x = Math.sin(angle) * r;
+          z = -Math.cos(angle) * r + 8;
+          y = (Math.random() - 0.5) * 10 + Math.cos(angle * 2) * 2;
+          cTmp.copy(accent || COL_OCHRE).lerp(COL_STAR, Math.random() * 0.32);
+        } else if (sceneIndex === 9) {
+          if (u < 0.55) {
+            const step = Math.floor(Math.random() * 4);
+            x = -14 + step * 5.2 + (Math.random() - 0.5) * 4.2;
+            y = -5 + step * 2.6 + (Math.random() - 0.5) * 0.6;
+            z = (Math.random() - 0.5) * 8 - 6;
+            cTmp.copy(COL_OCHRE);
+          } else {
+            const a = Math.random() * Math.PI * 2;
+            const r = 9.5 + (Math.random() - 0.5) * 1.6;
+            x = 10 + Math.cos(a) * r;
+            y = Math.sin(a) * r;
+            z = (Math.random() - 0.5) * 2 - 6;
+            cTmp.copy(COL_CYAN).lerp(COL_PINE, Math.random() * 0.4);
+          }
+        }
+
+        pTargetPositions[idx] = x;
+        pTargetPositions[idx + 1] = y;
+        pTargetPositions[idx + 2] = z;
+        cTmp.toArray(pTargetColors, idx);
+      }
+    }
+
+    // ----- B. PROCEDURAL 3D HERO GEOMETRY GROUPS -----
+    const heroGroups = {};
+
+    // 1. Terrain + Luminous River Group (Act 1 & Act 10)
+    const terrainGroup = new THREE.Group();
+    const planeGeo = new THREE.PlaneGeometry(86, 86, 72, 72);
+    planeGeo.rotateX(-Math.PI / 2);
+    const posAttr = planeGeo.attributes.position;
+    for (let i = 0; i < posAttr.count; i++) {
+      const vx = posAttr.getX(i);
+      const vz = posAttr.getZ(i);
+      const riverX = Math.sin((vz / 43) * 3.0) * 3.8;
+      const dist = Math.abs(vx - riverX);
+      const channelFactor = Math.min(1, Math.max(0, (dist - 2.2) / 7.0));
+      const h = (Math.sin(vx * 0.14) * Math.cos(vz * 0.11) * 3.8 + Math.sin(vx * 0.07 + vz * 0.08) * 3.2 + dist * 0.16) * channelFactor;
+      posAttr.setY(i, -6.2 + Math.max(-0.4, h));
+    }
+    planeGeo.computeVertexNormals();
+
+    terrainGroup.add(new THREE.Mesh(planeGeo, new THREE.MeshStandardMaterial({
+      color: 0x131319, roughness: 0.9, metalness: 0.18, flatShading: true, transparent: true, opacity: 0.88
+    })));
+    const terrainWire = new THREE.Mesh(planeGeo, new THREE.MeshBasicMaterial({
+      color: 0xC89B54, wireframe: true, transparent: true, opacity: 0.22
+    }));
+    terrainWire.position.y = 0.04;
+    terrainGroup.add(terrainWire);
+
+    const riverPts = [];
+    for (let z = -42; z <= 42; z += 2) {
+      riverPts.push(new THREE.Vector3(Math.sin((z / 43) * 3.0) * 3.8, -5.9, z));
+    }
+    const riverTube = new THREE.Mesh(
+      new THREE.TubeGeometry(new THREE.CatmullRomCurve3(riverPts), 90, 0.55, 8, false),
+      new THREE.MeshBasicMaterial({ color: 0x49A6A8, transparent: true, opacity: 0.74 })
+    );
+    terrainGroup.add(riverTube);
+    scene.add(terrainGroup);
+    heroGroups.terrain = terrainGroup;
+
+    // 2. Four Pillars + Celestial Meridian Ring (Act 2)
+    const pillarsGroup = new THREE.Group();
+    const pillarMeshes = [];
+    const pillarColors = [0xC89B54, 0xC44536, 0xEAE4D7, 0x49A6A8];
+    for (let i = 0; i < 4; i++) {
+      const g = new THREE.Group();
+      const x = (i - 1.5) * 6.4;
+      g.position.set(x, 0, -4);
+
+      const core = new THREE.Mesh(
+        new THREE.BoxGeometry(1.7, 9.2, 1.7),
+        new THREE.MeshStandardMaterial({
+          color: 0x121520, emissive: pillarColors[i], emissiveIntensity: 0.18,
+          roughness: 0.35, metalness: 0.65, transparent: true, opacity: 0.86
+        })
+      );
+      const edges = new THREE.LineSegments(
+        new THREE.EdgesGeometry(new THREE.BoxGeometry(1.76, 9.26, 1.76)),
+        new THREE.LineBasicMaterial({ color: pillarColors[i], transparent: true, opacity: 0.8 })
+      );
+      const ring = new THREE.Mesh(
+        new THREE.TorusGeometry(2.1, 0.035, 12, 48),
+        new THREE.MeshBasicMaterial({ color: pillarColors[i], transparent: true, opacity: 0.55 })
+      );
+      ring.rotation.x = Math.PI / 2.2;
+      g.add(core, edges, ring);
+      g.userData = { core, ring };
+      pillarsGroup.add(g);
+      pillarMeshes.push(g);
+    }
+    // Celestial Meridian Astrolabe Ring surrounding the 4 Pillars
+    const meridianRing = new THREE.Mesh(
+      new THREE.TorusGeometry(14.8, 0.06, 12, 96),
+      new THREE.MeshBasicMaterial({ color: 0x49A6A8, transparent: true, opacity: 0.36 })
+    );
+    meridianRing.position.set(0, 0, -4);
+    meridianRing.rotation.x = Math.PI / 2.45;
+    pillarsGroup.add(meridianRing);
+    scene.add(pillarsGroup);
+    heroGroups.pillars = pillarsGroup;
+
+    // 3. Five-Element Celestial Orbit (Act 3)
+    const wuxingGroup = new THREE.Group();
+    const wxNodes = [
+      { pos: new THREE.Vector3(-8, 3.5, -5), color: 0xC44536, r: 1.3 },
+      { pos: new THREE.Vector3(-2.5, 0.5, -3), color: 0xC89B54, r: 1.85 },
+      { pos: new THREE.Vector3(3.5, -1.5, -4), color: 0xEAE4D7, r: 1.25 },
+      { pos: new THREE.Vector3(9, 2.2, -6), color: 0x49A6A8, r: 1.45 },
+      { pos: new THREE.Vector3(2.5, 6.2, -9), color: 0x5C8D6B, r: 0.92 }
+    ];
+    const wxSpheres = [];
+    wxNodes.forEach((n, i) => {
+      const m = new THREE.Mesh(
+        new THREE.IcosahedronGeometry(n.r, i === 4 ? 0 : 1),
+        new THREE.MeshStandardMaterial({
+          color: 0x10131C, emissive: n.color, emissiveIntensity: i === 4 ? 0.25 : 0.48, wireframe: true
+        })
+      );
+      m.position.copy(n.pos);
+      const inner = new THREE.Mesh(
+        new THREE.SphereGeometry(n.r * 0.45, 16, 16),
+        new THREE.MeshBasicMaterial({ color: n.color, transparent: true, opacity: i === 4 ? 0.38 : 0.85 })
+      );
+      m.add(inner);
+      wuxingGroup.add(m);
+      wxSpheres.push(m);
+    });
+    const flowCurve = new THREE.CatmullRomCurve3([wxNodes[0].pos, wxNodes[1].pos, wxNodes[2].pos, wxNodes[3].pos]);
+    wuxingGroup.add(new THREE.Mesh(
+      new THREE.TubeGeometry(flowCurve, 64, 0.08, 8, false),
+      new THREE.MeshBasicMaterial({ color: 0xC89B54, transparent: true, opacity: 0.5 })
+    ));
+    const flowBeads = [];
+    for (let i = 0; i < 12; i++) {
+      const bead = new THREE.Mesh(
+        new THREE.SphereGeometry(0.22, 10, 10),
+        new THREE.MeshBasicMaterial({ color: i % 2 === 0 ? 0x49A6A8 : 0xEAE4D7 })
+      );
+      bead.userData.offset = i / 12;
+      wuxingGroup.add(bead);
+      flowBeads.push(bead);
+    }
+    scene.add(wuxingGroup);
+    heroGroups.wuxing = wuxingGroup;
+
+    // 4. Crystal Constellation Rings (Act 4)
+    const clashGroup = new THREE.Group();
+    const clashRings = [];
+    [
+      { pos: [-7, 1.5, -5], col: 0x49A6A8, r: 3.2 },
+      { pos: [-2.2, 0.5, -4], col: 0xC44536, r: 3.4 },
+      { pos: [2.4, -0.5, -4], col: 0xEAE4D7, r: 3.4 },
+      { pos: [7.5, -1.2, -5], col: 0xC89B54, r: 3.2 }
+    ].forEach(c => {
+      const ring = new THREE.Mesh(
+        new THREE.TorusGeometry(c.r, 0.07, 12, 64),
+        new THREE.MeshBasicMaterial({ color: c.col, transparent: true, opacity: 0.72 })
+      );
+      ring.position.set(...c.pos);
+      clashGroup.add(ring);
+      clashRings.push(ring);
+    });
+    scene.add(clashGroup);
+    heroGroups.clash = clashGroup;
+
+    // 5. Glowing Armillary Gyroscope & Feedback Loop (Act 5)
+    const gyroGroup = new THREE.Group();
+    const gyroAssembly = new THREE.Group();
+    gyroAssembly.position.set(-8.5, 0.5, -5);
+    const gRing1 = new THREE.Mesh(new THREE.TorusGeometry(4.5, 0.065, 12, 64), new THREE.MeshBasicMaterial({ color: 0xC89B54, transparent: true, opacity: 0.8 }));
+    const gRing2 = new THREE.Mesh(new THREE.TorusGeometry(3.4, 0.055, 12, 64), new THREE.MeshBasicMaterial({ color: 0xEAE4D7, transparent: true, opacity: 0.65 }));
+    const gRing3 = new THREE.Mesh(new THREE.TorusGeometry(2.2, 0.055, 12, 64), new THREE.MeshBasicMaterial({ color: 0x49A6A8, transparent: true, opacity: 0.72 }));
+    const gCore = new THREE.Mesh(new THREE.OctahedronGeometry(0.9, 0), new THREE.MeshBasicMaterial({ color: 0xC89B54, wireframe: true }));
+    gyroAssembly.add(gRing1, gRing2, gRing3, gCore);
+    gyroGroup.add(gyroAssembly);
+
+    const loopAssembly = new THREE.Group();
+    loopAssembly.position.set(8.5, 0.5, -5);
+    loopAssembly.add(new THREE.Mesh(
+      new THREE.TorusGeometry(3.8, 0.08, 12, 64),
+      new THREE.MeshBasicMaterial({ color: 0x49A6A8, transparent: true, opacity: 0.72 })
+    ));
+    gyroGroup.add(loopAssembly);
+    scene.add(gyroGroup);
+    heroGroups.gyro = gyroGroup;
+
+    // 6. Tri-Prism Crystal Cluster (Act 6)
+    const prismGroup = new THREE.Group();
+    const prisms = [];
+    [0xC89B54, 0x49A6A8, 0x5C8D6B].forEach((col, i) => {
+      const m = new THREE.Mesh(
+        new THREE.OctahedronGeometry(2.7, 0),
+        new THREE.MeshStandardMaterial({
+          color: 0x0F121A, emissive: col, emissiveIntensity: 0.45, wireframe: true
+        })
+      );
+      m.position.set((i - 1) * 9.5, 1.5, -6);
+      prismGroup.add(m);
+      prisms.push(m);
+    });
+    scene.add(prismGroup);
+    heroGroups.prism = prismGroup;
+
+    // 7. Eight Dayun Crystal Pillars (Act 7)
+    const dayunGroup = new THREE.Group();
+    const dayunPillars3D = [];
+    const dayunPts = [];
+    DAYUN_DATA.forEach((d, i) => {
+      const x = (i - 3.5) * 5.8;
+      const z = Math.sin(i * 0.7) * 3.5 - 6;
+      const height = 4.2 + (i === 2 || i === 3 ? 3.8 : (i === 4 || i === 5 ? 3.2 : 1.8));
+      dayunPts.push(new THREE.Vector3(x, -3.5, z));
+
+      const col = new THREE.Color(d.color);
+      const colMesh = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.42, 0.58, height, 6),
+        new THREE.MeshStandardMaterial({
+          color: 0x111520, emissive: col, emissiveIntensity: 0.45,
+          roughness: 0.35, metalness: 0.5, transparent: true, opacity: 0.88
+        })
+      );
+      colMesh.position.set(x, -3.5 + height / 2, z);
+
+      const capRing = new THREE.Mesh(
+        new THREE.TorusGeometry(1.15, 0.04, 10, 32),
+        new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.65 })
+      );
+      capRing.rotation.x = Math.PI / 2;
+      capRing.position.set(x, -3.5 + height + 0.4, z);
+
+      dayunGroup.add(colMesh, capRing);
+      dayunPillars3D.push({ mesh: colMesh, ring: capRing, x, y: -3.5 + height, z, baseH: height });
+    });
+    dayunGroup.add(new THREE.Mesh(
+      new THREE.TubeGeometry(new THREE.CatmullRomCurve3(dayunPts), 72, 0.1, 8, false),
+      new THREE.MeshBasicMaterial({ color: 0xC89B54, transparent: true, opacity: 0.55 })
+    ));
+    scene.add(dayunGroup);
+    heroGroups.dayun = dayunGroup;
+
+    // 8. Eight Liunian Orbital Crystal Nodes (Act 8)
+    const liunianGroup = new THREE.Group();
+    const liunianNodes3D = [];
+    LIUNIAN_DATA.forEach((item, i) => {
+      const t = (i / 7) - 0.5;
+      const angle = t * Math.PI * 0.95;
+      const rad = 14.5;
+      const x = Math.sin(angle) * rad;
+      const z = -Math.cos(angle) * rad + 7;
+      const col = new THREE.Color(item.color);
+
+      const crystal = new THREE.Mesh(
+        new THREE.OctahedronGeometry(1.08, 0),
+        new THREE.MeshStandardMaterial({
+          color: 0x141824, emissive: col, emissiveIntensity: 0.55, flatShading: true
+        })
+      );
+      crystal.position.set(x, 0.5, z);
+
+      const beam = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.05, 0.16, 14, 8),
+        new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.0 })
+      );
+      beam.position.set(x, 0.5, z);
+
+      liunianGroup.add(crystal, beam);
+      liunianNodes3D.push({ crystal, beam, x, z });
+    });
+    scene.add(liunianGroup);
+    heroGroups.liunian = liunianGroup;
+
+    // 9. Four Ascending Terraces + 90-Day Orbital Ring (Act 9)
+    const stepsGroup = new THREE.Group();
+    for (let i = 0; i < 4; i++) {
+      const box = new THREE.Mesh(
+        new THREE.BoxGeometry(3.8, 1.1 + i * 1.4, 3.2),
+        new THREE.MeshStandardMaterial({
+          color: 0x131722, emissive: [0xC44536, 0xC89B54, 0x49A6A8, 0x5C8D6B][i],
+          emissiveIntensity: 0.28, transparent: true, opacity: 0.8
+        })
+      );
+      box.position.set(-13 + i * 4.5, -4.5 + (1.1 + i * 1.4) / 2, -6);
+      box.add(new THREE.LineSegments(
+        new THREE.EdgesGeometry(box.geometry),
+        new THREE.LineBasicMaterial({ color: 0xC89B54, transparent: true, opacity: 0.48 })
+      ));
+      stepsGroup.add(box);
+    }
+    const ninetyRing = new THREE.Mesh(
+      new THREE.TorusGeometry(6.2, 0.11, 12, 72),
+      new THREE.MeshBasicMaterial({ color: 0x49A6A8, transparent: true, opacity: 0.68 })
+    );
+    ninetyRing.position.set(10, 0.5, -6);
+    stepsGroup.add(ninetyRing);
+    scene.add(stepsGroup);
+    heroGroups.steps = stepsGroup;
+
+    Object.values(heroGroups).forEach(g => { g.visible = false; });
+
+    /**
+     * =========================================================================
+     * 4. CAMERA RIG, INTERACTION STATE & SCENE CONTROLLER
+     * =========================================================================
+     */
+    const SCENE_CAMERAS = [
+      { pos: [0, 0, 32], look: [0, 0, 0], group: null },
+      { pos: [0, 5.5, 24], look: [0, -2.5, -10], group: 'terrain' },
+      { pos: [0, 2.2, 20], look: [0, 0, -4], group: 'pillars' },
+      { pos: [0, 3.5, 22], look: [0, 1.2, -4], group: 'wuxing' },
+      { pos: [0, 2.5, 21], look: [0, 0, -4], group: 'clash' },
+      { pos: [0, 1.5, 22], look: [0, 0.5, -5], group: 'gyro' },
+      { pos: [0, 3.2, 23], look: [0, 0.5, -6], group: 'prism' },
+      { pos: [-14, 5.2, 22], look: [-8, 0.5, -6], group: 'dayun' },
+      { pos: [0, 5.5, 21], look: [0, 0.5, -4], group: 'liunian' },
+      { pos: [0, 3.0, 24], look: [0, 0.2, -6], group: 'steps' },
+      { pos: [0, 14.5, 34], look: [0, -3.5, -14], group: 'terrain' }
+    ];
+
+    let currentSlide = 0;
+    let hasBrokenThrough = false;
+    let isTransitioning = false;
+    let selectedPillarIdx = 2;
+    let solarMode = 'solar'; // 'solar' | 'beijing'
+    let meridianTargetRot = 0.28;
+    let selectedDayunIdx = 0;
+    let selectedLiunianIdx = 0;
+    let gyroTargetTilt = 0;
+    let prismBoost = [0, 0, 0];
+
+    const camTargetPos = new THREE.Vector3(0, 0, 32);
+    const camTargetLook = new THREE.Vector3(0, 0, 0);
+    const camCurrentLook = new THREE.Vector3(0, 0, 0);
+    const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+
+    let autoplayActive = false;
+    let autoplayTimer = 0;
+    const AUTOPLAY_DURATION = 11500;
+
+    function showToast(msg) {
+      const el = document.getElementById('toast-msg');
+      if (!el) return;
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(el._t);
+      el._t = setTimeout(() => el.classList.remove('show'), 2200);
+    }
+
+    /**
+     * =========================================================================
+     * 4.5 ANTI-ORPHAN CHINESE TYPOGRAPHY POST-PROCESSOR
+     *     Automatically binds the trailing 3–4 Chinese characters + punctuation
+     *     into a non-breaking <span class="no-orphan"> so narrow mobile viewports
+     *     (320px–430px) NEVER leave 1–2 orphan characters alone on the final line.
+     * =========================================================================
+     */
+    function applyAntiOrphanTypography(root = document) {
+      if (!root) return;
+      const targets = root.querySelectorAll('p, li, .anti-orphan');
+      const tailRegex = /([\u4e00-\u9fff0-9A-Za-z][\u4e00-\u9fff0-9A-Za-z，、·：；“”《》「」]{1,2}[\u4e00-\u9fff0-9A-Za-z][。，！？；：、）》」』”’—…\.\!\?]*)\s*$/;
+
+      targets.forEach((el) => {
+        if (el.dataset.antiOrphanDone === '1') return;
+        // Skip containers built entirely of explicit semantic .clause blocks
+        if (el.querySelector('.clause') && !Array.from(el.childNodes).some(n => n.nodeType === 3 && /[\u4e00-\u9fff]{4,}/.test(n.nodeValue))) {
+          el.dataset.antiOrphanDone = '1';
+          return;
+        }
+
+        // Locate the last non-empty text node inside this block
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+        let lastTextNode = null;
+        let node;
+        while ((node = walker.nextNode())) {
+          if (node.nodeValue && node.nodeValue.trim().length > 0) {
+            lastTextNode = node;
+          }
+        }
+        if (!lastTextNode) return;
+
+        // Avoid double-wrapping existing no-orphan or clause spans
+        const parentEl = lastTextNode.parentElement;
+        if (parentEl && parentEl.closest('.no-orphan, .clause, kbd')) {
+          el.dataset.antiOrphanDone = '1';
+          return;
+        }
+
+        const text = lastTextNode.nodeValue;
+        if (!/[\u4e00-\u9fff]/.test(text)) return;
+
+        const match = text.match(tailRegex);
+        if (match && match.index > 0) {
+          const head = text.slice(0, match.index);
+          const tail = match[1];
+          const frag = document.createDocumentFragment();
+          frag.appendChild(document.createTextNode(head));
+          const span = document.createElement('span');
+          span.className = 'no-orphan';
+          span.textContent = tail;
+          frag.appendChild(span);
+          lastTextNode.parentNode.replaceChild(frag, lastTextNode);
+        }
+        el.dataset.antiOrphanDone = '1';
+      });
+    }
+
+    function triggerBreakthrough() {
+      if (hasBrokenThrough || isTransitioning) return;
+      isTransitioning = true;
+      hasBrokenThrough = true;
+
+      audioEngine.init();
+      audioEngine.playBreakthrough();
+
+      const boringWrap = document.getElementById('act-0-boring');
+      const boringCard = document.getElementById('boring-doc-card');
+      const shatterLayer = document.getElementById('shatter-layer');
+      const crackFlash = document.getElementById('crack-flash');
+
+      const rect = boringCard.getBoundingClientRect();
+      shatterLayer.innerHTML = '';
+      shatterLayer.style.display = 'block';
+
+      const cols = 6, rows = 4;
+      const cellW = rect.width / cols;
+      const cellH = rect.height / rows;
+      const shards = [];
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const shard = document.createElement('div');
+          shard.className = 'shatter-shard';
+          shard.style.left = (rect.left + c * cellW) + 'px';
+          shard.style.top = (rect.top + r * cellH) + 'px';
+          shard.style.width = (cellW + 2) + 'px';
+          shard.style.height = (cellH + 2) + 'px';
+          const p1 = Math.random() * 14, p2 = 86 + Math.random() * 14;
+          shard.style.clipPath = `polygon(${p1}% 0%, 100% ${Math.random() * 12}%, ${p2}% 100%, 0% ${88 + Math.random() * 12}%)`;
+          shatterLayer.appendChild(shard);
+          shards.push({
+            el: shard,
+            dx: (c - cols / 2 + 0.5) * (120 + Math.random() * 180),
+            dy: (r - rows / 2 + 0.5) * (110 + Math.random() * 160),
+            dz: 220 + Math.random() * 480,
+            rx: (Math.random() - 0.5) * 320,
+            ry: (Math.random() - 0.5) * 320,
+            rz: (Math.random() - 0.5) * 180
+          });
+        }
+      }
+
+      crackFlash.style.transition = 'opacity 0.14s ease-out';
+      crackFlash.style.opacity = '1';
+
+      boringWrap.style.opacity = '0';
+      boringWrap.style.pointerEvents = 'none';
+
+      setParticleMorph(1);
+      heroGroups.terrain.visible = true;
+      camera.position.set(0, 1.5, 42);
+
+      requestAnimationFrame(() => {
+        shards.forEach(s => {
+          s.el.style.transition = 'transform 1.15s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.05s ease-in';
+          s.el.style.transform = `translate3d(${s.dx}px, ${s.dy}px, ${s.dz}px) rotateX(${s.rx}deg) rotateY(${s.ry}deg) rotateZ(${s.rz}deg) scale(0.45)`;
+          s.el.style.opacity = '0';
+        });
+        setTimeout(() => {
+          crackFlash.style.transition = 'opacity 0.9s ease';
+          crackFlash.style.opacity = '0';
+        }, 140);
+      });
+
+      setTimeout(() => {
+        boringWrap.style.display = 'none';
+        revealChromeUI(true);
+        isTransitioning = false;
+        goToSlide(1, true);
+      }, 360);
+
+      setTimeout(() => {
+        shatterLayer.style.display = 'none';
+        shatterLayer.innerHTML = '';
+      }, 1300);
+    }
+
+    function revealChromeUI(show) {
+      const topHud = document.getElementById('top-hud');
+      const bottomDock = document.getElementById('bottom-dock');
+      const archFrame = document.getElementById('arch-frame');
+      const prevBtn = document.getElementById('btn-prev');
+      const nextBtn = document.getElementById('btn-next');
+
+      if (show) {
+        topHud.classList.remove('opacity-0', 'pointer-events-none');
+        bottomDock.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+        archFrame.classList.remove('opacity-0');
+        prevBtn.classList.remove('hidden-ui');
+        nextBtn.classList.remove('hidden-ui');
+      } else {
+        topHud.classList.add('opacity-0', 'pointer-events-none');
+        bottomDock.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+        archFrame.classList.add('opacity-0');
+        prevBtn.classList.add('hidden-ui');
+        nextBtn.classList.add('hidden-ui');
+      }
+    }
+
+    function resetToActZero() {
+      stopAutoplay();
+      audioEngine.playClick(0);
+      document.querySelectorAll('.scene-slide').forEach(el => el.classList.remove('active'));
+      revealChromeUI(false);
+      Object.values(heroGroups).forEach(g => { g.visible = false; });
+      setParticleMorph(0);
+
+      const boringWrap = document.getElementById('act-0-boring');
+      boringWrap.style.display = 'flex';
+      requestAnimationFrame(() => {
+        boringWrap.style.opacity = '1';
+        boringWrap.style.pointerEvents = 'auto';
+      });
+      currentSlide = 0;
+      hasBrokenThrough = false;
+      updateChapterNav();
+    }
+
+    function goToSlide(index, skipSound = false) {
+      if (index < 0) index = 0;
+      if (index > 10) index = 10;
+
+      if (index === 0) {
+        resetToActZero();
+        return;
+      }
+
+      if (!hasBrokenThrough && index > 0) {
+        triggerBreakthrough();
+        return;
+      }
+
+      currentSlide = index;
+      autoplayTimer = 0;
+
+      document.querySelectorAll('.scene-slide').forEach(el => el.classList.remove('active'));
+      const activeEl = document.getElementById(`slide-${index}`);
+      if (activeEl) activeEl.classList.add('active');
+
+      const cfg = SCENE_CAMERAS[index];
+      camTargetPos.set(...cfg.pos);
+      camTargetLook.set(...cfg.look);
+
+      Object.entries(heroGroups).forEach(([name, grp]) => {
+        grp.visible = (name === cfg.group);
+      });
+
+      const accent = index === 8 ? LIUNIAN_DATA[selectedLiunianIdx].color : null;
+      setParticleMorph(index, accent);
+
+      if (index === 2) selectPillar(selectedPillarIdx, true);
+      if (index === 7) selectDayun(selectedDayunIdx, true);
+      if (index === 8) selectLiunian(selectedLiunianIdx, true);
+
+      const counter = document.getElementById('scene-counter');
+      if (counter) counter.textContent = `${String(index).padStart(2, '0')} / 10`;
+      updateChapterNav();
+
+      if (!skipSound) audioEngine.playSceneTransition(index);
+    }
+
+    function nextSlide() {
+      if (!hasBrokenThrough) {
+        triggerBreakthrough();
+      } else if (currentSlide < 10) {
+        goToSlide(currentSlide + 1);
+      } else if (autoplayActive) {
+        stopAutoplay();
+        showToast('全卷演示已毕 · 可重温开篇或自由查阅');
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        goToSlide(currentSlide - 1);
+      } else if (currentSlide === 1) {
+        resetToActZero();
+      }
+    }
+
+    /**
+     * =========================================================================
+     * 5. INTERACTIVE UI COMPONENT BUILDERS
+     * =========================================================================
+     */
+    function buildChapterNav() {
+      const container = document.getElementById('chapter-ticks');
+      container.innerHTML = CHAPTERS.map(ch => `
+        <button data-ch="${ch.id}" type="button"
+          class="chapter-tick flex flex-col items-center px-1.5 py-1 rounded transition cursor-pointer shrink-0 group">
+          <span class="tick-dot w-1.5 h-1.5 rounded-full bg-paper/25 mb-1 transition-all"></span>
+          <span class="tick-label font-serif text-[11px] tracking-wider text-paper/45 group-hover:text-paper transition">${ch.short}</span>
+        </button>
+      `).join('');
+
+      container.querySelectorAll('.chapter-tick').forEach(btn => {
+        btn.addEventListener('click', () => goToSlide(parseInt(btn.dataset.ch, 10)));
+      });
+    }
+
+    function updateChapterNav() {
+      const pct = (currentSlide / 10) * 100;
+      const bar = document.getElementById('chapter-progress-line');
+      if (bar) bar.style.width = `${pct}%`;
+
+      document.querySelectorAll('.chapter-tick').forEach(btn => {
+        const id = parseInt(btn.dataset.ch, 10);
+        const dot = btn.querySelector('.tick-dot');
+        const label = btn.querySelector('.tick-label');
+        const active = id === currentSlide;
+        dot.className = `tick-dot rounded-full mb-1 transition-all ${active ? 'w-2.5 h-2.5 bg-ochre shadow-[0_0_10px_#C89B54]' : (id < currentSlide ? 'w-1.5 h-1.5 bg-cyanwater/70' : 'w-1.5 h-1.5 bg-paper/25')}`;
+        label.className = `tick-label font-serif text-[11px] tracking-wider transition ${active ? 'text-ochre font-semibold' : 'text-paper/45 group-hover:text-paper'}`;
+      });
+    }
+
+    // Act 2: Pillars + Beijing vs True Solar Time Interactive Toggle
+    function buildPillarsUI() {
+      const grid = document.getElementById('pillars-grid');
+      grid.innerHTML = PILLARS_DATA.map((p, i) => `
+        <button type="button" data-pillar="${i}" class="pillar-card arch-card rounded-lg p-3.5 text-left flex flex-col justify-between">
+          <div class="flex items-center justify-between w-full">
+            <span class="font-mono text-[11px] text-paper/55">${p.name}</span>
+            <span class="text-[11px] px-1.5 py-0.5 rounded border border-paper/15 text-ochre">${p.shishen}</span>
+          </div>
+          <div class="my-2.5 flex items-baseline justify-center gap-3 font-serif">
+            <span class="text-3xl sm:text-4xl font-semibold" style="color:${p.color}">${p.gan}</span>
+            <span class="text-3xl sm:text-4xl font-semibold text-paper">${p.zhi}</span>
+          </div>
+          <div class="text-[11px] text-paper/60 border-t border-paper/10 pt-2 flex justify-between">
+            <span class="truncate pr-1">藏: ${p.canggan.split('、')[0]}</span>
+            <span class="font-mono text-cyanwater shrink-0">${p.changsheng}</span>
+          </div>
+        </button>
+      `).join('');
+
+      grid.querySelectorAll('.pillar-card').forEach(btn => {
+        btn.addEventListener('click', () => selectPillar(parseInt(btn.dataset.pillar, 10)));
+      });
+      selectPillar(2, true);
+
+      const btnBj = document.getElementById('btn-time-bj');
+      const btnSolar = document.getElementById('btn-time-solar');
+      const renderSolarGrid = (mode, silent = false) => {
+        solarMode = mode;
+        if (!silent) audioEngine.playClick(mode === 'solar' ? 4 : 1);
+        btnBj.className = `px-2.5 py-1 rounded transition ${mode === 'beijing' ? 'bg-ochre/25 text-ochre' : 'text-paper/60 hover:text-paper'}`;
+        btnSolar.className = `px-2.5 py-1 rounded transition ${mode === 'solar' ? 'bg-cyanwater/25 text-cyanwater' : 'text-paper/60 hover:text-paper'}`;
+        meridianTargetRot = (mode === 'solar') ? 0.55 : -0.35;
+
+        const isSolar = mode === 'solar';
+        document.getElementById('solar-compare-grid').innerHTML = `
+          <div class="rounded p-2.5 border ${!isSolar ? 'bg-ochre/12 border-ochre/50' : 'bg-ink/65 border-paper/10'}">
+            <div class="text-[10px] ${!isSolar ? 'text-ochre' : 'text-paper/50'}">标准北京时间</div>
+            <div class="font-mono text-sm text-paper mt-0.5">20:21</div>
+            <div class="text-[10px] text-paper/45">东经 120°00′</div>
+          </div>
+          <div class="bg-ink/65 border border-paper/10 rounded p-2.5">
+            <div class="text-[10px] text-paper/50">开远城区经度</div>
+            <div class="font-mono text-sm text-ochre mt-0.5">103°15′E</div>
+            <div class="text-[10px] text-paper/45">云南开远</div>
+          </div>
+          <div class="bg-ink/65 border border-paper/10 rounded p-2.5">
+            <div class="text-[10px] text-paper/50">天文修正值</div>
+            <div class="font-mono text-xs sm:text-sm text-paper mt-0.5">-67m / +3m32s</div>
+            <div class="text-[10px] text-paper/45">经度差 + 均时差</div>
+          </div>
+          <div class="rounded p-2.5 border ${isSolar ? 'bg-cyanwater/15 border-cyanwater/55' : 'bg-ink/65 border-paper/10'}">
+            <div class="text-[10px] ${isSolar ? 'text-cyanwater' : 'text-paper/50'}">校正真太阳时</div>
+            <div class="font-mono text-sm font-semibold ${isSolar ? 'text-cyanwater' : 'text-paper'} mt-0.5">≈ 19:18</div>
+            <div class="text-[10px] text-paper/70">仍属戌时（壬戌）</div>
+          </div>
+        `;
+      };
+      btnBj.addEventListener('click', () => renderSolarGrid('beijing'));
+      btnSolar.addEventListener('click', () => renderSolarGrid('solar'));
+      renderSolarGrid('solar', true);
+    }
+
+    function selectPillar(idx, silent = false) {
+      selectedPillarIdx = idx;
+      if (!silent) audioEngine.playClick(idx);
+      const p = PILLARS_DATA[idx];
+      document.querySelectorAll('.pillar-card').forEach((el, i) => el.classList.toggle('active', i === idx));
+        document.getElementById('pillar-detail-box').innerHTML = `
+        <div>
+          <div class="flex items-center justify-between border-b border-paper/10 pb-2 mb-2.5">
+            <span class="font-serif text-base text-paper">${p.name} · <span style="color:${p.color}">${p.gan}${p.zhi}</span>（${p.shishen}）</span>
+            <span class="font-mono text-xs text-cyanwater whitespace-nowrap">十二长生：${p.changsheng}</span>
+          </div>
+          <div class="text-xs text-paper/60 mb-2">地支藏干：<span class="text-paper/90">${p.canggan}</span></div>
+          <p class="text-xs sm:text-sm text-paper/80 leading-relaxed">${p.desc}</p>
+        </div>
+        <div class="text-[11px] font-mono text-ochre/75 mt-3">3D 视角已聚焦【${p.name} · ${p.gan}${p.zhi}】星柱</div>
+      `;
+      applyAntiOrphanTypography(document.getElementById('pillar-detail-box'));
+
+      if (currentSlide === 2) {
+        const targetX = (idx - 1.5) * 4.5;
+        camTargetPos.set(targetX * 0.65, 2.2, 18.5);
+        camTargetLook.set(targetX * 0.45, 0, -4);
+      }
+      pillarMeshes.forEach((m, i) => {
+        m.userData.core.material.emissiveIntensity = (i === idx) ? 0.64 : 0.14;
+      });
+    }
+
+    // Act 3: Yongshen Tabs
+    function buildYongshenTabs() {
+      const renderTab = (key, silent = false) => {
+        if (!silent) audioEngine.playClick(key === 'geju' ? 1 : key === 'fuyi' ? 3 : 5);
+        const data = YONGSHEN_TABS[key];
+        document.querySelectorAll('.yongshen-tab').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === key));
+        document.getElementById('yongshen-content').innerHTML = `
+          <div>
+            <div class="font-serif text-sm ${data.color} mb-2">${data.badge}</div>
+            <p class="text-xs sm:text-sm text-paper/85 leading-relaxed">${data.body}</p>
+          </div>
+          <div class="text-xs font-serif text-ochre/90 pt-3 border-t border-paper/10 mt-3">断语：${data.note}</div>
+        `;
+        applyAntiOrphanTypography(document.getElementById('yongshen-content'));
+      };
+      document.querySelectorAll('.yongshen-tab').forEach(btn => {
+        btn.addEventListener('click', () => renderTab(btn.dataset.tab));
+      });
+      renderTab('geju', true);
+    }
+
+    // Act 4: Four Joints
+    function buildJointsUI() {
+      const sel = document.getElementById('joints-selector');
+      sel.innerHTML = JOINTS_DATA.map((j, i) => `
+        <button type="button" data-joint="${i}" class="joint-btn arch-card rounded-lg p-3.5 text-left">
+          <div class="font-mono text-[10px] text-paper/45">关节 0${i + 1}</div>
+          <div class="font-serif text-base text-paper mt-1">${j.title}</div>
+          <div class="text-[11px] mt-1" style="color:${j.color}">${j.method}</div>
+        </button>
+      `).join('');
+
+      const selectJoint = (idx, silent = false) => {
+        if (!silent) audioEngine.playClick(idx + 2);
+        const j = JOINTS_DATA[idx];
+        sel.querySelectorAll('.joint-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+        document.getElementById('joint-detail-panel').innerHTML = `
+          <div class="space-y-3">
+            <div class="flex items-center justify-between border-b border-paper/10 pb-2.5">
+              <div>
+                <span class="font-serif text-lg text-paper">${j.title}</span>
+                <span class="text-xs text-paper/55 ml-2">${j.subtitle}</span>
+              </div>
+              <span class="font-serif text-xs px-2.5 py-1 rounded border whitespace-nowrap" style="color:${j.color}; border-color:${j.color}66; background:${j.color}18">${j.method}</span>
+            </div>
+            <div>
+              <div class="font-mono text-[11px] text-ochre mb-1">现实疏导动作</div>
+              <p class="text-sm text-paper/90 leading-relaxed">${j.action}</p>
+            </div>
+            <div class="p-3 rounded bg-ink/65 border border-paper/10">
+              <div class="font-mono text-[10px] text-cyanwater mb-1">日常观察检验</div>
+              <p class="text-xs text-paper/75 leading-relaxed">${j.check}</p>
+            </div>
+          </div>
+          <div class="text-[11px] text-paper/50 pt-2 anti-orphan">若已有实在收获，这条疏导之路便已在脚下。</div>
+        `;
+        applyAntiOrphanTypography(document.getElementById('joint-detail-panel'));
+      };
+      sel.querySelectorAll('.joint-btn').forEach(b => b.addEventListener('click', () => selectJoint(parseInt(b.dataset.joint, 10))));
+      selectJoint(0, true);
+    }
+
+    // Act 5: Real-Time Sliders -> 3D Gyroscope Tilt & Balance + Learning Loop
+    function buildAct5UI() {
+      const wrap = document.getElementById('trait-sliders-wrap');
+      let lastTickSound = 0;
+
+      const updateGyroFromSliders = () => {
+        const avg = TRAIT_SLIDERS.reduce((sum, s) => sum + s.val, 0) / TRAIT_SLIDERS.length; // 0..100
+        // 0..45 balanced (near 0 tilt), >50 progressively tilts armillary gyroscope
+        gyroTargetTilt = ((avg - 35) / 65) * 0.72;
+        const isBalanced = avg <= 55;
+        gRing1.material.color.set(isBalanced ? 0xC89B54 : 0xC44536);
+        gRing3.material.color.set(isBalanced ? 0x49A6A8 : 0xC44536);
+
+        const badge = document.getElementById('gyro-status-badge');
+        if (badge) {
+          badge.textContent = isBalanced ? '浑天仪：中和稳态' : '浑天仪：偏执倾斜';
+          badge.className = `shrink-0 font-mono text-[10px] px-2 py-1 rounded border ${isBalanced ? 'border-cyanwater/50 bg-cyanwater/10 text-cyanwater' : 'border-vermilion/60 bg-vermilion/15 text-vermilion'}`;
+        }
+      };
+
+      wrap.innerHTML = TRAIT_SLIDERS.map((s, i) => `
+        <div class="arch-card rounded-lg p-3 space-y-1.5">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-serif text-sm text-ochre whitespace-nowrap">${s.good}</span>
+            <span class="font-mono text-[10px] text-paper/40 tracking-widest">尺度校准</span>
+            <span class="font-serif text-sm text-vermilion whitespace-nowrap">${s.bad}</span>
+          </div>
+          <div class="text-[11.5px] text-cyanwater/90 text-center anti-orphan">${s.scale}</div>
+          <input type="range" min="0" max="100" value="${s.val}" data-sidx="${i}" class="cosmic-slider no-swipe" aria-label="${s.good}与${s.bad}校准" />
+          <p id="slider-desc-${i}" class="text-[11.5px] text-paper/72 leading-relaxed">${s.goodText}</p>
+        </div>
+      `).join('');
+      applyAntiOrphanTypography(wrap);
+
+      wrap.querySelectorAll('input[type="range"]').forEach(inp => {
+        inp.addEventListener('input', (e) => {
+          const idx = parseInt(e.target.dataset.sidx, 10);
+          const v = parseInt(e.target.value, 10);
+          TRAIT_SLIDERS[idx].val = v;
+          const descEl = document.getElementById(`slider-desc-${idx}`);
+          if (descEl) {
+            descEl.dataset.antiOrphanDone = '0';
+            descEl.textContent = v > 55 ? TRAIT_SLIDERS[idx].badText : TRAIT_SLIDERS[idx].goodText;
+            descEl.className = `text-[11.5px] leading-relaxed ${v > 55 ? 'text-vermilion/90' : 'text-paper/75'}`;
+            applyAntiOrphanTypography(descEl.parentElement);
+          }
+          updateGyroFromSliders();
+          const now = performance.now();
+          if (now - lastTickSound > 160) {
+            lastTickSound = now;
+            audioEngine.playClick(Math.floor(v / 18));
+          }
+        });
+      });
+      updateGyroFromSliders();
+
+      // Learning Loop
+      const loopWrap = document.getElementById('learning-loop');
+      loopWrap.innerHTML = LOOP_STEPS.map((s, i) => `
+        <button type="button" data-step="${i}" class="loop-step-btn arch-card rounded-lg p-3 text-center">
+          <div class="font-serif text-xl text-cyanwater">${s.key}</div>
+          <div class="text-[11px] text-paper/75 mt-0.5">${s.title}</div>
+        </button>
+      `).join('');
+
+      const selectStep = (idx, silent = false) => {
+        if (!silent) audioEngine.playClick(idx + 2);
+        loopWrap.querySelectorAll('.loop-step-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+        const s = LOOP_STEPS[idx];
+        document.getElementById('learning-loop-detail').innerHTML = `
+          <div class="font-serif text-sm text-cyanwater mb-1">第 ${idx + 1} 步 · ${s.key}（${s.title}）</div>
+          <p class="text-xs text-paper/85 leading-relaxed">${s.desc}</p>
+        `;
+        applyAntiOrphanTypography(document.getElementById('learning-loop-detail'));
+      };
+      loopWrap.querySelectorAll('.loop-step-btn').forEach(b => b.addEventListener('click', () => selectStep(parseInt(b.dataset.step, 10))));
+      selectStep(1, true);
+    }
+
+    // Act 6: Interactive Tabs + 3D Tri-Prism Pulse
+    function selectAct6Tab(idx, silent = false) {
+      if (!silent) audioEngine.playClick(idx * 2);
+      prismBoost[idx] = 1.65;
+      document.querySelectorAll('.a6-tab').forEach((b, i) => b.classList.toggle('active', i === idx));
+      const d = ACT6_DATA[idx];
+      document.getElementById('act6-detail-stage').innerHTML = `
+        <div class="space-y-4">
+          <div>
+            <div class="font-mono text-[11px] text-ochre tracking-widest">${d.eyebrow}</div>
+            <h3 class="font-serif text-xl sm:text-2xl text-paper mt-1">${d.title}</h3>
+            <p class="text-xs sm:text-sm text-paper/75 mt-1.5 leading-relaxed">${d.lead}</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            ${d.items.map(it => `
+              <div class="p-4 rounded-lg bg-ink/65 border border-paper/10">
+                <div class="font-serif text-sm font-medium mb-1.5" style="color:${it.col}">${it.tag}</div>
+                <p class="text-xs text-paper/80 leading-relaxed">${it.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      applyAntiOrphanTypography(document.getElementById('act6-detail-stage'));
+    }
+
+    function buildAct6UI() {
+      document.querySelectorAll('.a6-tab').forEach(b => {
+        b.addEventListener('click', () => selectAct6Tab(parseInt(b.dataset.a6, 10)));
+      });
+      selectAct6Tab(0, true);
+    }
+
+    // Act 7: Dayun Timeline
+    function buildDayunUI() {
+      const sel = document.getElementById('dayun-selector');
+      sel.innerHTML = DAYUN_DATA.map((d, i) => `
+        <button type="button" data-dy="${i}" class="dayun-btn arch-card rounded p-2 text-center">
+          <div class="font-serif text-base sm:text-lg text-paper">${d.gz}</div>
+          <div class="font-mono text-[10px] text-paper/55">${d.age}</div>
+          <div class="h-0.5 w-6 mx-auto mt-1 rounded-full" style="background:${d.color}"></div>
+        </button>
+      `).join('');
+      sel.querySelectorAll('.dayun-btn').forEach(b => b.addEventListener('click', () => selectDayun(parseInt(b.dataset.dy, 10))));
+      selectDayun(0, true);
+    }
+
+    function selectDayun(idx, silent = false) {
+      selectedDayunIdx = idx;
+      if (!silent) audioEngine.playClick(idx);
+      const d = DAYUN_DATA[idx];
+      document.querySelectorAll('.dayun-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+      document.getElementById('dayun-detail').innerHTML = `
+        <div class="md:col-span-4 border-b md:border-b-0 md:border-r border-paper/10 pb-3 md:pb-0 md:pr-4">
+          <div class="flex items-center gap-2.5">
+            <span class="font-serif text-3xl font-semibold" style="color:${d.color}">${d.gz}</span>
+            <div>
+              <div class="font-mono text-xs text-paper/85">${d.years}</div>
+              <div class="font-mono text-[11px] text-paper/55">约 ${d.age} · ${d.elem}之运</div>
+            </div>
+          </div>
+          <div class="mt-2 inline-block text-[11px] px-2 py-0.5 rounded border" style="color:${d.color}; border-color:${d.color}66; background:${d.color}18">${d.tag}</div>
+        </div>
+        <div class="md:col-span-8 space-y-1.5">
+          <div class="font-serif text-base text-ochre">${d.theme}</div>
+          <p class="text-xs sm:text-sm text-paper/80 leading-relaxed">${d.detail}</p>
+        </div>
+      `;
+      applyAntiOrphanTypography(document.getElementById('dayun-detail'));
+
+      if (currentSlide === 7 && dayunPillars3D[idx]) {
+        const p = dayunPillars3D[idx];
+        camTargetPos.set(p.x * 0.72, 4.6, 17.5);
+        camTargetLook.set(p.x * 0.85, 0.4, p.z);
+      }
+      dayunPillars3D.forEach((p, i) => {
+        p.mesh.material.emissiveIntensity = (i === idx) ? 0.95 : 0.22;
+        p.ring.scale.setScalar(i === idx ? 1.38 : 0.9);
+      });
+    }
+
+    // Act 8: Liunian Orbital Nodes
+    function buildLiunianUI() {
+      const sel = document.getElementById('liunian-selector');
+      sel.innerHTML = LIUNIAN_DATA.map((item, i) => `
+        <button type="button" data-ln="${i}" class="liunian-btn arch-card rounded p-2 text-center">
+          <div class="font-mono text-xs text-paper/75">${item.year}</div>
+          <div class="font-serif text-base text-paper mt-0.5">${item.gz}</div>
+          <div class="text-[10px] text-paper/45">${item.age.replace('满', '')}</div>
+        </button>
+      `).join('');
+      sel.querySelectorAll('.liunian-btn').forEach(b => b.addEventListener('click', () => selectLiunian(parseInt(b.dataset.ln, 10))));
+      selectLiunian(0, true);
+    }
+
+    function selectLiunian(idx, silent = false) {
+      selectedLiunianIdx = idx;
+      if (!silent) audioEngine.playClick(idx + 1);
+      const item = LIUNIAN_DATA[idx];
+      document.querySelectorAll('.liunian-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+
+      document.getElementById('liunian-detail').innerHTML = `
+        <div class="md:col-span-4 border-b md:border-b-0 md:border-r border-paper/10 pb-3 md:pb-0 md:pr-4">
+          <div class="font-mono text-xs text-paper/55">${item.year} 年 · ${item.age}</div>
+          <div class="font-serif text-3xl mt-0.5" style="color:${item.color}">${item.gz}</div>
+          <div class="text-xs text-paper/85 mt-1.5 font-serif">${item.keyword}</div>
+        </div>
+        <div class="md:col-span-8 space-y-2">
+          <p class="text-xs text-paper/65 leading-relaxed"><span class="text-ochre font-mono mr-1.5">[岁运结构]</span>${item.structure}</p>
+          <p class="text-xs sm:text-sm text-paper/90 leading-relaxed"><span class="text-cyanwater font-mono mr-1.5">[现实行策]</span>${item.advice}</p>
+        </div>
+      `;
+      applyAntiOrphanTypography(document.getElementById('liunian-detail'));
+
+      if (currentSlide === 8) {
+        setParticleMorph(8, item.color);
+        const node = liunianNodes3D[idx];
+        camTargetPos.set(node.x * 0.42, 4.8, 19.5);
+        camTargetLook.set(node.x * 0.55, 1.2, node.z);
+      }
+      liunianNodes3D.forEach((n, i) => {
+        n.beam.material.opacity = (i === idx) ? 0.28 : 0.0;
+        n.crystal.material.emissiveIntensity = (i === idx) ? 1.15 : 0.3;
+      });
+    }
+
+    // Act 9: Mode Switcher (Stages vs 90-Day Sandbox)
+    function buildAct9UI() {
+      const btnStages = document.getElementById('btn-a9-stages');
+      const btnNinety = document.getElementById('btn-a9-ninety');
+      const panelStages = document.getElementById('a9-panel-stages');
+      const panelNinety = document.getElementById('a9-panel-ninety');
+
+      const setMode = (mode, silent = false) => {
+        if (!silent) audioEngine.playClick(mode === 'stages' ? 1 : 4);
+        const isStages = mode === 'stages';
+        panelStages.classList.toggle('hidden', !isStages);
+        panelStages.classList.toggle('grid', isStages);
+        panelNinety.classList.toggle('hidden', isStages);
+        panelNinety.classList.toggle('grid', !isStages);
+        btnStages.className = `px-3.5 py-1.5 rounded transition ${isStages ? 'bg-ochre/20 text-ochre' : 'text-paper/65 hover:text-paper'}`;
+        btnNinety.className = `px-3.5 py-1.5 rounded transition ${!isStages ? 'bg-cyanwater/20 text-cyanwater' : 'text-paper/65 hover:text-paper'}`;
+      };
+      btnStages.addEventListener('click', () => setMode('stages'));
+      btnNinety.addEventListener('click', () => setMode('ninety'));
+
+      const sel = document.getElementById('ninety-selector');
+      sel.innerHTML = NINETY_PHASES.map((p, i) => `
+        <button type="button" data-n90="${i}" class="n90-btn arch-card rounded p-2.5 text-center">
+          <div class="font-serif text-sm text-paper">${p.title}</div>
+          <div class="font-mono text-[10px] text-paper/55 mt-0.5">${p.range}</div>
+        </button>
+      `).join('');
+
+      const selectPhase = (idx, silent = false) => {
+        if (!silent) audioEngine.playClick(idx + 2);
+        const p = NINETY_PHASES[idx];
+        sel.querySelectorAll('.n90-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+        document.getElementById('ninety-detail').innerHTML = `
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-serif text-base" style="color:${p.color}">阶段 0${idx + 1} · ${p.title}</span>
+            <span class="font-mono text-[11px] text-paper/60 whitespace-nowrap">${p.range}（${p.weeks}）</span>
+          </div>
+          <p class="text-xs sm:text-sm text-paper/85 leading-relaxed">${p.task}</p>
+        `;
+        applyAntiOrphanTypography(document.getElementById('ninety-detail'));
+        ninetyRing.material.color.set(p.color);
+      };
+      sel.querySelectorAll('.n90-btn').forEach(b => b.addEventListener('click', () => selectPhase(parseInt(b.dataset.n90, 10))));
+      selectPhase(0, true);
+    }
+
+    /**
+     * =========================================================================
+     * 6. CONTROLS: AUTOPLAY, FULLSCREEN, KEYBOARD, WHEEL, TOUCH
+     * =========================================================================
+     */
+    function toggleAutoplay() {
+      autoplayActive = !autoplayActive;
+      autoplayTimer = 0;
+      const dot = document.getElementById('autoplay-dot');
+      const btn = document.getElementById('btn-autoplay');
+      const bar = document.getElementById('autoplay-progress-bar');
+
+      if (autoplayActive) {
+        dot.className = 'w-1.5 h-1.5 rounded-full bg-ochre animate-pulse';
+        btn.classList.add('border-ochre/70', 'text-ochre');
+        showToast('自动演示已开启 · 按 A 暂停');
+      } else {
+        dot.className = 'w-1.5 h-1.5 rounded-full bg-paper/40';
+        btn.classList.remove('border-ochre/70', 'text-ochre');
+        bar.style.width = '0%';
+        showToast('已暂停自动演示');
+      }
+    }
+
+    function stopAutoplay() {
+      if (!autoplayActive) return;
+      autoplayActive = false;
+      autoplayTimer = 0;
+      document.getElementById('autoplay-dot').className = 'w-1.5 h-1.5 rounded-full bg-paper/40';
+      document.getElementById('btn-autoplay').classList.remove('border-ochre/70', 'text-ochre');
+      document.getElementById('autoplay-progress-bar').style.width = '0%';
+    }
+
+    async function toggleFullscreen() {
+      try {
+        const fsElement = document.fullscreenElement || document.webkitFullscreenElement;
+        if (!fsElement) {
+          if (document.fullscreenEnabled === false) {
+            showToast('当前预览环境限制了原生全屏，可在独立窗口打开体验');
+            return;
+          }
+          const req = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen;
+          if (!req) {
+            showToast('当前浏览器不支持原生全屏切换');
+            return;
+          }
+          await Promise.resolve(req.call(document.documentElement));
+        } else {
+          const exit = document.exitFullscreen || document.webkitExitFullscreen;
+          if (exit) {
+            await Promise.resolve(exit.call(document));
+          }
+        }
+      } catch (e) {
+        showToast('当前预览环境限制了原生全屏，可在独立窗口打开体验');
+      }
+    }
+
+    document.getElementById('btn-breakthrough').addEventListener('click', triggerBreakthrough);
+    document.getElementById('btn-prev').addEventListener('click', () => { stopAutoplay(); prevSlide(); });
+    document.getElementById('btn-next').addEventListener('click', () => { stopAutoplay(); nextSlide(); });
+    document.getElementById('btn-mobile-prev').addEventListener('click', () => { stopAutoplay(); prevSlide(); });
+    document.getElementById('btn-mobile-next').addEventListener('click', () => { stopAutoplay(); nextSlide(); });
+    document.getElementById('btn-autoplay').addEventListener('click', toggleAutoplay);
+    document.getElementById('btn-audio').addEventListener('click', () => audioEngine.toggle());
+    document.getElementById('btn-fullscreen').addEventListener('click', toggleFullscreen);
+    document.getElementById('btn-restart').addEventListener('click', resetToActZero);
+
+    // First-gesture audio unlock for iOS / Android browsers
+    ['touchstart', 'pointerdown', 'click'].forEach((evtName) => {
+      window.addEventListener(evtName, () => audioEngine.unlock(), { passive: true });
+    });
+
+    window.addEventListener('keydown', (e) => {
+      // Allow native arrow-key adjustment when focused on a range slider
+      if (e.target && e.target.tagName === 'INPUT') return;
+
+      const key = e.key;
+      if (key === 'ArrowRight' || key === 'PageDown' || key === ' ') {
+        e.preventDefault();
+        stopAutoplay();
+        nextSlide();
+      } else if (key === 'ArrowLeft' || key === 'PageUp') {
+        e.preventDefault();
+        stopAutoplay();
+        prevSlide();
+      } else if (key === 'a' || key === 'A') {
+        if (hasBrokenThrough) toggleAutoplay();
+      } else if (key === 'm' || key === 'M') {
+        audioEngine.toggle();
+      } else if (key === 'f' || key === 'F') {
+        toggleFullscreen();
+      }
+    });
+
+    // Native-Grade Mobile Horizontal Swipe Gesture Controller
+    const swipeState = {
+      active: false,
+      ignored: false,
+      startX: 0,
+      startY: 0,
+      startTime: 0,
+      lockedAxis: null, // 'x' | 'y' | null
+      hasSwipedOnce: false
+    };
+    const swipeEdgeLeft = document.getElementById('swipe-edge-left');
+    const swipeEdgeRight = document.getElementById('swipe-edge-right');
+
+    function resetSwipeVisuals() {
+      if (swipeEdgeLeft) {
+        swipeEdgeLeft.style.opacity = '0';
+        swipeEdgeLeft.style.transform = 'translate(-28px, -50%)';
+      }
+      if (swipeEdgeRight) {
+        swipeEdgeRight.style.opacity = '0';
+        swipeEdgeRight.style.transform = 'translate(28px, -50%)';
+      }
+    }
+
+    function isSwipeBlockedTarget(target) {
+      if (!target) return false;
+      if (target.closest('input[type="range"], .no-swipe, .h-scroll')) return true;
+      // Avoid interfering with any inner horizontally scrollable element
+      let el = target;
+      while (el && el !== document.body) {
+        const style = window.getComputedStyle(el);
+        if ((style.overflowX === 'auto' || style.overflowX === 'scroll') && el.scrollWidth > el.clientWidth + 4) {
+          return true;
+        }
+        el = el.parentElement;
+      }
+      return false;
+    }
+
+    window.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) {
+        swipeState.active = false;
+        resetSwipeVisuals();
+        return;
+      }
+      swipeState.ignored = isSwipeBlockedTarget(e.target);
+      if (swipeState.ignored) {
+        swipeState.active = false;
+        return;
+      }
+      swipeState.active = true;
+      swipeState.lockedAxis = null;
+      swipeState.startX = e.touches[0].clientX;
+      swipeState.startY = e.touches[0].clientY;
+      swipeState.startTime = performance.now();
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!swipeState.active || swipeState.ignored || e.touches.length !== 1) return;
+      const dx = e.touches[0].clientX - swipeState.startX;
+      const dy = e.touches[0].clientY - swipeState.startY;
+      const absX = Math.abs(dx);
+      const absY = Math.abs(dy);
+
+      if (!swipeState.lockedAxis && (absX > 10 || absY > 10)) {
+        swipeState.lockedAxis = (absX > absY * 1.25) ? 'x' : 'y';
+      }
+
+      if (swipeState.lockedAxis !== 'x') return;
+
+      // Real-time refined golden arc feedback when horizontal drag > 14px
+      if (absX > 14) {
+        const progress = Math.min(1, (absX - 14) / 76);
+        const shift = progress * 24;
+        if (dx < 0 && currentSlide < 10) {
+          // Swiping left -> next slide (glow on right edge)
+          swipeEdgeRight.style.opacity = String(0.25 + progress * 0.72);
+          swipeEdgeRight.style.transform = `translate(${28 - shift}px, -50%)`;
+          swipeEdgeLeft.style.opacity = '0';
+        } else if (dx > 0 && hasBrokenThrough && currentSlide > 0) {
+          // Swiping right -> previous slide (glow on left edge)
+          swipeEdgeLeft.style.opacity = String(0.25 + progress * 0.72);
+          swipeEdgeLeft.style.transform = `translate(${-28 + shift}px, -50%)`;
+          swipeEdgeRight.style.opacity = '0';
+        }
+      } else {
+        resetSwipeVisuals();
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchend', (e) => {
+      if (!swipeState.active || swipeState.ignored || e.changedTouches.length !== 1) {
+        resetSwipeVisuals();
+        return;
+      }
+      const dx = e.changedTouches[0].clientX - swipeState.startX;
+      const dy = e.changedTouches[0].clientY - swipeState.startY;
+      const absX = Math.abs(dx);
+      const absY = Math.abs(dy);
+      const elapsed = performance.now() - swipeState.startTime;
+
+      swipeState.active = false;
+      resetSwipeVisuals();
+
+      const isHorizontalIntent = absX > absY * 1.25;
+      const passedDistance = absX > 48;
+      const passedQuickFlick = absX > 26 && elapsed < 260;
+
+      if (isHorizontalIntent && (passedDistance || passedQuickFlick)) {
+        stopAutoplay();
+        if (dx < 0) {
+          // Left swipe works on Act 0 (triggers 3D breakthrough!) and slides 1..9
+          nextSlide();
+        } else if (hasBrokenThrough) {
+          prevSlide();
+        }
+        if (!swipeState.hasSwipedOnce) {
+          swipeState.hasSwipedOnce = true;
+          const hint = document.getElementById('mobile-swipe-hint');
+          if (hint) hint.classList.add('dismissed');
+        }
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchcancel', () => {
+      swipeState.active = false;
+      resetSwipeVisuals();
+    }, { passive: true });
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.tx = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouse.ty = (e.clientY / window.innerHeight - 0.5) * 2;
+    });
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    /**
+     * =========================================================================
+     * 7. ANIMATION LOOP (60fps Smooth Camera + 6500 Particles + Cosmic Starfield)
+     * =========================================================================
+     */
+    let prevTime = performance.now();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const now = performance.now();
+      const dt = Math.min((now - prevTime) / 1000, 0.05);
+      prevTime = now;
+      const t = now * 0.001;
+
+      mouse.x += (mouse.tx - mouse.x) * 0.05;
+      mouse.y += (mouse.ty - mouse.y) * 0.05;
+
+      // Gentle starry sky cosmic rotation
+      starfield.rotation.y = t * 0.018;
+      starfield.rotation.x = Math.sin(t * 0.012) * 0.05;
+
+      if (autoplayActive && hasBrokenThrough) {
+        autoplayTimer += dt * 1000;
+        const pct = Math.min(100, (autoplayTimer / AUTOPLAY_DURATION) * 100);
+        document.getElementById('autoplay-progress-bar').style.width = `${pct}%`;
+        if (autoplayTimer >= AUTOPLAY_DURATION) nextSlide();
+      }
+
+      const lerpAlpha = 1 - Math.exp(-3.2 * dt);
+      const breatheX = Math.sin(t * 0.42) * 0.7 + mouse.x * 1.85;
+      const breatheY = Math.cos(t * 0.35) * 0.45 - mouse.y * 1.25;
+      const autoOrbit = autoplayActive ? Math.sin(t * 0.32) * 2.4 : 0;
+
+      camera.position.x += (camTargetPos.x + breatheX + autoOrbit - camera.position.x) * lerpAlpha;
+      camera.position.y += (camTargetPos.y + breatheY - camera.position.y) * lerpAlpha;
+      camera.position.z += (camTargetPos.z - camera.position.z) * lerpAlpha;
+
+      camCurrentLook.lerp(camTargetLook, lerpAlpha);
+      camera.lookAt(camCurrentLook);
+
+      // Update 6,500 morphing particles
+      const posArr = particleGeo.attributes.position.array;
+      const colArr = particleGeo.attributes.color.array;
+      const morphSpeed = 1 - Math.exp(-2.8 * dt);
+
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const idx = i * 3;
+        const seed = pSeeds[i];
+        const driftX = Math.sin(t * 0.65 + seed) * 0.14;
+        const driftY = Math.cos(t * 0.58 + seed * 1.3) * 0.14;
+
+        posArr[idx] += (pTargetPositions[idx] + driftX - posArr[idx]) * morphSpeed;
+        posArr[idx + 1] += (pTargetPositions[idx + 1] + driftY - posArr[idx + 1]) * morphSpeed;
+        posArr[idx + 2] += (pTargetPositions[idx + 2] - posArr[idx + 2]) * morphSpeed;
+
+        colArr[idx] += (pTargetColors[idx] - colArr[idx]) * morphSpeed;
+        colArr[idx + 1] += (pTargetColors[idx + 1] - colArr[idx + 1]) * morphSpeed;
+        colArr[idx + 2] += (pTargetColors[idx + 2] - colArr[idx + 2]) * morphSpeed;
+      }
+      particleGeo.attributes.position.needsUpdate = true;
+      particleGeo.attributes.color.needsUpdate = true;
+
+      // Animate Visible Hero Geometries
+      if (terrainGroup.visible) {
+        riverTube.material.opacity = 0.64 + Math.sin(t * 2.2) * 0.14;
+        terrainGroup.rotation.y = Math.sin(t * 0.08) * 0.04;
+      }
+
+      if (pillarsGroup.visible) {
+        meridianRing.rotation.z += (meridianTargetRot + t * 0.08 - meridianRing.rotation.z) * 0.06;
+        pillarMeshes.forEach((g, i) => {
+          g.position.y = Math.sin(t * 1.05 + i * 1.2) * 0.34;
+          g.userData.ring.rotation.z = t * (0.38 + i * 0.09) * (i % 2 === 0 ? 1 : -1);
+        });
+      }
+
+      if (wuxingGroup.visible) {
+        wxSpheres.forEach((s, i) => {
+          s.rotation.y = t * (0.34 + i * 0.08);
+          s.rotation.x = t * 0.18;
+        });
+        flowBeads.forEach(b => {
+          const u = (b.userData.offset + t * 0.15) % 1;
+          flowCurve.getPointAt(u, b.position);
+        });
+      }
+
+      if (clashGroup.visible) {
+        clashRings.forEach((r, i) => {
+          r.rotation.x = t * (0.3 + i * 0.07) * (i % 2 === 0 ? 1 : -1);
+          r.rotation.y = t * (0.42 - i * 0.05);
+        });
+      }
+
+      if (gyroGroup.visible) {
+        gyroAssembly.rotation.z += (gyroTargetTilt - gyroAssembly.rotation.z) * 0.08;
+        gRing1.rotation.x = t * 0.45;
+        gRing2.rotation.y = t * 0.68;
+        gRing3.rotation.z = t * 0.85;
+        gCore.rotation.y = -t * 0.6;
+        loopAssembly.rotation.y = t * 0.4;
+        loopAssembly.rotation.x = Math.sin(t * 0.55) * 0.35;
+      }
+
+      if (prismGroup.visible) {
+        prisms.forEach((p, i) => {
+          prismBoost[i] *= 0.94;
+          p.rotation.y += (0.007 + prismBoost[i] * 0.06);
+          p.rotation.x += 0.004;
+          p.position.y = 1.5 + Math.sin(t * 1.1 + i * 2) * 0.45 + prismBoost[i] * 0.85;
+        });
+      }
+
+      if (dayunGroup.visible) {
+        dayunPillars3D.forEach((p, i) => {
+          p.ring.rotation.z = t * 0.75;
+          p.ring.position.y = -3.5 + p.baseH + 0.45 + Math.sin(t * 1.9 + i) * 0.18;
+        });
+      }
+
+      if (liunianGroup.visible) {
+        liunianNodes3D.forEach((n, i) => {
+          const targetY = (i === selectedLiunianIdx) ? 2.4 : 0.4;
+          n.crystal.position.y += (targetY - n.crystal.position.y) * 0.08;
+          n.crystal.rotation.y = t * (i === selectedLiunianIdx ? 1.35 : 0.42);
+          n.crystal.rotation.x = Math.sin(t + i) * 0.25;
+        });
+      }
+
+      if (stepsGroup.visible) {
+        ninetyRing.rotation.z = -t * 0.26;
+        ninetyRing.rotation.y = Math.sin(t * 0.48) * 0.3;
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    window.onload = function () {
+      buildChapterNav();
+      buildPillarsUI();
+      buildYongshenTabs();
+      buildJointsUI();
+      buildAct5UI();
+      buildAct6UI();
+      buildDayunUI();
+      buildLiunianUI();
+      buildAct9UI();
+      applyAntiOrphanTypography(document);
+      setParticleMorph(0);
+      animate();
+    };
+  </script>
+</body>
+</html>
