@@ -1,0 +1,3345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>周易决策学 · 第一章：易学的基础 | 龍鶴堂風水事務所</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Refined Chinese Serif + Modern Sans & Monospace -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#0A0A0C',
+            charcoal: '#121216',
+            xuan: '#F2EFE9',
+            ash: '#9A958C',
+            cinnabar: '#9E2A22',
+            vermilion: '#B83227',
+            brandred: '#8B261D',
+            gilt: '#C8A96E',
+          },
+          fontFamily: {
+            serif: ['"Noto Serif SC"', '"Songti SC"', '"STSong"', 'Georgia', 'serif'],
+            sans: ['"Inter"', '-apple-system', 'BlinkMacSystemFont', '"PingFang SC"', 'sans-serif'],
+            mono: ['"Space Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS & NEO-CHINESE ARCHITECTURAL DARK LUXURY THEME
+       ========================================================================== */
+    :root {
+      --bg-obsidian: #0A0A0C;
+      --ink-xuan: #F2EFE9;
+      --ink-ash: #9A958C;
+      --accent-cinnabar: #9E2A22;
+      --accent-vermilion: #B83227;
+      --accent-brandred: #8B261D;
+      --accent-gilt: #C8A96E;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      background-color: #050507;
+      color: var(--ink-xuan);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* Ambient Theater Backdrop for Desktop Viewing */
+    .ambient-backdrop {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 22% 16%, rgba(158, 42, 34, 0.16) 0%, transparent 46%),
+        radial-gradient(circle at 82% 84%, rgba(200, 169, 110, 0.1) 0%, transparent 46%),
+        linear-gradient(155deg, #060608 0%, #0B0B0F 50%, #050507 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* 9:16 Mobile-First Theater Container */
+    .stage-shell {
+      position: relative;
+      width: 100%;
+      height: 100dvh;
+      background: var(--bg-obsidian);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: max-width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-radius 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @media (min-width: 540px) {
+      .stage-shell {
+        max-width: 440px;
+        height: min(94dvh, 870px);
+        border-radius: 28px;
+        border: 1px solid rgba(200, 169, 110, 0.25);
+        box-shadow:
+          0 32px 96px rgba(0, 0, 0, 0.88),
+          0 0 0 1px rgba(242, 239, 233, 0.05) inset,
+          0 0 70px rgba(158, 42, 34, 0.14);
+      }
+      .stage-shell.expanded-mode {
+        max-width: min(92vw, 760px);
+        height: min(95dvh, 920px);
+        border-radius: 24px;
+      }
+    }
+
+    /* Subtle Ink-Wash Paper Architectural Grid Overlay (Pure CSS, Zero Base64) */
+    .arch-grid-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background-image:
+        linear-gradient(to right, rgba(242, 239, 233, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(242, 239, 233, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 50% 42%, rgba(200, 169, 110, 0.04) 0%, transparent 65%);
+      background-size: 42px 42px, 42px 42px, 100% 100%;
+      mask-image: radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0.88) 25%, rgba(0,0,0,0.2) 100%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0.88) 25%, rgba(0,0,0,0.2) 100%);
+    }
+
+    /* Ambient Spotlight */
+    .stage-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background:
+        radial-gradient(circle at 50% 26%, rgba(158, 42, 34, 0.15) 0%, transparent 56%),
+        radial-gradient(circle at 50% 78%, rgba(200, 169, 110, 0.07) 0%, transparent 55%);
+    }
+
+    /* Global Ink & Starlight Background Canvas */
+    #cosmosCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       SLIDE TRANSITIONS & STAGGERED REVEALS
+       ========================================================================== */
+    .slides-viewport {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      z-index: 5;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 4px 16px 8px 16px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate3d(0, 16px, 0) scale(0.985);
+      transition: opacity 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.58s cubic-bezier(0.22, 1, 0.36, 1);
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
+    }
+    .slide::-webkit-scrollbar { display: none; }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate3d(0, 0, 0) scale(1);
+      z-index: 10;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .slide.active .reveal { opacity: 1; transform: translateY(0); }
+    .slide.active .reveal.d-1 { transition-delay: 0.06s; }
+    .slide.active .reveal.d-2 { transition-delay: 0.16s; }
+    .slide.active .reveal.d-3 { transition-delay: 0.26s; }
+    .slide.active .reveal.d-4 { transition-delay: 0.36s; }
+    .slide.active .reveal.d-5 { transition-delay: 0.46s; }
+
+    /* ==========================================================================
+       BRAND LOGO GEOMETRIC ASSEMBLY & CRIMSON PULSE
+       ========================================================================== */
+    .logo-piece {
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease;
+    }
+    .slide:not(.active) .logo-pillar-l { transform: translateY(24px); opacity: 0; }
+    .slide:not(.active) .logo-pillar-r { transform: translateY(-24px); opacity: 0; }
+    .slide:not(.active) .logo-beam-m { transform: scaleX(0); transform-origin: center; opacity: 0; }
+    .slide:not(.active) .logo-beam-b { transform: translateY(16px); opacity: 0; }
+    .slide:not(.active) .logo-red-l { transform: translate(-18px, -18px) scale(0.35); opacity: 0; }
+    .slide:not(.active) .logo-red-r { transform: translate(18px, -18px) scale(0.35); opacity: 0; }
+
+    .slide.active .logo-pillar-l { transform: translateY(0); opacity: 1; transition-delay: 0.12s; }
+    .slide.active .logo-pillar-r { transform: translateY(0); opacity: 1; transition-delay: 0.20s; }
+    .slide.active .logo-beam-m { transform: scaleX(1); opacity: 1; transition-delay: 0.32s; }
+    .slide.active .logo-beam-b { transform: translateY(0); opacity: 1; transition-delay: 0.40s; }
+    .slide.active .logo-red-l { transform: translate(0, 0) scale(1); opacity: 1; transition-delay: 0.56s; }
+    .slide.active .logo-red-r { transform: translate(0, 0) scale(1); opacity: 1; transition-delay: 0.64s; }
+
+    @keyframes redCapGlow {
+      0%, 100% { filter: drop-shadow(0 0 3px rgba(184, 50, 39, 0.5)); fill: #8B261D; }
+      50% { filter: drop-shadow(0 0 12px rgba(212, 62, 48, 0.95)); fill: #C4372B; }
+    }
+    .red-cap-pulse { animation: redCapGlow 3s ease-in-out infinite; }
+
+    @keyframes slowSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes slowSpinRev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+    .spin-slow { animation: slowSpin 44s linear infinite; transform-origin: center; }
+    .spin-slow-rev { animation: slowSpinRev 58s linear infinite; transform-origin: center; }
+
+    @keyframes ctaPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(184, 50, 39, 0.45), 0 8px 24px rgba(158, 42, 34, 0.38); }
+      50% { box-shadow: 0 0 0 9px rgba(184, 50, 39, 0), 0 10px 30px rgba(184, 50, 39, 0.58); }
+    }
+    .btn-breath { animation: ctaPulse 2.6s ease-in-out infinite; }
+
+    /* ==========================================================================
+       AUDIO SOUNDWAVE ANIMATIONS & VISUAL RIPPLES
+       ========================================================================== */
+    @keyframes eqBar {
+      0%, 100% { transform: scaleY(0.32); }
+      50% { transform: scaleY(1); }
+    }
+    .eq-bar {
+      width: 2.5px;
+      height: 12px;
+      border-radius: 99px;
+      background: #C8A96E;
+      transform-origin: bottom;
+      transition: transform 0.25s ease, background-color 0.25s ease;
+    }
+    .audio-playing .eq-bar-1 { animation: eqBar 0.85s ease-in-out infinite; }
+    .audio-playing .eq-bar-2 { animation: eqBar 0.65s ease-in-out 0.18s infinite; background: #B83227; }
+    .audio-playing .eq-bar-3 { animation: eqBar 0.95s ease-in-out 0.34s infinite; }
+    .audio-muted .eq-bar { transform: scaleY(0.22); background: #6E6A63; animation: none !important; }
+
+    @keyframes soundRippleOut {
+      0% { r: 16; opacity: 0.95; stroke-width: 2.4; }
+      100% { r: 54; opacity: 0; stroke-width: 0.4; }
+    }
+    .wx-ripple-anim {
+      animation: soundRippleOut 1.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes meditateRing {
+      0% { transform: scale(0.85); opacity: 0.75; }
+      100% { transform: scale(1.75); opacity: 0; }
+    }
+    .meditate-active .med-ring-1 { animation: meditateRing 3.2s ease-out infinite; }
+    .meditate-active .med-ring-2 { animation: meditateRing 3.2s ease-out 1.6s infinite; }
+
+    /* ==========================================================================
+       GLASS PANELS, SLIDERS, PROGRESS BAR & INTERACTIVE ELEMENTS
+       ========================================================================== */
+    .glass-panel {
+      background: linear-gradient(180deg, rgba(22, 22, 28, 0.8) 0%, rgba(12, 12, 16, 0.9) 100%);
+      border: 1px solid rgba(242, 239, 233, 0.09);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .glass-panel-gold {
+      background: linear-gradient(180deg, rgba(26, 23, 22, 0.85) 0%, rgba(14, 13, 15, 0.92) 100%);
+      border: 1px solid rgba(200, 169, 110, 0.28);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* Mobile-Friendly Range Slider */
+    input[type="range"].yi-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 32px;
+      background: transparent;
+      cursor: pointer;
+      touch-action: none;
+    }
+    input[type="range"].yi-slider:focus { outline: none; }
+    input[type="range"].yi-slider::-webkit-slider-runnable-track {
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(154,149,140,0.35) 0%, rgba(200,169,110,0.6) 50%, rgba(184,50,39,0.85) 100%);
+    }
+    input[type="range"].yi-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 21px;
+      height: 21px;
+      margin-top: -8.5px;
+      border-radius: 50%;
+      background: #F2EFE9;
+      border: 2.5px solid #B83227;
+      box-shadow: 0 0 12px rgba(184, 50, 39, 0.65);
+      transition: transform 0.15s ease;
+    }
+    input[type="range"].yi-slider:active::-webkit-slider-thumb { transform: scale(1.18); }
+    input[type="range"].yi-slider::-moz-range-track {
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(154,149,140,0.35) 0%, rgba(200,169,110,0.6) 50%, rgba(184,50,39,0.85) 100%);
+    }
+    input[type="range"].yi-slider::-moz-range-thumb {
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      background: #F2EFE9;
+      border: 2.5px solid #B83227;
+      box-shadow: 0 0 12px rgba(184, 50, 39, 0.65);
+    }
+
+    /* Story Bar */
+    .story-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #C8A96E, #B83227);
+      border-radius: 999px;
+      transition: width 0.15s linear;
+    }
+    .story-seg.done .story-fill {
+      width: 100%;
+      background: rgba(242, 239, 233, 0.72);
+    }
+
+    /* Bagua Orbital Node Smooth Glide */
+    .bagua-node {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+      will-change: transform;
+    }
+
+    /* Five Elements Bar Animation */
+    .wuxing-bar {
+      transition: height 0.55s cubic-bezier(0.22, 1, 0.36, 1), background 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    /* Octagram Glow */
+    @keyframes octGlow {
+      0%, 100% { filter: drop-shadow(0 0 5px rgba(184, 50, 39, 0.65)); }
+      50% { filter: drop-shadow(0 0 16px rgba(200, 169, 110, 0.95)); }
+    }
+    .octagram-active { animation: octGlow 2.4s ease-in-out infinite; }
+
+    /* Custom Toggle Switch */
+    .yi-switch {
+      width: 40px;
+      height: 22px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      position: relative;
+      transition: background-color 0.25s ease;
+      flex-shrink: 0;
+    }
+    .yi-switch::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #F2EFE9;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.45);
+    }
+    .yi-switch.on { background: #B83227; }
+    .yi-switch.on::after { transform: translateX(18px); }
+
+    .toast-msg { transition: opacity 0.3s ease, transform 0.3s ease; }
+  </style>
+</head>
+<body>
+  <div class="ambient-backdrop">
+    <!-- Main 9:16 Mobile-First Theater Container -->
+    <main id="stageShell" class="stage-shell" role="application" aria-label="周易决策学第一章声画互动演示文稿">
+
+      <!-- Generative Ink-Wash & Starlight Background Canvas -->
+      <canvas id="cosmosCanvas"></canvas>
+      <div class="arch-grid-overlay"></div>
+      <div class="stage-glow"></div>
+
+      <!-- ====================================================================
+           TOP CHROME: STORY BAR + HUD + AUDIO PILL + MOVIE MODE + INDEX
+           ==================================================================== -->
+      <header class="relative z-30 px-3.5 pt-2.5 pb-1 flex-shrink-0" data-no-swipe="true">
+        <!-- 8-Segment Instagram-Story Progress Bar -->
+        <div id="storyBar" class="grid grid-cols-8 gap-1.5 mb-2" role="tablist" aria-label="演示进度"></div>
+
+        <!-- HUD Action Row -->
+        <div class="flex items-center justify-between gap-1.5">
+          <!-- Left: Brand Logo + Counter -->
+          <button id="tocOpenBtn" class="flex items-center gap-2 py-1 pr-2 rounded-xl hover:bg-white/5 active:scale-95 transition min-h-[36px]" title="打开章节目录">
+            <svg viewBox="0 0 100 100" class="w-7 h-7 rounded-[4px] shadow-md flex-shrink-0 border border-white/15" aria-label="龍鶴堂红黑方块Logo">
+              <rect x="0" y="0" width="100" height="100" fill="#000000" />
+              <rect x="7" y="21.5" width="14.5" height="72" fill="#FFFFFF" />
+              <rect x="78.5" y="21.5" width="14.5" height="72" fill="#FFFFFF" />
+              <rect x="7" y="7" width="14.5" height="14.5" fill="#8B261D" />
+              <rect x="78.5" y="7" width="14.5" height="14.5" fill="#8B261D" />
+              <rect x="7" y="42" width="86" height="14.5" fill="#FFFFFF" />
+              <rect x="7" y="79" width="86" height="14.5" fill="#FFFFFF" />
+            </svg>
+            <div class="text-left leading-tight">
+              <div class="flex items-center gap-1.5">
+                <span class="font-serif text-[12px] font-semibold tracking-[0.12em] text-xuan">龍鶴堂</span>
+                <span id="slideCounter" class="text-[10px] text-gilt/90 font-mono">01/08</span>
+              </div>
+              <div id="hudToneMini" class="text-[8.5px] text-ash tracking-[0.1em] font-serif truncate max-w-[95px]">五音律吕 · 待启</div>
+            </div>
+          </button>
+
+          <!-- Right: Audio Pill + Movie Mode + Index + Expand -->
+          <div class="flex items-center gap-1.5">
+            <!-- Audio Control Pill with 3-bar EQ -->
+            <button id="audioPillBtn" class="audio-muted flex items-center gap-1.5 px-2.5 py-1.5 min-h-[34px] rounded-full border border-white/15 bg-white/5 hover:bg-white/10 active:scale-95 transition text-[11px] font-serif text-xuan" aria-expanded="false" aria-label="音律控制面板">
+              <span class="flex items-end gap-[2px] h-3" aria-hidden="true">
+                <span class="eq-bar eq-bar-1"></span>
+                <span class="eq-bar eq-bar-2"></span>
+                <span class="eq-bar eq-bar-3"></span>
+              </span>
+              <span id="audioPillText" class="text-[10.5px]">音律</span>
+            </button>
+
+            <!-- Movie Mode Auto-Play Toggle -->
+            <button id="cinemaToggleBtn" class="flex items-center gap-1.5 px-2.5 py-1.5 min-h-[34px] rounded-full border border-white/15 bg-white/5 hover:bg-white/10 active:scale-95 transition text-[10.5px] font-serif text-xuan" aria-pressed="false">
+              <span id="cinemaDot" class="w-1.5 h-1.5 rounded-full bg-ash transition-colors"></span>
+              <span id="cinemaLabel">影片</span>
+            </button>
+
+            <!-- Index Drawer Button -->
+            <button id="hudIndexBtn" class="flex items-center justify-center w-8 h-8 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 text-xuan/90 active:scale-95 transition" title="章节目录" aria-label="章节目录">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="14" y2="18"/></svg>
+            </button>
+
+            <!-- Desktop Stage Expand Toggle -->
+            <button id="expandToggleBtn" class="hidden sm:flex items-center justify-center w-8 h-8 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 text-ash hover:text-xuan transition" title="切换宽屏剧场">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             FROSTED-GLASS AUDIO CONTROL POPOVER
+             ================================================================ -->
+        <div id="audioPopover" class="hidden absolute right-3.5 top-[72px] w-[264px] rounded-2xl glass-panel-gold p-3.5 shadow-2xl z-50">
+          <div class="flex items-center justify-between pb-2 mb-2.5 border-b border-white/10">
+            <div>
+              <div class="font-serif text-xs font-bold text-xuan tracking-wider">五音十二律吕 · 声境引擎</div>
+              <div id="popoverToneReadout" class="text-[10px] font-serif text-gilt mt-0.5">当前律吕：黄钟 · 宫音 (待启)</div>
+            </div>
+            <button id="quickMuteBtn" class="px-2 py-1 rounded-lg text-[10px] font-serif border border-white/15 bg-white/5 hover:bg-white/15 text-xuan transition">
+              静音
+            </button>
+          </div>
+
+          <!-- BGM Toggle Row -->
+          <div class="flex items-center justify-between py-1.5">
+            <div>
+              <div class="text-xs font-serif text-xuan">背景古韵 (BGM)</div>
+              <div class="text-[10px] text-ash">古琴五音泛音 · 禅意铜磬低鸣</div>
+            </div>
+            <button id="bgmToggleSwitch" class="yi-switch on" role="switch" aria-checked="true" aria-label="背景古韵开关"></button>
+          </div>
+
+          <!-- SFX Toggle Row -->
+          <div class="flex items-center justify-between py-1.5 mt-1">
+            <div>
+              <div class="text-xs font-serif text-xuan">交互音效 (SFX)</div>
+              <div class="text-[10px] text-ash">翻页帛声 · 玉石拨盘 · 变爻五音</div>
+            </div>
+            <button id="sfxToggleSwitch" class="yi-switch on" role="switch" aria-checked="true" aria-label="交互音效开关"></button>
+          </div>
+
+          <!-- Master Volume Slider -->
+          <div class="mt-2 pt-2 border-t border-white/10">
+            <div class="flex items-center justify-between text-[10.5px] mb-0.5">
+              <span class="font-serif text-ash">主音量控制</span>
+              <span id="masterVolText" class="font-mono text-gilt">75%</span>
+            </div>
+            <input id="masterVolSlider" type="range" min="0" max="100" value="75" class="yi-slider" aria-label="主音量" />
+          </div>
+        </div>
+      </header>
+
+      <!-- ====================================================================
+           SLIDES VIEWPORT (8 CINEMATIC INTERACTIVE SLIDES)
+           ==================================================================== -->
+      <div id="slidesViewport" class="slides-viewport">
+
+        <!-- ================================================================
+             SLIDE 1: 封面 · 启卷 (COVER)
+             ================================================================ -->
+        <section class="slide active justify-between" data-slide="0" data-title="封面 · 启卷演易">
+          <div class="flex flex-col items-center text-center mt-1 reveal d-1">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gilt/30 bg-gilt/10">
+              <span class="w-1.5 h-1.5 rounded-full bg-vermilion"></span>
+              <span class="font-mono text-[9.5px] tracking-[0.18em] text-gilt uppercase">DRAGON-CRANE HALL · 龍鶴堂風水事務所</span>
+            </div>
+          </div>
+
+          <!-- Center Hero: Celestial Rings + Assembling 龍鶴堂红黑方块 Logo -->
+          <div class="relative flex items-center justify-center my-0.5 reveal d-2">
+            <svg viewBox="0 0 250 250" class="w-48 h-48 sm:w-56 sm:h-56 overflow-visible">
+              <g class="spin-slow" opacity="0.58">
+                <circle cx="125" cy="125" r="116" fill="none" stroke="rgba(200,169,110,0.3)" stroke-width="0.8" stroke-dasharray="3 6" />
+                <circle cx="125" cy="125" r="102" fill="none" stroke="rgba(242,239,233,0.12)" stroke-width="0.6" />
+                <circle cx="125" cy="9" r="2.5" fill="#C8A96E" />
+                <circle cx="125" cy="241" r="2.5" fill="#B83227" />
+                <circle cx="9" cy="125" r="2" fill="#F2EFE9" />
+                <circle cx="241" cy="125" r="2" fill="#F2EFE9" />
+              </g>
+              <g class="spin-slow-rev" opacity="0.62">
+                <circle cx="125" cy="125" r="85" fill="none" stroke="rgba(184,50,39,0.4)" stroke-width="0.85" stroke-dasharray="14 8" />
+                <line x1="125" y1="34" x2="125" y2="46" stroke="#C8A96E" stroke-width="1" />
+                <line x1="125" y1="204" x2="125" y2="216" stroke="#C8A96E" stroke-width="1" />
+                <line x1="34" y1="125" x2="46" y2="125" stroke="#C8A96E" stroke-width="1" />
+                <line x1="204" y1="125" x2="216" y2="125" stroke="#C8A96E" stroke-width="1" />
+              </g>
+
+              <!-- Exact Brand Logo: 龍鶴堂红黑方块 (centered, 108x108) -->
+              <g transform="translate(71, 71) scale(1.08)">
+                <rect x="0" y="0" width="100" height="100" fill="#000000" stroke="rgba(242,239,233,0.22)" stroke-width="1" />
+                <rect class="logo-piece logo-pillar-l" x="7" y="21.5" width="14.5" height="72" fill="#FFFFFF" />
+                <rect class="logo-piece logo-pillar-r" x="78.5" y="21.5" width="14.5" height="72" fill="#FFFFFF" />
+                <rect class="logo-piece logo-beam-m" x="7" y="42" width="86" height="14.5" fill="#FFFFFF" />
+                <rect class="logo-piece logo-beam-b" x="7" y="79" width="86" height="14.5" fill="#FFFFFF" />
+                <rect class="logo-piece logo-red-l red-cap-pulse" x="7" y="7" width="14.5" height="14.5" fill="#8B261D" />
+                <rect class="logo-piece logo-red-r red-cap-pulse" x="78.5" y="7" width="14.5" height="14.5" fill="#8B261D" />
+              </g>
+            </svg>
+          </div>
+
+          <!-- Editorial Typography -->
+          <div class="text-center px-1 reveal d-3">
+            <h1 class="font-serif text-[32px] sm:text-[36px] font-bold tracking-[0.18em] text-xuan leading-tight mb-1">
+              周易决策学
+            </h1>
+            <p class="font-serif text-sm sm:text-base text-gilt tracking-[0.15em]">
+              第一章：易学的基础
+            </p>
+            <p class="font-mono text-[9.5px] tracking-[0.16em] text-ash uppercase mt-1 mb-3">
+              I CHING DECISION SCIENCE · 主讲 王仙之
+            </p>
+
+            <!-- Golden Thesis Banner -->
+            <div class="glass-panel-gold rounded-2xl px-4 py-2.5 text-left relative overflow-hidden">
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-vermilion via-cinnabar to-gilt"></div>
+              <p class="font-serif text-[12.5px] sm:text-[13px] leading-relaxed text-xuan/95 pl-2">
+                “不仅限于占卜预测，更是华夏先民<span class="text-gilt font-semibold">观象授时、建模推演万物时空规律</span>的哲学与决策系统。”
+              </p>
+            </div>
+          </div>
+
+          <!-- Cover CTA Buttons: Primary Sound+Visual Entry & Secondary Silent Browse -->
+          <div class="flex flex-col gap-2 mt-2 mb-1 reveal d-4" data-no-swipe="true">
+            <button id="startAudioDeckBtn" class="btn-breath w-full flex items-center justify-center gap-2 py-3.5 px-5 rounded-2xl bg-gradient-to-r from-cinnabar to-vermilion text-xuan font-serif font-semibold tracking-[0.16em] text-sm active:scale-[0.98] transition min-h-[48px]">
+              <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+              <span>开启声画演易</span>
+              <span class="text-[10px] font-mono text-xuan/80 font-normal tracking-normal">· 五音古韵</span>
+            </button>
+            <div class="grid grid-cols-2 gap-2">
+              <button id="silentBrowseBtn" class="py-2.5 px-3 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-ash hover:text-xuan text-xs font-serif tracking-widest active:scale-[0.98] transition min-h-[40px]">
+                静音浏览
+              </button>
+              <button id="heroCinemaBtn" class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-gilt/40 bg-gilt/10 hover:bg-gilt/20 text-gilt text-xs font-serif tracking-wider active:scale-[0.98] transition min-h-[40px]">
+                <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                <span>影片模式</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             SLIDE 2: 观象授时 · 十二消息卦 (ORIGINS & TIME-SPACE)
+             ================================================================ -->
+        <section class="slide justify-between" data-slide="1" data-title="观象授时 · 十二消息卦">
+          <div class="reveal d-1">
+            <div class="flex items-center justify-between mb-0.5">
+              <span class="font-mono text-[9.5px] tracking-[0.18em] text-gilt uppercase">02 · ORIGINS &amp; TIME-SPACE</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-cinnabar/25 border border-vermilion/40 text-xuan/90 font-serif">伏羲 · 文王 · 孔子十翼</span>
+            </div>
+            <h2 class="font-serif text-[20px] font-bold tracking-[0.06em] text-xuan leading-snug">
+              仰观天文，俯察地理
+            </h2>
+            <p class="text-[11.5px] text-ash leading-relaxed mt-0.5">
+              伏羲画卦、文王系辞为<span class="text-xuan">“经”</span>，孔子注解十翼为<span class="text-xuan">“传”</span>。上古观象授时以察农时，“易与天地准，故能弥纶天地之道”。
+            </p>
+          </div>
+
+          <!-- Interactive 12 Sovereign Hexagrams Wheel -->
+          <div class="glass-panel rounded-2xl p-2.5 my-1 flex-1 flex flex-col justify-between min-h-0 reveal d-2" data-no-swipe="true">
+            <div class="flex items-center justify-between text-[10px] text-ash">
+              <span class="font-serif text-gilt">十二消息卦 · 回归年消长轮盘</span>
+              <span class="font-mono text-[9.5px]">拖动或轻触卦位 · 玉石刻音</span>
+            </div>
+
+            <div class="relative flex items-center justify-center flex-1 min-h-[192px]">
+              <svg id="xiaoxiWheelSvg" viewBox="0 0 300 300" class="w-full max-w-[238px] h-auto overflow-visible">
+                <circle cx="150" cy="150" r="134" fill="none" stroke="rgba(242,239,233,0.07)" stroke-width="1" />
+                <circle cx="150" cy="150" r="102" fill="none" stroke="rgba(200,169,110,0.22)" stroke-width="1" stroke-dasharray="2 4" />
+                <circle cx="150" cy="150" r="62" fill="rgba(10,10,12,0.9)" stroke="rgba(184,50,39,0.45)" stroke-width="1.2" />
+
+                <g id="xiaoxiPointer" style="transform-origin: 150px 150px; transition: transform 0.42s cubic-bezier(0.22,1,0.36,1);">
+                  <line x1="150" y1="150" x2="150" y2="28" stroke="url(#ptrGrad)" stroke-width="2" />
+                  <circle cx="150" cy="48" r="3.5" fill="#B83227" />
+                </g>
+                <defs>
+                  <linearGradient id="ptrGrad" x1="0" y1="1" x2="0" y2="0">
+                    <stop offset="0%" stop-color="rgba(184,50,39,0)" />
+                    <stop offset="100%" stop-color="#B83227" />
+                  </linearGradient>
+                </defs>
+
+                <g id="xiaoxiNodes"></g>
+                <g id="xiaoxiCenterHex"></g>
+              </svg>
+            </div>
+
+            <div class="pt-1.5 border-t border-white/10">
+              <div class="flex items-center justify-between gap-2 mb-1">
+                <div class="flex items-baseline gap-2">
+                  <span id="xxName" class="font-serif text-base font-bold text-xuan">坤卦</span>
+                  <span id="xxTerm" class="text-[10.5px] px-2 py-0.5 rounded bg-vermilion/20 border border-vermilion/40 text-gilt font-serif">冬至 · 纯阴</span>
+                </div>
+                <div class="text-right font-mono text-[10.5px]">
+                  <span class="text-ash">阳气 </span>
+                  <span id="xxYangPct" class="text-vermilion font-bold">0%</span>
+                </div>
+              </div>
+
+              <div class="w-full h-1.5 rounded-full bg-white/10 overflow-hidden mb-1">
+                <div id="xxYangBar" class="h-full rounded-full bg-gradient-to-r from-gilt to-vermilion transition-all duration-300" style="width: 0%;"></div>
+              </div>
+
+              <p id="xxDesc" class="text-[11px] text-ash leading-snug min-h-[28px]">
+                纯阴伏藏，日影最长；物极必反，一阳正待于地下萌生。
+              </p>
+
+              <div class="flex items-center gap-2 mt-0.5">
+                <span class="text-[10px] font-serif text-ash">冬至</span>
+                <input id="xiaoxiSlider" type="range" min="0" max="11" step="1" value="0" class="yi-slider flex-1" aria-label="十二消息卦节气滑块" />
+                <span class="text-[10px] font-serif text-ash">剥尽</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             SLIDE 3: 一阴一阳之谓道 · 太极生八卦 (YIN-YANG & TAIJI)
+             ================================================================ -->
+        <section class="slide justify-between" data-slide="2" data-title="一阴一阳 · 太极生八卦">
+          <div class="reveal d-1">
+            <div class="flex items-center justify-between mb-0.5">
+              <span class="font-mono text-[9.5px] tracking-[0.18em] text-gilt uppercase">03 · YIN-YANG &amp; TAIJI</span>
+              <span class="text-[10px] text-ash font-serif">应和 · 互根 · 消长</span>
+            </div>
+            <h2 class="font-serif text-[20px] font-bold tracking-[0.06em] text-xuan leading-snug">
+              一气之二态，太极生八卦
+            </h2>
+            <p class="text-[11.5px] text-ash leading-relaxed mt-0.5">
+              “阴阳二气”并非两种气，而是<span class="text-xuan">同一股能量</span>的动静二态（如电门与刹车调控车速）。万物皆太极，阴阳消长永不停息。
+            </p>
+          </div>
+
+          <div class="glass-panel rounded-2xl p-2.5 my-1 flex-1 flex flex-col min-h-0 reveal d-2" data-no-swipe="true">
+            <div class="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-black/50 border border-white/10 mb-2 flex-shrink-0">
+              <button id="s3TabQi" class="py-1.5 rounded-lg text-xs font-serif font-semibold bg-cinnabar/85 text-xuan transition">
+                一气二态粒子场
+              </button>
+              <button id="s3TabTree" class="py-1.5 rounded-lg text-xs font-serif text-ash hover:text-xuan transition">
+                太极 → 八卦演进树
+              </button>
+            </div>
+
+            <!-- TAB 1: Unified Qi Particle Taiji Field -->
+            <div id="s3PanelQi" class="flex-1 flex flex-col justify-between min-h-0">
+              <div class="relative flex-1 min-h-[168px] rounded-xl overflow-hidden border border-white/10 bg-[#060609]">
+                <canvas id="qiCanvas" class="w-full h-full block"></canvas>
+                <div class="absolute top-2 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
+                  <span id="qiStateBadge" class="px-2.5 py-0.5 rounded-full text-[10.5px] font-serif bg-black/75 border border-gilt/40 text-gilt">
+                    阴阳和合 · 动态平衡
+                  </span>
+                  <span id="qiOutputVal" class="font-mono text-[10.5px] text-xuan/90 bg-black/65 px-2 py-0.5 rounded">
+                    能量 50%
+                  </span>
+                </div>
+                <div class="absolute bottom-2 left-2.5 right-2.5 pointer-events-none">
+                  <div id="qiMetaphor" class="text-[10.5px] text-xuan/90 bg-black/70 backdrop-blur-sm px-2.5 py-1.5 rounded-lg border border-white/10 leading-snug">
+                    同源异态：同一股“一身之气”，借升降出入呈现中和稳态。
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-2 pt-1.5 border-t border-white/10">
+                <div class="flex items-center justify-between text-[10.5px] mb-0.5">
+                  <span class="text-ash font-serif">◀ 阴沉内收（刹车）</span>
+                  <span class="text-vermilion font-serif">阳升外放（电门）▶</span>
+                </div>
+                <input id="qiSlider" type="range" min="0" max="100" value="50" class="yi-slider" aria-label="阳升阴沉调节滑块" />
+                <div class="grid grid-cols-3 gap-1.5 mt-0.5 text-center text-[10px] text-ash">
+                  <button class="qi-preset py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10" data-val="12">静阴储精</button>
+                  <button class="qi-preset py-1.5 rounded-lg bg-gilt/15 hover:bg-gilt/25 border border-gilt/35 text-gilt" data-val="50">太极中和</button>
+                  <button class="qi-preset py-1.5 rounded-lg bg-vermilion/15 hover:bg-vermilion/25 border border-vermilion/35 text-vermilion" data-val="90">炽阳升发</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2: 4-Tier Taiji -> Liangyi -> Sixiang -> Bagua Tree -->
+            <div id="s3PanelTree" class="hidden flex-1 flex-col justify-between min-h-0">
+              <div class="relative flex-1 flex items-center justify-center min-h-[180px]">
+                <svg id="taijiTreeSvg" viewBox="0 0 340 236" class="w-full h-full max-h-[236px]"></svg>
+              </div>
+              <div class="pt-1.5 border-t border-white/10">
+                <p id="treeCaption" class="text-[11px] text-xuan/90 font-serif text-center mb-1.5">
+                  “易有太极，是生两仪，两仪生四象，四象生八卦。”
+                </p>
+                <div class="grid grid-cols-4 gap-1.5">
+                  <button class="tree-step-btn py-2 rounded-xl text-[11px] font-serif border border-white/10 bg-white/5 text-ash transition" data-step="1">1.太极</button>
+                  <button class="tree-step-btn py-2 rounded-xl text-[11px] font-serif border border-white/10 bg-white/5 text-ash transition" data-step="2">2.两仪</button>
+                  <button class="tree-step-btn py-2 rounded-xl text-[11px] font-serif border border-white/10 bg-white/5 text-ash transition" data-step="3">3.四象</button>
+                  <button class="tree-step-btn py-2 rounded-xl text-[11px] font-serif border border-vermilion/55 bg-cinnabar/45 text-xuan transition" data-step="4">4.八卦</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             SLIDE 4: 三才合一 · 六爻演化塔 (THREE POWERS & 64 HEXAGRAMS)
+             ================================================================ -->
+        <section class="slide justify-between" data-slide="3" data-title="三才合一 · 六爻演化塔">
+          <div class="reveal d-1">
+            <div class="flex items-center justify-between mb-0.5">
+              <span class="font-mono text-[9.5px] tracking-[0.18em] text-gilt uppercase">04 · THREE POWERS &amp; 64 HEXAGRAMS</span>
+              <span class="text-[10px] text-ash font-serif">8 × 8 = 64 卦</span>
+            </div>
+            <h2 class="font-serif text-[20px] font-bold tracking-[0.06em] text-xuan leading-snug">
+              兼三才而两之，故六
+            </h2>
+            <p class="text-[11.5px] text-ash leading-relaxed mt-0.5">
+              上爻为<span class="text-xuan">天(时间)</span>、中爻为<span class="text-xuan">人(万物)</span>、下爻为<span class="text-xuan">地(空间)</span>。重卦成六爻：<span class="text-gilt">下卦(内)为本质，上卦(外)为环境</span>。
+            </p>
+          </div>
+
+          <div class="glass-panel rounded-2xl p-2.5 my-1 flex-1 flex flex-col justify-between min-h-0 reveal d-2" data-no-swipe="true">
+            <!-- Hexagram Live Lookup Header + Presets -->
+            <div class="flex items-center justify-between gap-2 pb-1.5 border-b border-white/10">
+              <div class="min-w-0">
+                <div class="flex items-baseline gap-1.5">
+                  <span id="hexFullName" class="font-serif text-base font-bold text-xuan">地天泰</span>
+                  <span id="hexTrigramMeta" class="text-[10.5px] text-gilt font-serif truncate">坤上(地) · 乾下(天)</span>
+                </div>
+                <div class="text-[9.5px] text-ash">轻触任一爻变阴阳 · 聆听清玉/沉木之声</div>
+              </div>
+              <div class="flex gap-1 flex-shrink-0">
+                <button class="hex-preset px-2 py-1 rounded-lg text-[10px] font-serif bg-white/5 hover:bg-white/15 border border-white/10 text-xuan" data-bits="111000">泰</button>
+                <button class="hex-preset px-2 py-1 rounded-lg text-[10px] font-serif bg-white/5 hover:bg-white/15 border border-white/10 text-xuan" data-bits="000111">否</button>
+                <button class="hex-preset px-2 py-1 rounded-lg text-[10px] font-serif bg-white/5 hover:bg-white/15 border border-white/10 text-xuan" data-bits="101010">既济</button>
+              </div>
+            </div>
+
+            <!-- 6 Large Touch-Friendly Yao Bars -->
+            <div class="relative flex items-stretch gap-2 my-1.5 flex-1 min-h-[195px]">
+              <div class="w-10 flex flex-col justify-between py-0.5 text-[10px] font-serif text-center flex-shrink-0">
+                <div class="flex-1 flex flex-col items-center justify-center border-r border-t border-b border-gilt/35 rounded-l-lg mb-1 bg-gilt/5">
+                  <span class="text-gilt font-semibold">上卦</span>
+                  <span class="text-[8.5px] text-ash">外境</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center justify-center border-r border-t border-b border-vermilion/35 rounded-l-lg mt-1 bg-vermilion/5">
+                  <span class="text-vermilion font-semibold">下卦</span>
+                  <span class="text-[8.5px] text-ash">本质</span>
+                </div>
+              </div>
+
+              <div id="yaoTower" class="flex-1 flex flex-col justify-between gap-1.5"></div>
+
+              <div class="w-7 flex flex-col justify-between py-0.5 text-[10px] font-serif text-center flex-shrink-0">
+                <div class="flex-1 flex items-center justify-center border-l border-white/15 text-gilt/90">天</div>
+                <div class="flex-1 flex items-center justify-center border-l border-white/15 text-xuan/90">人</div>
+                <div class="flex-1 flex items-center justify-center border-l border-white/15 text-ash">地</div>
+              </div>
+            </div>
+
+            <!-- Last Tapped Line Meaning & 当位/中正 Status -->
+            <div class="rounded-xl bg-black/50 border border-white/10 p-2">
+              <div class="flex items-center justify-between mb-0.5">
+                <div class="flex items-center gap-1.5">
+                  <span id="yaoInspectTitle" class="font-serif text-xs font-bold text-xuan">六五（阴爻居阳位）</span>
+                  <span id="yaoPosBadge" class="text-[9.5px] px-1.5 py-0.5 rounded bg-gilt/20 text-gilt font-serif">得中</span>
+                </div>
+                <span id="yaoSanCaiTag" class="font-mono text-[9.5px] text-ash">天爻 · 尊位</span>
+              </div>
+              <p id="yaoInspectDesc" class="text-[11px] text-ash leading-snug">
+                五爻为尊位，居上卦之中，象征掌权者，强调中正合德。
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             SLIDE 5: 先天为体 · 后天为用 (XIANTIAN VS HOUTIAN BAGUA)
+             ================================================================ -->
+        <section class="slide justify-between" data-slide="4" data-title="先天为体 · 后天为用">
+          <div class="reveal d-1">
+            <div class="flex items-center justify-between mb-0.5">
+              <span class="font-mono text-[9.5px] tracking-[0.18em] text-gilt uppercase">05 · XIANTIAN &amp; HOUTIAN BAGUA</span>
+              <span class="text-[10px] text-ash font-serif">知变 · 应变 · 适变</span>
+            </div>
+            <h2 class="font-serif text-[20px] font-bold tracking-[0.06em] text-xuan leading-snug">
+              先天为体，后天为用
+            </h2>
+            <p class="text-[11.5px] text-ash leading-relaxed mt-0.5">
+              <span class="text-xuan">先天(伏羲)</span>显天时与阴阳消长；<span class="text-xuan">后天(文王)</span>定地利方位、面南而治与乾坤六子，核心在预见<span class="text-gilt">变化趋势</span>。
+            </p>
+          </div>
+
+          <div class="glass-panel rounded-2xl p-2.5 my-1 flex-1 flex flex-col justify-between min-h-0 reveal d-2" data-no-swipe="true">
+            <!-- Mode Switcher + Sunrise/Sunset Divider Overlay Toggle -->
+            <div class="flex flex-col gap-1.5 flex-shrink-0">
+              <div class="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-black/55 border border-white/10">
+                <button id="btnXiantian" class="py-1.5 rounded-lg text-xs font-serif font-semibold bg-cinnabar/85 text-xuan transition">
+                  先天八卦 · 乾南坤北
+                </button>
+                <button id="btnHoutian" class="py-1.5 rounded-lg text-xs font-serif text-ash hover:text-xuan transition">
+                  后天八卦 · 离南坎北
+                </button>
+              </div>
+              <div class="flex items-center justify-between px-1">
+                <span class="text-[10px] text-ash font-serif">轻触星盘卦位查看卦象与六子角色</span>
+                <button id="dividerOverlayBtn" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-serif border border-white/15 bg-white/5 text-ash hover:text-xuan transition">
+                  <span id="dividerDot" class="w-1.5 h-1.5 rounded-full bg-ash"></span>
+                  <span>日出日落分界线</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Morphing Orbital Bagua Compass -->
+            <div class="relative flex-1 flex items-center justify-center min-h-[205px]">
+              <svg id="baguaBgSvg" viewBox="0 0 260 260" class="w-[224px] h-[224px] pointer-events-none">
+                <circle cx="130" cy="130" r="110" fill="none" stroke="rgba(242,239,233,0.08)" stroke-width="1" />
+                <circle cx="130" cy="130" r="80" fill="none" stroke="rgba(200,169,110,0.24)" stroke-width="0.9" stroke-dasharray="3 4" />
+                <circle cx="130" cy="130" r="46" fill="rgba(10,10,12,0.88)" stroke="rgba(242,239,233,0.14)" stroke-width="1" />
+
+                <!-- Xiantian Arcs -->
+                <g id="xiantianArcs" class="transition-opacity duration-500">
+                  <path d="M 118 166 A 39 39 0 0 1 118 94" fill="none" stroke="#B83227" stroke-width="1.8" marker-end="url(#arrowRed)" />
+                  <path d="M 142 94 A 39 39 0 0 1 142 166" fill="none" stroke="#C8A96E" stroke-width="1.8" marker-end="url(#arrowGold)" />
+                  <text x="130" y="124" text-anchor="middle" fill="#F2EFE9" font-size="11" font-family="Noto Serif SC" font-weight="700">先天体</text>
+                  <text x="130" y="139" text-anchor="middle" fill="#9A958C" font-size="8" font-family="Noto Serif SC">二至二分 · 天时</text>
+                </g>
+
+                <!-- Houtian Center Title -->
+                <g id="houtianCenter" style="opacity:0;" class="transition-opacity duration-500">
+                  <text x="130" y="124" text-anchor="middle" fill="#F2EFE9" font-size="11" font-family="Noto Serif SC" font-weight="700">后天用</text>
+                  <text x="130" y="139" text-anchor="middle" fill="#C8A96E" font-size="8" font-family="Noto Serif SC">帝出乎震 · 方位</text>
+                </g>
+
+                <!-- Optional Sunrise/Sunset & 乾坤六子 Diagonal Divider Overlay -->
+                <g id="houtianDivider" style="opacity:0;" class="transition-opacity duration-400">
+                  <line x1="22" y1="86" x2="238" y2="174" stroke="#B83227" stroke-width="1.8" stroke-dasharray="5 3" />
+                  <rect x="64" y="54" width="132" height="16" rx="8" fill="rgba(10,10,12,0.85)" stroke="rgba(184,50,39,0.5)" stroke-width="0.8" />
+                  <text x="130" y="65" text-anchor="middle" fill="#F2EFE9" font-size="8.5" font-family="Noto Serif SC">日出后 · 四阴卦(巽离坤兑)</text>
+                  <rect x="64" y="190" width="132" height="16" rx="8" fill="rgba(10,10,12,0.85)" stroke="rgba(200,169,110,0.5)" stroke-width="0.8" />
+                  <text x="130" y="201" text-anchor="middle" fill="#C8A96E" font-size="8.5" font-family="Noto Serif SC">日落后 · 四阳卦(乾坎艮震)</text>
+                </g>
+
+                <!-- Cardinal Orientation -->
+                <text x="130" y="11" text-anchor="middle" fill="#C8A96E" font-size="9" font-family="Noto Serif SC">南 · 上</text>
+                <text x="130" y="256" text-anchor="middle" fill="#9A958C" font-size="9" font-family="Noto Serif SC">北 · 下</text>
+                <text x="8" y="133" text-anchor="middle" fill="#9A958C" font-size="9" font-family="Noto Serif SC">东</text>
+                <text x="252" y="133" text-anchor="middle" fill="#9A958C" font-size="9" font-family="Noto Serif SC">西</text>
+
+                <defs>
+                  <marker id="arrowRed" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#B83227" />
+                  </marker>
+                  <marker id="arrowGold" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#C8A96E" />
+                  </marker>
+                </defs>
+              </svg>
+
+              <div id="baguaNodesLayer" class="absolute inset-0 pointer-events-none"></div>
+            </div>
+
+            <!-- Selected Trigram Readout -->
+            <div class="rounded-xl bg-black/50 border border-white/10 p-2">
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-1.5 min-w-0">
+                  <span id="bgSelSymbol" class="text-base text-gilt leading-none">☰</span>
+                  <span id="bgSelTitle" class="font-serif text-xs font-bold text-xuan truncate">乾 · 夏至（正南）</span>
+                </div>
+                <span id="bgSelRole" class="text-[9.5px] px-1.5 py-0.5 rounded bg-white/10 text-gilt font-serif flex-shrink-0">老父 · 金/天</span>
+              </div>
+              <p id="bgSelDesc" class="text-[11px] text-ash mt-0.5 leading-snug">
+                先天居正南夏至，纯阳之极，震→离→兑→乾阳气递增至此登峰。
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             SLIDE 6: 五行时空与五音律吕 (FIVE ELEMENTS & WU YIN)
+             ================================================================ -->
+        <section class="slide justify-between" data-slide="5" data-title="五行时空与五音律吕">
+          <div class="reveal d-1">
+            <div class="flex items-center justify-between mb-0.5">
+              <span class="font-mono text-[9.5px] tracking-[0.18em] text-gilt uppercase">06 · FIVE ELEMENTS &amp; WU YIN</span>
+              <span class="text-[10px] text-ash font-serif">立表测影 · 候气法</span>
+            </div>
+            <h2 class="font-serif text-[20px] font-bold tracking-[0.06em] text-xuan leading-snug">
+              旺相休囚死 · 五音共振
+            </h2>
+            <p class="text-[11.5px] text-ash leading-relaxed mt-0.5">
+              四正方位即四气，时空统一乃吉凶标尺。五行生克即五气消长，更与<span class="text-gilt">干支六十甲子及宫商角徵羽五音</span>同频应时。
+            </p>
+          </div>
+
+          <div class="glass-panel rounded-2xl p-2.5 my-1 flex-1 flex flex-col justify-between min-h-0 reveal d-2" data-no-swipe="true">
+            <!-- 5 Season Buttons with Authentic Wu Yin Mapping -->
+            <div class="grid grid-cols-5 gap-1 flex-shrink-0">
+              <button class="wx-season-btn py-1.5 rounded-xl text-[10.5px] font-serif border transition leading-tight" data-season="spring">春·木<br/><span class="text-[8.5px] opacity-80">角音</span></button>
+              <button class="wx-season-btn py-1.5 rounded-xl text-[10.5px] font-serif border transition leading-tight" data-season="summer">夏·火<br/><span class="text-[8.5px] opacity-80">徵音</span></button>
+              <button class="wx-season-btn py-1.5 rounded-xl text-[10.5px] font-serif border transition leading-tight" data-season="late">季·土<br/><span class="text-[8.5px] opacity-80">宫音</span></button>
+              <button class="wx-season-btn py-1.5 rounded-xl text-[10.5px] font-serif border transition leading-tight" data-season="autumn">秋·金<br/><span class="text-[8.5px] opacity-80">商音</span></button>
+              <button class="wx-season-btn py-1.5 rounded-xl text-[10.5px] font-serif border transition leading-tight" data-season="winter">冬·水<br/><span class="text-[8.5px] opacity-80">羽音</span></button>
+            </div>
+
+            <!-- Pentagon Generating (生) & Controlling (克) Diagram with Soundwave Ripple -->
+            <div class="relative flex items-center justify-center my-0.5">
+              <svg id="wuxingPentagonSvg" viewBox="0 0 300 156" class="w-full max-w-[295px] h-auto overflow-visible"></svg>
+            </div>
+
+            <!-- Live Bidirectional 旺·相·休·囚·死 Strength Chart -->
+            <div class="rounded-xl bg-black/50 border border-white/10 px-2.5 pt-2 pb-1.5 flex-1 flex flex-col justify-between min-h-[132px]">
+              <div class="flex items-center justify-between text-[10px] mb-1">
+                <span id="wxSeasonSummary" class="font-serif text-gilt font-semibold truncate">春木当令 · 东方甲乙 · 姑洗角音</span>
+                <span class="font-mono text-[9px] text-ash flex-shrink-0 ml-1">金线相生 · 红虚相克</span>
+              </div>
+
+              <div class="relative flex-1 flex items-center justify-around px-0.5 min-h-[96px]">
+                <div class="absolute left-0 right-0 top-1/2 h-[1px] bg-white/20 pointer-events-none"></div>
+                <span class="absolute left-0 top-[18%] text-[8.5px] font-serif text-gilt/75 pointer-events-none">强</span>
+                <span class="absolute left-0 bottom-[16%] text-[8.5px] font-serif text-ash/75 pointer-events-none">弱</span>
+                <div id="wxBarsWrap" class="w-full h-full grid grid-cols-5 gap-1.5 pl-3"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             SLIDE 7: 河图洛书 · 天地数理真源 (LUOSHU & HETU MYSTERY)
+             ================================================================ -->
+        <section class="slide justify-between" data-slide="6" data-title="河图洛书 · 天地数理真源">
+          <div class="reveal d-1">
+            <div class="flex items-center justify-between mb-0.5">
+              <span class="font-mono text-[9.5px] tracking-[0.18em] text-gilt uppercase">07 · LUOSHU &amp; HETU MYSTERY</span>
+              <span class="text-[10px] text-ash font-serif">八卦之母 · 天地数55</span>
+            </div>
+            <h2 class="font-serif text-[20px] font-bold tracking-[0.06em] text-xuan leading-snug">
+              洛书八角纹与真·河图
+            </h2>
+            <p class="text-[11.5px] text-ash leading-relaxed mt-0.5">
+              阴数顺转<span class="text-vermilion">45°</span>成洛书九宫、<span class="text-gilt">对宫合十</span>与史前八角纹；真·河图之“河”乃<span class="text-xuan">天河</span>，实为苍龙六宿星象。
+            </p>
+          </div>
+
+          <div class="glass-panel rounded-2xl p-2.5 my-1 flex-1 flex flex-col min-h-0 reveal d-2" data-no-swipe="true">
+            <div class="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-black/55 border border-white/10 mb-1.5 flex-shrink-0">
+              <button id="s7TabLuoshu" class="py-1.5 rounded-lg text-xs font-serif font-semibold bg-cinnabar/85 text-xuan transition">
+                真·洛书 45° 旋动
+              </button>
+              <button id="s7TabDragon" class="py-1.5 rounded-lg text-xs font-serif text-ash hover:text-xuan transition">
+                真·河图 · 苍龙六宿
+              </button>
+            </div>
+
+            <!-- TAB A: Luoshu 0° -> 45° Rotation & Sum-to-10 Proof + Octagram -->
+            <div id="s7PanelLuoshu" class="flex-1 flex flex-col justify-between min-h-0">
+              <div class="relative flex-1 flex items-center justify-center min-h-[188px]">
+                <svg id="luoshuSvg" viewBox="0 0 260 260" class="w-[208px] h-[208px] overflow-visible">
+                  <circle cx="130" cy="130" r="112" fill="none" stroke="rgba(242,239,233,0.08)" stroke-width="1" stroke-dasharray="3 4" />
+
+                  <!-- Opposing Sum-to-10 Laser Lines -->
+                  <g id="lsSumLines" style="opacity:0; transition: opacity 0.45s ease;">
+                    <line x1="130" y1="34" x2="130" y2="226" stroke="rgba(184,50,39,0.65)" stroke-width="1.5" stroke-dasharray="4 3" />
+                    <line x1="34" y1="130" x2="226" y2="130" stroke="rgba(184,50,39,0.65)" stroke-width="1.5" stroke-dasharray="4 3" />
+                    <line x1="62" y1="62" x2="198" y2="198" stroke="rgba(200,169,110,0.65)" stroke-width="1.5" stroke-dasharray="4 3" />
+                    <line x1="198" y1="62" x2="62" y2="198" stroke="rgba(200,169,110,0.65)" stroke-width="1.5" stroke-dasharray="4 3" />
+                  </g>
+
+                  <!-- Prehistoric Octagram 八角纹 -->
+                  <g id="lsOctagram" style="opacity:0; transition: opacity 0.55s ease;">
+                    <rect x="78" y="78" width="104" height="104" fill="rgba(158,42,34,0.18)" stroke="#B83227" stroke-width="1.8" />
+                    <rect x="78" y="78" width="104" height="104" fill="rgba(200,169,110,0.14)" stroke="#C8A96E" stroke-width="1.8" transform="rotate(45 130 130)" />
+                  </g>
+
+                  <!-- FIXED YANG CROSS (一九三七 中五) -->
+                  <g id="lsYangCross">
+                    <rect x="103" y="22" width="54" height="216" rx="4" fill="rgba(242,239,233,0.04)" stroke="rgba(242,239,233,0.42)" stroke-width="1.2" />
+                    <rect x="22" y="103" width="216" height="54" rx="4" fill="rgba(242,239,233,0.04)" stroke="rgba(242,239,233,0.42)" stroke-width="1.2" />
+                    <text x="130" y="55" text-anchor="middle" fill="#F2EFE9" font-size="22" font-family="Noto Serif SC" font-weight="700">九</text>
+                    <text x="130" y="218" text-anchor="middle" fill="#F2EFE9" font-size="22" font-family="Noto Serif SC" font-weight="700">一</text>
+                    <text x="49" y="138" text-anchor="middle" fill="#F2EFE9" font-size="22" font-family="Noto Serif SC" font-weight="700">三</text>
+                    <text x="211" y="138" text-anchor="middle" fill="#F2EFE9" font-size="22" font-family="Noto Serif SC" font-weight="700">七</text>
+                  </g>
+
+                  <!-- ROTATING YIN CROSS (二四六八 -> Clockwise 45° to 4 Corners) -->
+                  <g id="lsYinCross" style="transform-origin: 130px 130px;">
+                    <rect x="105" y="28" width="50" height="204" rx="4" fill="rgba(200,169,110,0.06)" stroke="#C8A96E" stroke-width="1.3" stroke-dasharray="5 3" />
+                    <rect x="28" y="105" width="204" height="50" rx="4" fill="rgba(200,169,110,0.06)" stroke="#C8A96E" stroke-width="1.3" stroke-dasharray="5 3" />
+                    <g id="lsYinNum2" transform="translate(130, 56)"><text y="7" text-anchor="middle" fill="#C8A96E" font-size="20" font-family="Noto Serif SC" font-weight="700">二</text></g>
+                    <g id="lsYinNum6" transform="translate(204, 130)"><text y="7" text-anchor="middle" fill="#C8A96E" font-size="20" font-family="Noto Serif SC" font-weight="700">六</text></g>
+                    <g id="lsYinNum8" transform="translate(130, 204)"><text y="7" text-anchor="middle" fill="#C8A96E" font-size="20" font-family="Noto Serif SC" font-weight="700">八</text></g>
+                    <g id="lsYinNum4" transform="translate(56, 130)"><text y="7" text-anchor="middle" fill="#C8A96E" font-size="20" font-family="Noto Serif SC" font-weight="700">四</text></g>
+                  </g>
+
+                  <!-- Center Pivot 五 -->
+                  <rect x="108" y="108" width="44" height="44" rx="6" fill="#0B0B0F" stroke="#B83227" stroke-width="1.6" />
+                  <text x="130" y="138" text-anchor="middle" fill="#B83227" font-size="22" font-family="Noto Serif SC" font-weight="900">五</text>
+                </svg>
+              </div>
+
+              <div class="pt-1.5 border-t border-white/10">
+                <div class="flex items-center justify-between mb-0.5">
+                  <span id="lsStatusBadge" class="text-[11px] font-serif text-ash">初始叠合（0°）· 拖动旋动天地</span>
+                  <span id="lsAngleVal" class="font-mono text-xs text-gilt font-bold">0°</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <input id="luoshuSlider" type="range" min="0" max="45" step="1" value="0" class="yi-slider flex-1" aria-label="洛书天地旋动角度" />
+                  <button id="luoshuSnapBtn" class="px-3 py-1.5 rounded-xl bg-cinnabar/85 hover:bg-vermilion text-xuan text-[11px] font-serif flex-shrink-0 active:scale-95 transition min-h-[34px]">
+                    旋至 45°
+                  </button>
+                </div>
+                <div id="lsSumProof" class="text-[10px] font-mono text-center text-ash mt-0.5">
+                  锁合 45° 验证对宫合十并显现史前八角纹（石印声效）
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB B: Azure Dragon Six Mansions -> True Hetu Spiral -->
+            <div id="s7PanelDragon" class="hidden flex-1 flex-col justify-between min-h-0">
+              <div id="dragonStage" class="relative flex-1 rounded-xl bg-[#05060B] border border-white/10 overflow-hidden flex items-center justify-center min-h-[192px] cursor-pointer">
+                <svg id="dragonSvg" viewBox="0 0 320 214" class="w-full h-full">
+                  <defs>
+                    <radialGradient id="milkyWay" cx="50%" cy="50%" r="60%">
+                      <stop offset="0%" stop-color="rgba(200,169,110,0.16)" />
+                      <stop offset="55%" stop-color="rgba(100,120,160,0.06)" />
+                      <stop offset="100%" stop-color="rgba(5,6,11,0)" />
+                    </radialGradient>
+                    <filter id="starGlow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feGaussianBlur stdDeviation="2.2" result="blur" />
+                      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
+                  </defs>
+
+                  <ellipse cx="160" cy="107" rx="150" ry="68" transform="rotate(-20 160 107)" fill="url(#milkyWay)" />
+                  <text x="285" y="30" fill="rgba(200,169,110,0.55)" font-size="9.5" font-family="Noto Serif SC" text-anchor="end">天河（银河）</text>
+
+                  <!-- Azure Dragon Six Mansions Constellation -->
+                  <g id="dragonConstellation" style="transition: opacity 0.55s ease, transform 0.6s ease; transform-origin: 160px 107px;">
+                    <polyline points="54,30 82,26 74,54 58,56 54,30" fill="none" stroke="rgba(242,239,233,0.42)" stroke-width="1.1" />
+                    <polyline points="58,56 46,70 68,92 94,82 82,56 74,54" fill="none" stroke="rgba(242,239,233,0.42)" stroke-width="1.1" />
+                    <polyline points="68,92 84,114 108,106 94,82" fill="none" stroke="rgba(242,239,233,0.42)" stroke-width="1.1" />
+                    <polyline points="108,106 148,125 164,129 180,129 196,125" fill="none" stroke="#C8A96E" stroke-width="1.6" />
+                    <polyline points="164,129 162,149 174,163 202,171 228,173 248,161 256,141 242,131 226,141" fill="none" stroke="rgba(242,239,233,0.55)" stroke-width="1.3" />
+
+                    <circle cx="54" cy="30" r="3" fill="#F2EFE9" filter="url(#starGlow)" />
+                    <circle cx="82" cy="26" r="2.8" fill="#F2EFE9" />
+                    <circle cx="58" cy="56" r="2.4" fill="#F2EFE9" />
+                    <circle cx="74" cy="54" r="2.4" fill="#F2EFE9" />
+                    <circle cx="46" cy="70" r="2.5" fill="#F2EFE9" />
+                    <circle cx="68" cy="92" r="2.8" fill="#F2EFE9" />
+                    <circle cx="94" cy="82" r="2.5" fill="#F2EFE9" />
+                    <circle cx="108" cy="106" r="2.5" fill="#F2EFE9" />
+                    <circle cx="148" cy="125" r="3.2" fill="#C8A96E" filter="url(#starGlow)" />
+                    <circle cx="164" cy="129" r="3.2" fill="#C8A96E" filter="url(#starGlow)" />
+                    <circle cx="180" cy="129" r="3.2" fill="#C8A96E" filter="url(#starGlow)" />
+                    <circle cx="196" cy="125" r="3.2" fill="#C8A96E" filter="url(#starGlow)" />
+                    <circle cx="162" cy="149" r="5" fill="#B83227" filter="url(#starGlow)" />
+                    <circle cx="162" cy="149" r="9" fill="none" stroke="rgba(184,50,39,0.5)" stroke-width="1" />
+                    <circle cx="174" cy="163" r="2.5" fill="#F2EFE9" />
+                    <circle cx="202" cy="171" r="2.6" fill="#F2EFE9" />
+                    <circle cx="228" cy="173" r="3" fill="#F2EFE9" />
+                    <circle cx="248" cy="161" r="3" fill="#F2EFE9" />
+                    <circle cx="256" cy="141" r="2.8" fill="#F2EFE9" />
+                    <circle cx="242" cy="131" r="2.4" fill="#F2EFE9" />
+                    <circle cx="226" cy="141" r="2.4" fill="#F2EFE9" />
+
+                    <text x="68" y="45" text-anchor="middle" fill="#F2EFE9" font-size="11" font-family="Noto Serif SC">角</text>
+                    <text x="68" y="77" text-anchor="middle" fill="#F2EFE9" font-size="11" font-family="Noto Serif SC">亢</text>
+                    <text x="84" y="104" text-anchor="middle" fill="#F2EFE9" font-size="11" font-family="Noto Serif SC">氐</text>
+                    <text x="172" y="114" text-anchor="middle" fill="#C8A96E" font-size="11" font-family="Noto Serif SC" font-weight="700">房 · 天驷(农祥)</text>
+                    <text x="136" y="154" text-anchor="end" fill="#B83227" font-size="11.5" font-family="Noto Serif SC" font-weight="700">心宿</text>
+                    <text x="234" y="157" text-anchor="middle" fill="#F2EFE9" font-size="11" font-family="Noto Serif SC">尾</text>
+                  </g>
+
+                  <!-- True Hetu Coiled Dragon Spiral Overlay -->
+                  <g id="trueHetuOverlay" style="opacity: 0; transform: scale(0.84); transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22,1,0.36,1); transform-origin: 160px 107px;" transform="translate(160, 107)">
+                    <circle r="76" fill="rgba(10,10,12,0.82)" stroke="rgba(200,169,110,0.48)" stroke-width="1" />
+                    <path d="M 10 -65 C -44 -69, -71 -24, -63 21 C -55 59, -11 75, 29 61 C 63 50, 71 9, 53 -21 C 40 -46, 4 -52, -21 -36 C -42 -23, -44 8, -27 27 C -11 42, 15 40, 27 23 C 36 9, 30 -11, 15 -17 C 4 -21, -9 -13, -7 0"
+                          fill="none" stroke="#F2EFE9" stroke-width="12.5" stroke-linecap="round" opacity="0.93" />
+                    <circle cx="-6" cy="2" r="3" fill="#B83227" />
+                    <circle cx="10" cy="4" r="2.2" fill="#C8A96E" />
+                    <text y="90" text-anchor="middle" fill="#C8A96E" font-size="10.5" font-family="Noto Serif SC">真·河图（苍龙跃天河 · 太极龙图）</text>
+                  </g>
+                </svg>
+                <span class="absolute bottom-1.5 right-2 text-[9px] font-mono text-ash/80 pointer-events-none">轻触星图演化</span>
+              </div>
+
+              <div class="pt-1.5 border-t border-white/10 flex items-center justify-between gap-2">
+                <p id="dragonDesc" class="text-[11px] text-ash leading-snug">
+                  “河”乃天河！龙星六体为龙，腹中房宿天驷为马——此即“龙马负图”真源。
+                </p>
+                <button id="toggleHetuBtn" class="px-3 py-1.5 rounded-xl border border-gilt/50 bg-gilt/15 text-gilt text-[11px] font-serif flex-shrink-0 active:scale-95 transition min-h-[36px]">
+                  显现真·河图
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             SLIDE 8: 终章 · 知变·应变·适变 (FINALE)
+             ================================================================ -->
+        <section class="slide justify-between" data-slide="7" data-title="终章 · 知变·应变·适变">
+          <div class="reveal d-1">
+            <div class="flex items-center justify-between mb-0.5">
+              <span class="font-mono text-[9.5px] tracking-[0.18em] text-gilt uppercase">08 · FINALE &amp; DECISION WISDOM</span>
+              <span class="text-[10px] text-ash font-serif">履霜，坚冰至</span>
+            </div>
+            <h2 class="font-serif text-[21px] font-bold tracking-[0.08em] text-xuan leading-snug">
+              知变 · 应变 · 适变
+            </h2>
+          </div>
+
+          <!-- 3 Core Chapter Takeaways -->
+          <div class="flex flex-col gap-2 my-1">
+            <article class="glass-panel rounded-2xl p-3 flex items-start gap-2.5 reveal d-2">
+              <div class="w-8 h-8 rounded-xl bg-cinnabar/25 border border-vermilion/45 flex items-center justify-center font-serif font-bold text-vermilion text-xs flex-shrink-0">
+                壹
+              </div>
+              <div>
+                <h3 class="font-serif text-[13.5px] font-bold text-xuan">未雨绸缪 · 察势于微</h3>
+                <p class="text-[11px] text-ash leading-relaxed mt-0.5">
+                  “履霜，坚冰至”——易学图式皆在传递<span class="text-gilt">变化趋势</span>，不待变局已成方作反应，先手布局。
+                </p>
+              </div>
+            </article>
+
+            <article class="glass-panel rounded-2xl p-3 flex items-start gap-2.5 reveal d-3">
+              <div class="w-8 h-8 rounded-xl bg-gilt/15 border border-gilt/40 flex items-center justify-center font-serif font-bold text-gilt text-xs flex-shrink-0">
+                贰
+              </div>
+              <div>
+                <h3 class="font-serif text-[13.5px] font-bold text-xuan">时空相应 · 顺势而为</h3>
+                <p class="text-[11px] text-ash leading-relaxed mt-0.5">
+                  先天为体、后天为用，一切决断归于<span class="text-xuan">时间节律与空间格局</span>的共振平衡，平衡则吉。
+                </p>
+              </div>
+            </article>
+
+            <article class="glass-panel rounded-2xl p-3 flex items-start gap-2.5 reveal d-4">
+              <div class="w-8 h-8 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center font-serif font-bold text-xuan text-xs flex-shrink-0">
+                叁
+              </div>
+              <div>
+                <h3 class="font-serif text-[13.5px] font-bold text-xuan">一气动静 · 中正守恒</h3>
+                <p class="text-[11px] text-ash leading-relaxed mt-0.5">
+                  善调进退电门与刹车，知止而行、适变而不失其正，乃现代决策的东方底层心法。
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <!-- Brand Seal + Meditative Pulse Ring + Final Actions -->
+          <div id="meditateZone" class="flex flex-col items-center text-center mt-0.5 mb-0.5 reveal d-5" data-no-swipe="true">
+            <div class="relative flex items-center justify-center mb-1.5">
+              <!-- Meditative Sound Rings (animate when "静听片刻五音" active) -->
+              <div class="med-ring-1 pointer-events-none absolute w-16 h-16 rounded-full border border-gilt/60 opacity-0"></div>
+              <div class="med-ring-2 pointer-events-none absolute w-16 h-16 rounded-full border border-vermilion/60 opacity-0"></div>
+              <svg viewBox="0 0 120 120" class="w-16 h-16 relative z-10">
+                <circle cx="60" cy="60" r="55" fill="none" stroke="rgba(200,169,110,0.35)" stroke-width="0.9" stroke-dasharray="3 4" class="spin-slow" />
+                <g transform="translate(22, 22) scale(0.76)">
+                  <rect x="0" y="0" width="100" height="100" fill="#000000" stroke="rgba(242,239,233,0.22)" stroke-width="1.2" />
+                  <rect x="7" y="21.5" width="14.5" height="72" fill="#FFFFFF" />
+                  <rect x="78.5" y="21.5" width="14.5" height="72" fill="#FFFFFF" />
+                  <rect class="red-cap-pulse" x="7" y="7" width="14.5" height="14.5" fill="#8B261D" />
+                  <rect class="red-cap-pulse" x="78.5" y="7" width="14.5" height="14.5" fill="#8B261D" />
+                  <rect x="7" y="42" width="86" height="14.5" fill="#FFFFFF" />
+                  <rect x="7" y="79" width="86" height="14.5" fill="#FFFFFF" />
+                </g>
+              </svg>
+            </div>
+            <p class="font-serif text-xs tracking-[0.2em] text-xuan">龍鶴堂風水事務所 · 周易决策学</p>
+            <p id="meditateHint" class="font-mono text-[9.5px] tracking-[0.14em] text-ash mt-0.5 mb-2.5">CHAPTER 01 COMPLETE · 下元甲辰 元亨利貞</p>
+
+            <div class="w-full flex flex-col gap-1.5">
+              <button id="replayCinemaBtn" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-cinnabar to-vermilion text-xuan font-serif text-xs font-semibold tracking-[0.14em] active:scale-[0.98] transition min-h-[42px]">
+                再看一遍影片模式
+              </button>
+              <div class="grid grid-cols-2 gap-2">
+                <button id="endTocBtn" class="py-2.5 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-xuan font-serif text-xs tracking-wider active:scale-[0.98] transition min-h-[40px]">
+                  打开章节目录
+                </button>
+                <button id="meditateAudioBtn" class="py-2.5 rounded-xl border border-gilt/45 bg-gilt/10 hover:bg-gilt/20 text-gilt font-serif text-xs tracking-wider active:scale-[0.98] transition min-h-[40px]">
+                  静听片刻五音
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- ====================================================================
+           BOTTOM FLOATING CAPSULE NAVIGATION BAR
+           ==================================================================== -->
+      <footer class="relative z-20 px-3.5 pb-2.5 pt-1 flex-shrink-0" data-no-swipe="true">
+        <div class="glass-panel rounded-full px-1.5 py-1 flex items-center justify-between gap-2 shadow-xl">
+          <button id="prevBtn" class="w-9 h-9 rounded-full flex items-center justify-center text-xuan hover:bg-white/10 active:scale-90 transition disabled:opacity-25" aria-label="上一页">
+            <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+
+          <button id="navTitleBtn" class="flex-1 text-center py-0.5 px-2 rounded-full hover:bg-white/5 transition min-w-0">
+            <div id="navSlideTitle" class="font-serif text-[11.5px] text-xuan tracking-[0.1em] truncate">封面 · 启卷演易</div>
+            <div class="text-[8.5px] font-mono text-ash tracking-widest">左右滑动翻页 · 点击目录</div>
+          </button>
+
+          <button id="nextBtn" class="w-9 h-9 rounded-full flex items-center justify-center bg-cinnabar/85 hover:bg-vermilion text-xuan active:scale-90 transition disabled:opacity-25" aria-label="下一页">
+            <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </footer>
+
+      <!-- ====================================================================
+           CHAPTER INDEX DRAWER MODAL
+           ==================================================================== -->
+      <div id="tocModal" class="absolute inset-0 z-40 bg-black/75 backdrop-blur-sm hidden flex-col justify-end" data-no-swipe="true">
+        <div class="bg-[#111116] border-t border-gilt/35 rounded-t-3xl p-4 max-h-[82%] overflow-y-auto">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="font-serif text-base font-bold text-xuan tracking-wider">第一章 · 章节目录</h3>
+              <p class="font-mono text-[9.5px] text-ash tracking-widest uppercase">SELECT CHAPTER MODULE</p>
+            </div>
+            <button id="tocCloseBtn" class="w-9 h-9 rounded-full bg-white/10 text-xuan flex items-center justify-center hover:bg-white/20 transition" aria-label="关闭目录">✕</button>
+          </div>
+          <div id="tocList" class="grid grid-cols-1 gap-2"></div>
+        </div>
+      </div>
+
+      <!-- Subtle Custom Toast -->
+      <div id="toastBox" class="toast-msg pointer-events-none opacity-0 translate-y-2 absolute top-[72px] left-1/2 -translate-x-1/2 z-50 px-3.5 py-1.5 rounded-full bg-black/88 border border-gilt/45 text-gilt text-[11px] font-serif whitespace-nowrap shadow-lg"></div>
+
+    </main>
+  </div>
+
+  <!-- ========================================================================
+       PROCEDURAL WEB AUDIO ENGINE + INTERACTIVE PRESENTATION ORCHESTRATOR
+       ======================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      try {
+        /* ====================================================================
+           PART 1: BESPOKE WEB AUDIO API ENGINE (`YiSoundEngine`)
+           100% Procedural Neo-Chinese Pentatonic BGM & Tactile Ritual SFX
+           Inspired by 五音十二律吕 (宫商角徵羽 · D Major Pentatonic)
+           ==================================================================== */
+        class YiSoundEngine {
+          constructor(onToneChange) {
+            this.ctx = null;
+            this.unlocked = false;
+            this.bgmEnabled = true;
+            this.sfxEnabled = true;
+            this.muted = false;
+            this.masterVolume = 0.75;
+            this.onToneChange = onToneChange || (() => {});
+
+            this.masterGain = null;
+            this.bgmGain = null;
+            this.sfxGain = null;
+            this.reverbSend = null;
+            this.droneNodes = null;
+            this.bgmPluckTimer = null;
+            this.meditateTimer = null;
+            this.isMeditating = false;
+
+            // D-major Pentatonic scale (宫=D, 商=E, 角=F#, 徵=A, 羽=B)
+            this.pentatonic = [
+              { freq: 293.66, lulu: '黄钟 · 宫音' },
+              { freq: 329.63, lulu: '太簇 · 商音' },
+              { freq: 369.99, lulu: '姑洗 · 角音' },
+              { freq: 440.00, lulu: '蕤宾 · 徵音' },
+              { freq: 493.88, lulu: '应钟 · 羽音' },
+              { freq: 587.33, lulu: '清黄钟 · 宫音' },
+              { freq: 659.25, lulu: '清太簇 · 商音' }
+            ];
+            this.lastNoteIdx = 0;
+          }
+
+          /**
+           * Initialize & unlock Web Audio Context safely inside a user gesture
+           */
+          unlock(fadeSeconds = 1.5) {
+            try {
+              const AudioCtx = window.AudioContext || window.webkitAudioContext;
+              if (!AudioCtx) return false;
+
+              if (!this.ctx) {
+                this.ctx = new AudioCtx();
+                this._buildMasterGraph();
+              }
+              if (this.ctx.state === 'suspended') {
+                this.ctx.resume();
+              }
+
+              this.unlocked = true;
+              const now = this.ctx.currentTime;
+              const targetVol = this.muted ? 0 : this.masterVolume;
+              this.masterGain.gain.cancelScheduledValues(now);
+              this.masterGain.gain.setValueAtTime(Math.max(0.0001, this.masterGain.gain.value), now);
+              this.masterGain.gain.linearRampToValueAtTime(targetVol, now + fadeSeconds);
+
+              if (this.bgmEnabled && !this.muted) {
+                this._startBgmLayers(fadeSeconds);
+              }
+              return true;
+            } catch (e) {
+              console.warn('Audio unlock skipped:', e);
+              return false;
+            }
+          }
+
+          /**
+           * Construct clean studio-grade routing: Master -> Compressor -> Out
+           * Plus warm stereo feedback delay/reverb tail bus for temple ambiance
+           */
+          _buildMasterGraph() {
+            const ctx = this.ctx;
+
+            // Soft limiter/compressor to prevent clipping on mobile speakers
+            const comp = ctx.createDynamicsCompressor();
+            comp.threshold.value = -14;
+            comp.knee.value = 18;
+            comp.ratio.value = 4;
+            comp.attack.value = 0.008;
+            comp.release.value = 0.25;
+            comp.connect(ctx.destination);
+
+            this.masterGain = ctx.createGain();
+            this.masterGain.gain.value = 0.0001;
+            this.masterGain.connect(comp);
+
+            this.bgmGain = ctx.createGain();
+            this.bgmGain.gain.value = 0.72;
+            this.bgmGain.connect(this.masterGain);
+
+            this.sfxGain = ctx.createGain();
+            this.sfxGain.gain.value = 0.85;
+            this.sfxGain.connect(this.masterGain);
+
+            // Warm Ambient Stereo Feedback Delay Network (Lush Temple Tail)
+            this.reverbSend = ctx.createGain();
+            this.reverbSend.gain.value = 0.42;
+
+            const delayL = ctx.createDelay(1.2);
+            const delayR = ctx.createDelay(1.2);
+            delayL.delayTime.value = 0.36;
+            delayR.delayTime.value = 0.52;
+
+            const fbL = ctx.createGain();
+            const fbR = ctx.createGain();
+            fbL.gain.value = 0.38;
+            fbR.gain.value = 0.36;
+
+            const dampL = ctx.createBiquadFilter();
+            const dampR = ctx.createBiquadFilter();
+            dampL.type = 'lowpass';
+            dampR.type = 'lowpass';
+            dampL.frequency.value = 1750;
+            dampR.frequency.value = 1550;
+
+            this.reverbSend.connect(delayL);
+            this.reverbSend.connect(delayR);
+
+            delayL.connect(dampL);
+            dampL.connect(fbL);
+            fbL.connect(delayR); // Cross-feedback for lush stereo space
+            dampL.connect(this.masterGain);
+
+            delayR.connect(dampR);
+            dampR.connect(fbR);
+            fbR.connect(delayL);
+            dampR.connect(this.masterGain);
+          }
+
+          /**
+           * Layer 1 (Deep Meditative Singing-Bowl Drone) + Layer 2 (Generative Sparse Guqin Plucks)
+           */
+          _startBgmLayers(fadeSeconds = 1.5) {
+            if (!this.ctx) return;
+            const ctx = this.ctx;
+            const now = ctx.currentTime;
+
+            // Start Layer 1 drone if not already running
+            if (!this.droneNodes) {
+              const droneMix = ctx.createGain();
+              droneMix.gain.setValueAtTime(0.0001, now);
+              droneMix.gain.linearRampToValueAtTime(0.2, now + fadeSeconds);
+
+              const lpf = ctx.createBiquadFilter();
+              lpf.type = 'lowpass';
+              lpf.frequency.value = 260;
+              lpf.Q.value = 1.4;
+
+              // Slow breathing LFO modulating drone warmth
+              const lfo = ctx.createOscillator();
+              const lfoGain = ctx.createGain();
+              lfo.frequency.value = 0.085; // ~12 sec breath cycle
+              lfoGain.gain.value = 110;
+              lfo.connect(lfoGain);
+              lfoGain.connect(lpf.frequency);
+              lfo.start(now);
+
+              // D2 (73.42Hz), A2 (110Hz), D3 (146.83Hz) warm singing bowl harmonics
+              const freqs = [
+                { f: 73.42, type: 'sine', g: 0.45 },
+                { f: 110.00, type: 'triangle', g: 0.22 },
+                { f: 146.83, type: 'sine', g: 0.16 }
+              ];
+              const oscs = freqs.map(cfg => {
+                const osc = ctx.createOscillator();
+                const g = ctx.createGain();
+                osc.type = cfg.type;
+                osc.frequency.value = cfg.f;
+                g.gain.value = cfg.g;
+                osc.connect(g);
+                g.connect(lpf);
+                osc.start(now);
+                return osc;
+              });
+
+              lpf.connect(droneMix);
+              droneMix.connect(this.bgmGain);
+              this.droneNodes = { oscs, lfo, droneMix };
+            } else {
+              this.droneNodes.droneMix.gain.cancelScheduledValues(now);
+              this.droneNodes.droneMix.gain.linearRampToValueAtTime(0.2, now + 0.8);
+            }
+
+            // Start Layer 2 sparse generative pentatonic Guqin plucks
+            if (!this.bgmPluckTimer) {
+              this._scheduleNextBgmPluck(1100);
+            }
+          }
+
+          _stopBgmLayers() {
+            if (this.bgmPluckTimer) {
+              clearTimeout(this.bgmPluckTimer);
+              this.bgmPluckTimer = null;
+            }
+            if (this.ctx && this.droneNodes) {
+              const now = this.ctx.currentTime;
+              this.droneNodes.droneMix.gain.cancelScheduledValues(now);
+              this.droneNodes.droneMix.gain.linearRampToValueAtTime(0.0001, now + 0.6);
+            }
+          }
+
+          _scheduleNextBgmPluck(delayMs) {
+            clearTimeout(this.bgmPluckTimer);
+            this.bgmPluckTimer = setTimeout(() => {
+              if (!this.unlocked || !this.bgmEnabled || this.muted || !this.ctx || this.ctx.state !== 'running') {
+                this.bgmPluckTimer = null;
+                return;
+              }
+              // Pick a musical step close to the previous note (melodic contour)
+              const delta = [-2, -1, 1, 2][Math.floor(Math.random() * 4)];
+              let nextIdx = this.lastNoteIdx + delta;
+              if (nextIdx < 0 || nextIdx >= this.pentatonic.length) {
+                nextIdx = Math.floor(Math.random() * this.pentatonic.length);
+              }
+              this.lastNoteIdx = nextIdx;
+              const note = this.pentatonic[nextIdx];
+              const vel = 0.14 + Math.random() * 0.08;
+              const bend = Math.random() > 0.62 ? (Math.random() > 0.5 ? 1.012 : 0.988) : 1.0;
+
+              this._playGuqinPluck(note.freq, vel, 3.6, bend, this.bgmGain);
+              this.onToneChange(note.lulu);
+
+              // Occasionally add a gentle harmonic grace octave/fifth
+              if (Math.random() > 0.65) {
+                setTimeout(() => {
+                  if (this.bgmEnabled && !this.muted) {
+                    this._playGuqinPluck(note.freq * 0.5, vel * 0.55, 4.2, 1.0, this.bgmGain);
+                  }
+                }, 420);
+              }
+
+              const nextWait = 3000 + Math.random() * 2500; // 3.0s - 5.5s organic spacing
+              this._scheduleNextBgmPluck(nextWait);
+            }, delayMs);
+          }
+
+          /**
+           * Warm Guqin / Guzheng Plucked String Synthesis (Zero Harshness)
+           */
+          _playGuqinPluck(freq, gainVal = 0.22, duration = 2.8, pitchBend = 1.0, destBus = null) {
+            if (!this.ctx) return;
+            const ctx = this.ctx;
+            const now = ctx.currentTime;
+            const target = destBus || this.sfxGain;
+
+            const env = ctx.createGain();
+            env.gain.setValueAtTime(0.0001, now);
+            env.gain.linearRampToValueAtTime(gainVal, now + 0.014);
+            env.gain.exponentialRampToValueAtTime(gainVal * 0.36, now + 0.35);
+            env.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(Math.min(4200, freq * 5.2), now);
+            filter.frequency.exponentialRampToValueAtTime(Math.max(380, freq * 1.35), now + duration * 0.7);
+            filter.Q.value = 0.9;
+
+            // Fundamental (warm triangle) + 2nd harmonic (pure sine)
+            const osc1 = ctx.createOscillator();
+            osc1.type = 'triangle';
+            osc1.frequency.setValueAtTime(freq * pitchBend, now);
+            if (pitchBend !== 1.0) {
+              osc1.frequency.exponentialRampToValueAtTime(freq, now + 0.24);
+            }
+
+            const osc2 = ctx.createOscillator();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(freq * 2, now);
+            const g2 = ctx.createGain();
+            g2.gain.setValueAtTime(0.28, now);
+            g2.gain.exponentialRampToValueAtTime(0.02, now + duration * 0.45);
+
+            osc1.connect(filter);
+            osc2.connect(g2);
+            g2.connect(filter);
+            filter.connect(env);
+            env.connect(target);
+            env.connect(this.reverbSend);
+
+            osc1.start(now);
+            osc2.start(now);
+            osc1.stop(now + duration + 0.05);
+            osc2.stop(now + duration + 0.05);
+          }
+
+          /**
+           * Soft Filtered Noise Buffer helper for silk parchment & subtle transients
+           */
+          _getNoiseBuffer() {
+            if (this._noiseBuf) return this._noiseBuf;
+            const ctx = this.ctx;
+            const len = ctx.sampleRate * 0.6;
+            const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+            const data = buf.getChannelData(0);
+            for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+            this._noiseBuf = buf;
+            return buf;
+          }
+
+          /* ---------------- PUBLIC CONTROLS ---------------- */
+
+          setBgmEnabled(enabled) {
+            this.bgmEnabled = enabled;
+            if (!this.unlocked) return;
+            if (enabled && !this.muted) this._startBgmLayers(0.9);
+            else this._stopBgmLayers();
+          }
+
+          setSfxEnabled(enabled) {
+            this.sfxEnabled = enabled;
+          }
+
+          setMasterVolume(val01) {
+            this.masterVolume = Math.max(0, Math.min(1, val01));
+            if (this.ctx && this.masterGain && !this.muted) {
+              this.masterGain.gain.setTargetAtTime(this.masterVolume, this.ctx.currentTime, 0.04);
+            }
+          }
+
+          setMuted(m) {
+            this.muted = m;
+            if (!this.ctx || !this.masterGain) return;
+            const now = this.ctx.currentTime;
+            if (m) {
+              this.masterGain.gain.setTargetAtTime(0.0001, now, 0.06);
+              this._stopBgmLayers();
+            } else {
+              this.masterGain.gain.setTargetAtTime(this.masterVolume, now, 0.08);
+              if (this.bgmEnabled) this._startBgmLayers(0.8);
+            }
+          }
+
+          _canPlaySfx() {
+            return this.unlocked && this.sfxEnabled && !this.muted && this.ctx && this.ctx.state === 'running';
+          }
+
+          /* ---------------- TACTILE & RITUAL SFX ---------------- */
+
+          /** Warm Ceremonial Bronze Gong Chime (Cover Entry) */
+          playGong() {
+            if (!this._canPlaySfx()) return;
+            const ctx = this.ctx;
+            const now = ctx.currentTime;
+            const partials = [
+              { f: 146.83, g: 0.30, d: 3.8 }, // D3
+              { f: 220.00, g: 0.20, d: 3.2 }, // A3
+              { f: 293.66, g: 0.16, d: 2.6 }, // D4
+              { f: 440.00, g: 0.09, d: 2.1 }, // A4 shimmer
+              { f: 659.25, g: 0.04, d: 1.5 }  // E5 air
+            ];
+            partials.forEach(p => {
+              const osc = ctx.createOscillator();
+              const g = ctx.createGain();
+              osc.type = 'sine';
+              osc.frequency.setValueAtTime(p.f, now);
+              g.gain.setValueAtTime(0.0001, now);
+              g.gain.linearRampToValueAtTime(p.g, now + 0.045);
+              g.gain.exponentialRampToValueAtTime(0.0001, now + p.d);
+              osc.connect(g);
+              g.connect(this.sfxGain);
+              g.connect(this.reverbSend);
+              osc.start(now);
+              osc.stop(now + p.d + 0.06);
+            });
+            this.onToneChange('黄钟大吕 · 启卷');
+          }
+
+          /** Soft Silk/Parchment Swoosh + Low Wooden Chime + Subtle Wind-Chime Shimmer */
+          playPageTurn() {
+            if (!this._canPlaySfx()) return;
+            const ctx = this.ctx;
+            const now = ctx.currentTime;
+
+            // 1. Parchment filtered noise swoosh
+            const src = ctx.createBufferSource();
+            src.buffer = this._getNoiseBuffer();
+            const bpf = ctx.createBiquadFilter();
+            bpf.type = 'bandpass';
+            bpf.frequency.setValueAtTime(420, now);
+            bpf.frequency.exponentialRampToValueAtTime(1180, now + 0.14);
+            bpf.frequency.exponentialRampToValueAtTime(520, now + 0.34);
+            bpf.Q.value = 1.8;
+
+            const nGain = ctx.createGain();
+            nGain.gain.setValueAtTime(0.0001, now);
+            nGain.gain.linearRampToValueAtTime(0.09, now + 0.08);
+            nGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
+
+            src.connect(bpf);
+            bpf.connect(nGain);
+            nGain.connect(this.sfxGain);
+            src.start(now);
+            src.stop(now + 0.38);
+
+            // 2. Subtle low wooden chime
+            const wood = ctx.createOscillator();
+            const wGain = ctx.createGain();
+            wood.type = 'sine';
+            wood.frequency.setValueAtTime(220, now);
+            wood.frequency.exponentialRampToValueAtTime(146.83, now + 0.18);
+            wGain.gain.setValueAtTime(0.0001, now);
+            wGain.gain.linearRampToValueAtTime(0.11, now + 0.015);
+            wGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.32);
+            wood.connect(wGain);
+            wGain.connect(this.sfxGain);
+            wood.start(now);
+            wood.stop(now + 0.35);
+
+            // 3. Delicate high wind-chime shimmer
+            const chimeFreq = [1174.66, 1318.51, 1479.98][Math.floor(Math.random() * 3)];
+            const chime = ctx.createOscillator();
+            const cGain = ctx.createGain();
+            chime.type = 'sine';
+            chime.frequency.value = chimeFreq;
+            cGain.gain.setValueAtTime(0.0001, now + 0.05);
+            cGain.gain.linearRampToValueAtTime(0.032, now + 0.08);
+            cGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.95);
+            chime.connect(cGain);
+            cGain.connect(this.reverbSend);
+            chime.start(now + 0.05);
+            chime.stop(now + 1.0);
+          }
+
+          /** Crisp Jade/Bamboo Dial Click for 12 Sovereign Hexagrams Wheel */
+          playDialTick(stepIdx = 0) {
+            if (!this._canPlaySfx()) return;
+            const ctx = this.ctx;
+            const now = ctx.currentTime;
+            // Subtle pentatonic pitch shift along the 12-month solar cycle
+            const base = 1150 + Math.sin((stepIdx / 12) * Math.PI) * 520;
+            const osc = ctx.createOscillator();
+            const g = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(base, now);
+            osc.frequency.exponentialRampToValueAtTime(base * 0.72, now + 0.045);
+
+            const bpf = ctx.createBiquadFilter();
+            bpf.type = 'bandpass';
+            bpf.frequency.value = base * 1.1;
+            bpf.Q.value = 3.2;
+
+            g.gain.setValueAtTime(0.0001, now);
+            g.gain.linearRampToValueAtTime(0.14, now + 0.004);
+            g.gain.exponentialRampToValueAtTime(0.0001, now + 0.065);
+
+            osc.connect(bpf);
+            bpf.connect(g);
+            g.connect(this.sfxGain);
+            osc.start(now);
+            osc.stop(now + 0.08);
+          }
+
+          /** Ascending Pentatonic Chime for Slide 3 Taiji -> Bagua Tree */
+          playTreeStep(step = 1) {
+            if (!this._canPlaySfx()) return;
+            const map = { 1: 293.66, 2: 329.63, 3: 369.99, 4: 440.00 };
+            const f = map[step] || 293.66;
+            this._playGuqinPluck(f, 0.22, 2.2, 1.0, this.sfxGain);
+            if (step === 4) {
+              setTimeout(() => this._playGuqinPluck(587.33, 0.16, 2.6, 1.0, this.sfxGain), 110);
+            }
+          }
+
+          /** Distinct Tactile Yao Toggle: Bright Jade (Yang) vs Warm Grounded Wood/Low Pluck (Yin) */
+          playYaoToggle(isYang) {
+            if (!this._canPlaySfx()) return;
+            const ctx = this.ctx;
+            const now = ctx.currentTime;
+            if (isYang) {
+              // Bright Jade Chime (Yang —)
+              [880.00, 1760.00 * 1.004].forEach((f, idx) => {
+                const osc = ctx.createOscillator();
+                const g = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = f;
+                g.gain.setValueAtTime(0.0001, now);
+                g.gain.linearRampToValueAtTime(idx === 0 ? 0.16 : 0.05, now + 0.008);
+                g.gain.exponentialRampToValueAtTime(0.0001, now + (idx === 0 ? 0.85 : 0.45));
+                osc.connect(g);
+                g.connect(this.sfxGain);
+                g.connect(this.reverbSend);
+                osc.start(now);
+                osc.stop(now + 0.9);
+              });
+              this.onToneChange('阳爻清升 · 玉磬');
+            } else {
+              // Warm Grounded Hollow Woodblock + Low Guqin Pluck (Yin --)
+              const wood = ctx.createOscillator();
+              const wg = ctx.createGain();
+              wood.type = 'sine';
+              wood.frequency.setValueAtTime(310, now);
+              wood.frequency.exponentialRampToValueAtTime(165, now + 0.09);
+              wg.gain.setValueAtTime(0.0001, now);
+              wg.gain.linearRampToValueAtTime(0.22, now + 0.006);
+              wg.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+              wood.connect(wg);
+              wg.connect(this.sfxGain);
+              wood.start(now);
+              wood.stop(now + 0.22);
+
+              this._playGuqinPluck(146.83, 0.18, 1.6, 0.985, this.sfxGain);
+              this.onToneChange('阴爻沉稳 · 桐木');
+            }
+          }
+
+          /** Celestial Harmonic Sweep + Resonant Bronze Bell Swell (Xiantian <-> Houtian) */
+          playBaguaMorph(isHoutian) {
+            if (!this._canPlaySfx()) return;
+            const ctx = this.ctx;
+            const now = ctx.currentTime;
+            const notes = isHoutian ? [293.66, 369.99, 440.00, 587.33] : [587.33, 440.00, 369.99, 293.66];
+            notes.forEach((f, i) => {
+              setTimeout(() => {
+                if (this._canPlaySfx()) this._playGuqinPluck(f, 0.13, 2.0, 1.0, this.sfxGain);
+              }, i * 95);
+            });
+            // Warm bronze bell swell
+            const bell = ctx.createOscillator();
+            const bg = ctx.createGain();
+            bell.type = 'sine';
+            bell.frequency.value = isHoutian ? 220.00 : 146.83;
+            bg.gain.setValueAtTime(0.0001, now);
+            bg.gain.linearRampToValueAtTime(0.18, now + 0.35);
+            bg.gain.exponentialRampToValueAtTime(0.0001, now + 2.4);
+            bell.connect(bg);
+            bg.connect(this.sfxGain);
+            bg.connect(this.reverbSend);
+            bell.start(now);
+            bell.stop(now + 2.5);
+            this.onToneChange(isHoutian ? '后天八卦 · 地利方位' : '先天八卦 · 天时之体');
+          }
+
+          /** Authentic Traditional Five Elements -> Five Tones (五音) Plucked Chord */
+          playFiveElementsTone(elementKey) {
+            // Authentic mapping: 木=角(F#), 火=徵(A), 土=宫(D), 金=商(E), 水=羽(B)
+            const chords = {
+              wood:  { freqs: [369.99, 440.00, 587.33], label: '春木 · 姑洗角音' },
+              fire:  { freqs: [440.00, 587.33, 659.25], label: '夏火 · 蕤宾徵音' },
+              earth: { freqs: [293.66, 440.00, 587.33], label: '季土 · 黄钟宫音' },
+              metal: { freqs: [329.63, 493.88, 659.25], label: '秋金 · 太簇商音' },
+              water: { freqs: [246.94, 369.99, 493.88], label: '冬水 · 应钟羽音' }
+            };
+            const item = chords[elementKey] || chords.earth;
+            this.onToneChange(item.label);
+            if (!this._canPlaySfx()) return;
+            item.freqs.forEach((f, idx) => {
+              setTimeout(() => {
+                if (this._canPlaySfx()) this._playGuqinPluck(f, 0.19 - idx * 0.025, 2.8, 1.0, this.sfxGain);
+              }, idx * 75);
+            });
+          }
+
+          /** Stone-Seal Mechanical Click + Shimmering Fifth Chord Bloom (Luoshu 45° Lock) */
+          playLuoshuLock() {
+            if (!this._canPlaySfx()) return;
+            const ctx = this.ctx;
+            const now = ctx.currentTime;
+
+            // Stone seal crisp click
+            const thud = ctx.createOscillator();
+            const tg = ctx.createGain();
+            thud.type = 'triangle';
+            thud.frequency.setValueAtTime(190, now);
+            thud.frequency.exponentialRampToValueAtTime(62, now + 0.08);
+            tg.gain.setValueAtTime(0.0001, now);
+            tg.gain.linearRampToValueAtTime(0.28, now + 0.005);
+            tg.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+            thud.connect(tg);
+            tg.connect(this.sfxGain);
+            thud.start(now);
+            thud.stop(now + 0.15);
+
+            // Shimmering fifth chord bloom (D4 + A4 + D5 + A5)
+            [293.66, 440.00, 587.33, 880.00].forEach((f, i) => {
+              const osc = ctx.createOscillator();
+              const g = ctx.createGain();
+              osc.type = i < 2 ? 'triangle' : 'sine';
+              osc.frequency.value = f;
+              const delay = 0.03 + i * 0.045;
+              g.gain.setValueAtTime(0.0001, now + delay);
+              g.gain.linearRampToValueAtTime(0.14 - i * 0.02, now + delay + 0.06);
+              g.gain.exponentialRampToValueAtTime(0.0001, now + delay + 2.6);
+              osc.connect(g);
+              g.connect(this.sfxGain);
+              g.connect(this.reverbSend);
+              osc.start(now + delay);
+              osc.stop(now + delay + 2.7);
+            });
+            this.onToneChange('洛书合十 · 八角天印');
+          }
+
+          /** Celestial Shimmer when revealing True Hetu Spiral Dragon */
+          playDragonShimmer() {
+            if (!this._canPlaySfx()) return;
+            [440.00, 493.88, 587.33, 659.25, 880.00].forEach((f, i) => {
+              setTimeout(() => {
+                if (this._canPlaySfx()) this._playGuqinPluck(f, 0.12, 2.4, 1.01, this.sfxGain);
+              }, i * 85);
+            });
+            this.onToneChange('苍龙跃河 · 真河图');
+          }
+
+          /** Gentle Meditative 5-Tone Cadence for Slide 8 */
+          startMeditationCadence() {
+            this.isMeditating = true;
+            this.setMuted(false);
+            this.setBgmEnabled(true);
+            this.unlock(1.0);
+            const seq = [0, 3, 2, 1, 4, 0];
+            let step = 0;
+            const playStep = () => {
+              if (!this.isMeditating || this.muted) return;
+              const n = this.pentatonic[seq[step % seq.length]];
+              this._playGuqinPluck(n.freq, 0.18, 4.0, 1.0, this.bgmGain);
+              this.onToneChange(`静听 · ${n.lulu}`);
+              step++;
+              this.meditateTimer = setTimeout(playStep, 2200);
+            };
+            playStep();
+          }
+
+          stopMeditationCadence() {
+            this.isMeditating = false;
+            clearTimeout(this.meditateTimer);
+          }
+        }
+
+        /* ====================================================================
+           PART 2: GLOBAL STATE, HUD ELEMENTS & AUDIO BINDINGS
+           ==================================================================== */
+        const slides = Array.from(document.querySelectorAll('.slide'));
+        const TOTAL_SLIDES = slides.length;
+        let currentSlide = 0;
+        let cinemaMode = false;
+        let cinemaTimer = null;
+        let cinemaProgressTimer = null;
+        let cinemaMicroTimers = [];
+        const CINEMA_DURATION_MS = 7800;
+
+        const stageShell = document.getElementById('stageShell');
+        const storyBar = document.getElementById('storyBar');
+        const slideCounter = document.getElementById('slideCounter');
+        const navSlideTitle = document.getElementById('navSlideTitle');
+        const hudToneMini = document.getElementById('hudToneMini');
+        const popoverToneReadout = document.getElementById('popoverToneReadout');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const cinemaToggleBtn = document.getElementById('cinemaToggleBtn');
+        const cinemaDot = document.getElementById('cinemaDot');
+        const cinemaLabel = document.getElementById('cinemaLabel');
+        const expandToggleBtn = document.getElementById('expandToggleBtn');
+        const tocModal = document.getElementById('tocModal');
+        const tocList = document.getElementById('tocList');
+        const toastBox = document.getElementById('toastBox');
+
+        // Audio HUD Elements
+        const audioPillBtn = document.getElementById('audioPillBtn');
+        const audioPillText = document.getElementById('audioPillText');
+        const audioPopover = document.getElementById('audioPopover');
+        const bgmToggleSwitch = document.getElementById('bgmToggleSwitch');
+        const sfxToggleSwitch = document.getElementById('sfxToggleSwitch');
+        const masterVolSlider = document.getElementById('masterVolSlider');
+        const masterVolText = document.getElementById('masterVolText');
+        const quickMuteBtn = document.getElementById('quickMuteBtn');
+
+        const sound = new YiSoundEngine((toneLabel) => {
+          hudToneMini.textContent = toneLabel;
+          popoverToneReadout.textContent = `当前律吕：${toneLabel}`;
+        });
+
+        function syncAudioUI() {
+          const isActiveSound = sound.unlocked && !sound.muted && (sound.bgmEnabled || sound.sfxEnabled);
+          audioPillBtn.classList.toggle('audio-playing', isActiveSound && sound.bgmEnabled);
+          audioPillBtn.classList.toggle('audio-muted', !isActiveSound);
+          audioPillText.textContent = !sound.unlocked ? '音律' : (sound.muted ? '静音' : '五音');
+
+          bgmToggleSwitch.classList.toggle('on', sound.bgmEnabled && !sound.muted);
+          bgmToggleSwitch.setAttribute('aria-checked', String(sound.bgmEnabled && !sound.muted));
+          sfxToggleSwitch.classList.toggle('on', sound.sfxEnabled && !sound.muted);
+          sfxToggleSwitch.setAttribute('aria-checked', String(sound.sfxEnabled && !sound.muted));
+          quickMuteBtn.textContent = sound.muted ? '恢复声音' : '一键静音';
+        }
+
+        let toastTimeout = null;
+        function showToast(msg) {
+          toastBox.textContent = msg;
+          toastBox.classList.remove('opacity-0', 'translate-y-2');
+          clearTimeout(toastTimeout);
+          toastTimeout = setTimeout(() => {
+            toastBox.classList.add('opacity-0', 'translate-y-2');
+          }, 2200);
+        }
+
+        // Audio Pill Popover Controls
+        audioPillBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (!sound.unlocked) {
+            sound.unlock(1.5);
+            sound.playDialTick(5);
+            showToast('五音古韵声境已开启');
+          }
+          const isHidden = audioPopover.classList.contains('hidden');
+          audioPopover.classList.toggle('hidden', !isHidden);
+          audioPillBtn.setAttribute('aria-expanded', String(isHidden));
+          syncAudioUI();
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!audioPopover.classList.contains('hidden') && !e.target.closest('#audioPopover') && !e.target.closest('#audioPillBtn')) {
+            audioPopover.classList.add('hidden');
+            audioPillBtn.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        bgmToggleSwitch.addEventListener('click', () => {
+          sound.unlock(0.8);
+          if (sound.muted) sound.setMuted(false);
+          sound.setBgmEnabled(!sound.bgmEnabled);
+          syncAudioUI();
+          showToast(sound.bgmEnabled ? '背景古韵已开启' : '背景古韵已关闭');
+        });
+
+        sfxToggleSwitch.addEventListener('click', () => {
+          sound.unlock(0.5);
+          if (sound.muted) sound.setMuted(false);
+          sound.setSfxEnabled(!sound.sfxEnabled);
+          if (sound.sfxEnabled) sound.playDialTick(6);
+          syncAudioUI();
+          showToast(sound.sfxEnabled ? '交互音效已开启' : '交互音效已关闭');
+        });
+
+        masterVolSlider.addEventListener('input', (e) => {
+          const val = Number(e.target.value);
+          masterVolText.textContent = `${val}%`;
+          if (val > 0 && sound.muted) sound.setMuted(false);
+          sound.unlock(0.4);
+          sound.setMasterVolume(val / 100);
+          syncAudioUI();
+        });
+
+        quickMuteBtn.addEventListener('click', () => {
+          sound.unlock(0.4);
+          sound.setMuted(!sound.muted);
+          syncAudioUI();
+          showToast(sound.muted ? '已全局静音' : '已恢复五音声境');
+        });
+
+        /* ====================================================================
+           PART 3: STORY BAR, TOC DIRECTORY & SLIDE NAVIGATION
+           ==================================================================== */
+        const storyFills = [];
+        slides.forEach((s, idx) => {
+          const title = s.dataset.title || `第 ${idx + 1} 页`;
+
+          const seg = document.createElement('button');
+          seg.className = 'story-seg h-1 rounded-full bg-white/15 overflow-hidden relative cursor-pointer p-0 border-0';
+          seg.setAttribute('aria-label', `跳转到第${idx + 1}页: ${title}`);
+          const fill = document.createElement('div');
+          fill.className = 'story-fill';
+          seg.appendChild(fill);
+          seg.addEventListener('click', () => {
+            stopCinemaMode(true);
+            goToSlide(idx, false, true);
+          });
+          storyBar.appendChild(seg);
+          storyFills.push({ seg, fill });
+
+          const item = document.createElement('button');
+          item.className = 'toc-item flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-left transition';
+          item.innerHTML = `
+            <div class="flex items-center gap-3">
+              <span class="font-mono text-xs text-gilt">0${idx + 1}</span>
+              <span class="font-serif text-sm text-xuan">${title}</span>
+            </div>
+            <span class="text-xs text-ash">→</span>
+          `;
+          item.addEventListener('click', () => {
+            closeToc();
+            stopCinemaMode(true);
+            goToSlide(idx, false, true);
+          });
+          tocList.appendChild(item);
+        });
+
+        function goToSlide(index, fromCinema = false, playTurnSound = true) {
+          const target = Math.max(0, Math.min(TOTAL_SLIDES - 1, index));
+          if (target === currentSlide && slides[target].classList.contains('active')) {
+            updateChrome();
+            return;
+          }
+
+          if (currentSlide === 7 && sound.isMeditating) {
+            stopMeditationUI();
+          }
+
+          slides[currentSlide].classList.remove('active');
+          currentSlide = target;
+          slides[currentSlide].classList.add('active');
+          slides[currentSlide].scrollTop = 0;
+
+          cosmosWarp = 1.0;
+          if (playTurnSound) sound.playPageTurn();
+          if (currentSlide === 2) requestAnimationFrame(resizeQiCanvas);
+
+          updateChrome();
+
+          if (cinemaMode && fromCinema) {
+            scheduleCinemaStep();
+          }
+        }
+
+        function updateChrome() {
+          const numStr = String(currentSlide + 1).padStart(2, '0');
+          slideCounter.textContent = `${numStr}/0${TOTAL_SLIDES}`;
+          navSlideTitle.textContent = slides[currentSlide].dataset.title || '';
+          prevBtn.disabled = currentSlide === 0;
+          nextBtn.disabled = currentSlide === TOTAL_SLIDES - 1;
+
+          storyFills.forEach(({ seg, fill }, i) => {
+            seg.classList.remove('done', 'current');
+            if (i < currentSlide) {
+              seg.classList.add('done');
+              fill.style.width = '100%';
+            } else if (i === currentSlide) {
+              seg.classList.add('current');
+              fill.style.width = cinemaMode ? '0%' : '100%';
+            } else {
+              fill.style.width = '0%';
+            }
+          });
+
+          Array.from(tocList.children).forEach((el, i) => {
+            el.classList.toggle('border-vermilion/60', i === currentSlide);
+            el.classList.toggle('bg-cinnabar/20', i === currentSlide);
+          });
+        }
+
+        /* ====================================================================
+           PART 4: CINEMA MOVIE MODE (SYNCHRONIZED INTERACTIVE AUTO-CHOREOGRAPHY)
+           ==================================================================== */
+        function clearCinemaTimers() {
+          clearTimeout(cinemaTimer);
+          clearInterval(cinemaProgressTimer);
+          cinemaMicroTimers.forEach(t => clearTimeout(t));
+          cinemaMicroTimers = [];
+        }
+
+        function scheduleCinemaStep() {
+          clearCinemaTimers();
+          const startTime = performance.now();
+          const activeFill = storyFills[currentSlide].fill;
+          activeFill.style.width = '0%';
+
+          runSlideAutoChoreography(currentSlide);
+
+          cinemaProgressTimer = setInterval(() => {
+            const elapsed = performance.now() - startTime;
+            activeFill.style.width = Math.min(100, (elapsed / CINEMA_DURATION_MS) * 100) + '%';
+          }, 60);
+
+          cinemaTimer = setTimeout(() => {
+            if (!cinemaMode) return;
+            if (currentSlide < TOTAL_SLIDES - 1) {
+              goToSlide(currentSlide + 1, true, true);
+            } else {
+              stopCinemaMode(true);
+              showToast('第一章声画影片播放完毕');
+            }
+          }, CINEMA_DURATION_MS);
+        }
+
+        function runSlideAutoChoreography(idx) {
+          if (idx === 1) {
+            [0, 3, 6, 9].forEach((val, step) => {
+              cinemaMicroTimers.push(setTimeout(() => setXiaoxiIndex(val, true), step * 1700));
+            });
+          } else if (idx === 2) {
+            switchS3Tab('qi');
+            cinemaMicroTimers.push(setTimeout(() => setQiValue(14), 500));
+            cinemaMicroTimers.push(setTimeout(() => setQiValue(88), 2200));
+            cinemaMicroTimers.push(setTimeout(() => {
+              switchS3Tab('tree');
+              renderTaijiTree(4, true);
+            }, 4400));
+          } else if (idx === 3) {
+            cinemaMicroTimers.push(setTimeout(() => { applyHexBits('111000', 4); sound.playYaoToggle(true); }, 600));
+            cinemaMicroTimers.push(setTimeout(() => { applyHexBits('000111', 2); sound.playYaoToggle(false); }, 2800));
+            cinemaMicroTimers.push(setTimeout(() => { applyHexBits('101010', 4); sound.playYaoToggle(true); }, 5100));
+          } else if (idx === 4) {
+            setBaguaMode('xiantian', false);
+            cinemaMicroTimers.push(setTimeout(() => setBaguaMode('houtian', true), 2600));
+            cinemaMicroTimers.push(setTimeout(() => setDividerOverlay(true), 4600));
+          } else if (idx === 5) {
+            ['spring', 'summer', 'late', 'autumn', 'winter'].forEach((s, i) => {
+              cinemaMicroTimers.push(setTimeout(() => setWuxingSeason(s, true), i * 1450));
+            });
+          } else if (idx === 6) {
+            switchS7Tab('luoshu');
+            setLuoshuAngle(0, false);
+            cinemaMicroTimers.push(setTimeout(() => animateLuoshuTo(45), 900));
+            cinemaMicroTimers.push(setTimeout(() => { switchS7Tab('dragon'); setHetuVisible(false, false); }, 4500));
+            cinemaMicroTimers.push(setTimeout(() => setHetuVisible(true, true), 5900));
+          }
+        }
+
+        function startCinemaMode(fromCover = false) {
+          sound.unlock(1.5);
+          syncAudioUI();
+          cinemaMode = true;
+          cinemaToggleBtn.setAttribute('aria-pressed', 'true');
+          cinemaToggleBtn.classList.add('border-vermilion/60', 'bg-cinnabar/40');
+          cinemaDot.classList.remove('bg-ash');
+          cinemaDot.classList.add('bg-vermilion', 'animate-pulse');
+          cinemaLabel.textContent = '播放中';
+          showToast('影片模式已启动 · 声画同步演易');
+
+          if (fromCover || currentSlide === TOTAL_SLIDES - 1) {
+            goToSlide(fromCover ? 1 : 0, true, false);
+            if (fromCover) sound.playGong();
+          } else {
+            scheduleCinemaStep();
+          }
+        }
+
+        function stopCinemaMode(silent = false) {
+          if (!cinemaMode) return;
+          cinemaMode = false;
+          clearCinemaTimers();
+          cinemaToggleBtn.setAttribute('aria-pressed', 'false');
+          cinemaToggleBtn.classList.remove('border-vermilion/60', 'bg-cinnabar/40');
+          cinemaDot.classList.remove('bg-vermilion', 'animate-pulse');
+          cinemaDot.classList.add('bg-ash');
+          cinemaLabel.textContent = '影片';
+          updateChrome();
+          if (!silent) showToast('已切换为手动交互模式');
+        }
+
+        // Cover & Global Navigation Bindings
+        document.getElementById('startAudioDeckBtn').addEventListener('click', () => {
+          sound.setMuted(false);
+          sound.setBgmEnabled(true);
+          sound.setSfxEnabled(true);
+          sound.unlock(1.5);
+          syncAudioUI();
+          sound.playGong();
+          goToSlide(1, false, false);
+        });
+
+        document.getElementById('silentBrowseBtn').addEventListener('click', () => {
+          sound.setMuted(true);
+          syncAudioUI();
+          goToSlide(1, false, false);
+          showToast('已进入静音浏览模式，可随时点击右上角开启五音');
+        });
+
+        document.getElementById('heroCinemaBtn').addEventListener('click', () => {
+          sound.setMuted(false);
+          startCinemaMode(true);
+        });
+
+        document.getElementById('replayCinemaBtn').addEventListener('click', () => {
+          stopMeditationUI();
+          sound.setMuted(false);
+          startCinemaMode(true);
+        });
+
+        cinemaToggleBtn.addEventListener('click', () => {
+          if (cinemaMode) stopCinemaMode(false);
+          else startCinemaMode(false);
+        });
+
+        prevBtn.addEventListener('click', () => { stopCinemaMode(true); goToSlide(currentSlide - 1); });
+        nextBtn.addEventListener('click', () => { stopCinemaMode(true); goToSlide(currentSlide + 1); });
+
+        function openToc() { tocModal.classList.remove('hidden'); tocModal.classList.add('flex'); }
+        function closeToc() { tocModal.classList.add('hidden'); tocModal.classList.remove('flex'); }
+        document.getElementById('tocOpenBtn').addEventListener('click', openToc);
+        document.getElementById('hudIndexBtn').addEventListener('click', openToc);
+        document.getElementById('navTitleBtn').addEventListener('click', openToc);
+        document.getElementById('endTocBtn').addEventListener('click', openToc);
+        document.getElementById('tocCloseBtn').addEventListener('click', closeToc);
+        tocModal.addEventListener('click', (e) => { if (e.target === tocModal) closeToc(); });
+
+        expandToggleBtn.addEventListener('click', () => {
+          stageShell.classList.toggle('expanded-mode');
+          setTimeout(() => { resizeCosmos(); resizeQiCanvas(); }, 460);
+        });
+
+        // Keyboard Arrows
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+            if (document.activeElement.tagName !== 'INPUT') {
+              e.preventDefault();
+              stopCinemaMode(true);
+              goToSlide(currentSlide + 1);
+            }
+          } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+            if (document.activeElement.tagName !== 'INPUT') {
+              e.preventDefault();
+              stopCinemaMode(true);
+              goToSlide(currentSlide - 1);
+            }
+          } else if (e.key === 'Escape') {
+            closeToc();
+            audioPopover.classList.add('hidden');
+          }
+        });
+
+        // Touch Swipe Left/Right (strictly ignoring drags inside interactive modules)
+        let touchStartX = 0, touchStartY = 0, swipeBlocked = false;
+        const viewportEl = document.getElementById('slidesViewport');
+        viewportEl.addEventListener('touchstart', (e) => {
+          if (e.target.closest('[data-no-swipe="true"]') || e.target.tagName === 'INPUT') {
+            swipeBlocked = true;
+            return;
+          }
+          swipeBlocked = false;
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        viewportEl.addEventListener('touchend', (e) => {
+          if (swipeBlocked || !e.changedTouches.length) return;
+          const dx = e.changedTouches[0].clientX - touchStartX;
+          const dy = e.changedTouches[0].clientY - touchStartY;
+          if (Math.abs(dx) > 46 && Math.abs(dx) > Math.abs(dy) * 1.35) {
+            stopCinemaMode(true);
+            if (dx < 0) goToSlide(currentSlide + 1);
+            else goToSlide(currentSlide - 1);
+          }
+        }, { passive: true });
+
+        /* ====================================================================
+           PART 5: GLOBAL INK-WASH & STARLIGHT CANVAS
+           ==================================================================== */
+        const cosmosCanvas = document.getElementById('cosmosCanvas');
+        const cCtx = cosmosCanvas.getContext('2d');
+        let cW = 0, cH = 0, cosmosWarp = 0, cosmosAngle = 0;
+        const stars = [];
+
+        function initStars() {
+          stars.length = 0;
+          for (let i = 0; i < 64; i++) {
+            stars.push({
+              x: Math.random(),
+              y: Math.random(),
+              r: Math.random() * 1.45 + 0.35,
+              alpha: Math.random() * 0.55 + 0.15,
+              phase: Math.random() * Math.PI * 2,
+              speed: Math.random() * 0.015 + 0.005,
+              hue: Math.random() > 0.78 ? '#C8A96E' : (Math.random() > 0.9 ? '#B83227' : '#F2EFE9')
+            });
+          }
+        }
+
+        function resizeCosmos() {
+          const rect = stageShell.getBoundingClientRect();
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          cW = rect.width; cH = rect.height;
+          cosmosCanvas.width = cW * dpr;
+          cosmosCanvas.height = cH * dpr;
+          cCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        function renderCosmos() {
+          cCtx.clearRect(0, 0, cW, cH);
+          cosmosAngle += 0.00075 + cosmosWarp * 0.013;
+          cosmosWarp *= 0.92;
+
+          cCtx.save();
+          cCtx.translate(cW * 0.5, cH * 0.44);
+          cCtx.rotate(cosmosAngle);
+          cCtx.strokeStyle = 'rgba(200, 169, 110, 0.06)';
+          cCtx.lineWidth = 1;
+          cCtx.beginPath();
+          cCtx.arc(0, 0, Math.min(cW, cH) * 0.45, 0, Math.PI * 2);
+          cCtx.stroke();
+          cCtx.setLineDash([4, 10]);
+          cCtx.beginPath();
+          cCtx.arc(0, 0, Math.min(cW, cH) * 0.31, 0, Math.PI * 2);
+          cCtx.stroke();
+          cCtx.restore();
+
+          for (let i = 0; i < stars.length; i++) {
+            const s = stars[i];
+            s.phase += s.speed;
+            s.y -= 0.00018 + cosmosWarp * 0.004;
+            if (s.y < 0) s.y = 1;
+            cCtx.globalAlpha = s.alpha * (0.6 + 0.4 * Math.sin(s.phase));
+            cCtx.fillStyle = s.hue;
+            cCtx.beginPath();
+            cCtx.arc(s.x * cW, s.y * cH, s.r, 0, Math.PI * 2);
+            cCtx.fill();
+          }
+          cCtx.globalAlpha = 1;
+          requestAnimationFrame(renderCosmos);
+        }
+
+        /* ====================================================================
+           PART 6: SLIDE 2 — 十二消息卦 WHEEL + JADE DIAL TICK SFX
+           ==================================================================== */
+        const XIAOXI_DATA = [
+          { name: '坤', term: '冬至 · 纯阴伏藏', angle: 180, lines: [0,0,0,0,0,0], desc: '日影最长，纯阴伏藏；物极必反，一阳正待于地下萌生。' },
+          { name: '复', term: '冬至 · 一阳来复', angle: 210, lines: [1,0,0,0,0,0], desc: '一阳初动，日影渐短；天地生机暗藏，万物内蓄春意。' },
+          { name: '临', term: '大寒 · 二阳渐长', angle: 240, lines: [1,1,0,0,0,0], desc: '阳气渐盛，寒冰始解；向上生长的趋势已然确立。' },
+          { name: '泰', term: '春分 · 阴阳平衡', angle: 270, lines: [1,1,1,0,0,0], desc: '地天泰和，昼夜均分；天地交泰，农耕生发黄金之始。' },
+          { name: '大壮', term: '谷雨 · 四阳壮盛', angle: 300, lines: [1,1,1,1,0,0], desc: '阳气大盛，草木繁茂；万物进入蓬勃成长阶段。' },
+          { name: '夬', term: '小满 · 五阳决阴', angle: 330, lines: [1,1,1,1,1,0], desc: '五阳决去一阴，气温炽升，距夏至极盛仅一步之遥。' },
+          { name: '乾', term: '夏至 · 纯阳极盛', angle: 0,   lines: [1,1,1,1,1,1], desc: '日影最短，阳气登峰造极；盛极之处，阴气已悄然孕育。' },
+          { name: '姤', term: '夏至后 · 一阴初生', angle: 30,  lines: [0,1,1,1,1,1], desc: '一阴初生于下，炎夏之中暗藏秋凉之兆，警觉趋势转折。' },
+          { name: '遁', term: '大暑 · 二阴渐进', angle: 60,  lines: [0,0,1,1,1,1], desc: '阴气渐进，阳气渐退；盛极当敛，明审进退时势。' },
+          { name: '否', term: '秋分 · 阴阳闭塞', angle: 90,  lines: [0,0,0,1,1,1], desc: '昼夜再均，暑去凉来；天地不交之象，提醒收敛固本。' },
+          { name: '观', term: '霜降 · 四阴渐盛', angle: 120, lines: [0,0,0,0,1,1], desc: '秋收已毕，草木凋零；静观时局变化，储备过冬之资。' },
+          { name: '剥', term: '小雪 · 硕果仅存', angle: 150, lines: [0,0,0,0,0,1], desc: '五阴剥阳仅存一阳于上，寒冬将至，守正待时以迎复始。' }
+        ];
+
+        const xiaoxiNodesG = document.getElementById('xiaoxiNodes');
+        const xiaoxiCenterHexG = document.getElementById('xiaoxiCenterHex');
+        const xiaoxiPointer = document.getElementById('xiaoxiPointer');
+        const xiaoxiSlider = document.getElementById('xiaoxiSlider');
+        const xxNameEl = document.getElementById('xxName');
+        const xxTermEl = document.getElementById('xxTerm');
+        const xxYangPctEl = document.getElementById('xxYangPct');
+        const xxYangBarEl = document.getElementById('xxYangBar');
+        const xxDescEl = document.getElementById('xxDesc');
+        let lastXiaoxiIdx = -1;
+
+        function buildXiaoxiWheel() {
+          xiaoxiNodesG.innerHTML = '';
+          const NS = 'http://www.w3.org/2000/svg';
+          const cx = 150, cy = 150;
+
+          XIAOXI_DATA.forEach((item, idx) => {
+            const rad = (item.angle - 90) * Math.PI / 180;
+            const gx = cx + 102 * Math.cos(rad);
+            const gy = cy + 102 * Math.sin(rad);
+            const lx = cx + 132 * Math.cos(rad);
+            const ly = cy + 132 * Math.sin(rad);
+
+            const g = document.createElementNS(NS, 'g');
+            g.setAttribute('class', 'cursor-pointer');
+
+            const hit = document.createElementNS(NS, 'circle');
+            hit.setAttribute('cx', gx); hit.setAttribute('cy', gy); hit.setAttribute('r', '21');
+            hit.setAttribute('fill', 'transparent');
+            g.appendChild(hit);
+
+            const hexG = document.createElementNS(NS, 'g');
+            hexG.setAttribute('transform', `translate(${gx}, ${gy}) rotate(${item.angle})`);
+            item.lines.forEach((bit, lineIdx) => {
+              const yPos = 10 - lineIdx * 4;
+              if (bit === 1) {
+                const r = document.createElementNS(NS, 'rect');
+                r.setAttribute('x', '-9'); r.setAttribute('y', yPos); r.setAttribute('width', '18'); r.setAttribute('height', '2.1'); r.setAttribute('rx', '0.6');
+                r.setAttribute('fill', '#F2EFE9'); r.setAttribute('class', 'xx-bar');
+                hexG.appendChild(r);
+              } else {
+                [-9, 1.5].forEach(sx => {
+                  const r = document.createElementNS(NS, 'rect');
+                  r.setAttribute('x', sx); r.setAttribute('y', yPos); r.setAttribute('width', '7.5'); r.setAttribute('height', '2.1'); r.setAttribute('rx', '0.6');
+                  r.setAttribute('fill', '#9A958C'); r.setAttribute('class', 'xx-bar');
+                  hexG.appendChild(r);
+                });
+              }
+            });
+            g.appendChild(hexG);
+
+            const txt = document.createElementNS(NS, 'text');
+            txt.setAttribute('x', lx); txt.setAttribute('y', ly + 4);
+            txt.setAttribute('text-anchor', 'middle'); txt.setAttribute('font-size', '11');
+            txt.setAttribute('font-family', 'Noto Serif SC'); txt.setAttribute('fill', '#9A958C');
+            txt.setAttribute('class', 'xx-label');
+            txt.textContent = item.name;
+            g.appendChild(txt);
+
+            if (idx === 0 || idx === 3 || idx === 6 || idx === 9) {
+              const sol = document.createElementNS(NS, 'text');
+              sol.setAttribute('x', cx + 74 * Math.cos(rad));
+              sol.setAttribute('y', cy + 74 * Math.sin(rad) + 3);
+              sol.setAttribute('text-anchor', 'middle'); sol.setAttribute('font-size', '9');
+              sol.setAttribute('font-family', 'Noto Serif SC'); sol.setAttribute('fill', '#C8A96E');
+              sol.textContent = idx === 0 ? '冬至' : idx === 3 ? '春分' : idx === 6 ? '夏至' : '秋分';
+              g.appendChild(sol);
+            }
+
+            g.addEventListener('click', () => {
+              stopCinemaMode(true);
+              setXiaoxiIndex(idx, true);
+            });
+            xiaoxiNodesG.appendChild(g);
+          });
+        }
+
+        function setXiaoxiIndex(idx, playSound = false) {
+          const item = XIAOXI_DATA[idx];
+          if (playSound && idx !== lastXiaoxiIdx) {
+            sound.playDialTick(idx);
+          }
+          lastXiaoxiIdx = idx;
+          xiaoxiSlider.value = idx;
+          xiaoxiPointer.style.transform = `rotate(${item.angle}deg)`;
+
+          Array.from(xiaoxiNodesG.children).forEach((g, i) => {
+            const label = g.querySelector('.xx-label');
+            const bars = g.querySelectorAll('.xx-bar');
+            const isActive = i === idx;
+            label.setAttribute('fill', isActive ? '#B83227' : '#9A958C');
+            label.setAttribute('font-weight', isActive ? '700' : '400');
+            bars.forEach(b => {
+              b.setAttribute('fill', isActive ? '#C8A96E' : (b.getAttribute('width') === '18' ? '#F2EFE9' : '#7A756D'));
+            });
+          });
+
+          const NS = 'http://www.w3.org/2000/svg';
+          xiaoxiCenterHexG.innerHTML = '';
+          item.lines.forEach((bit, lineIdx) => {
+            const yPos = 170 - lineIdx * 9.2;
+            if (bit === 1) {
+              const r = document.createElementNS(NS, 'rect');
+              r.setAttribute('x', '123'); r.setAttribute('y', yPos); r.setAttribute('width', '54'); r.setAttribute('height', '4.8'); r.setAttribute('rx', '1.4');
+              r.setAttribute('fill', '#B83227');
+              xiaoxiCenterHexG.appendChild(r);
+            } else {
+              [123, 154].forEach(sx => {
+                const r = document.createElementNS(NS, 'rect');
+                r.setAttribute('x', sx); r.setAttribute('y', yPos); r.setAttribute('width', '23'); r.setAttribute('height', '4.8'); r.setAttribute('rx', '1.4');
+                r.setAttribute('fill', '#F2EFE9');
+                xiaoxiCenterHexG.appendChild(r);
+              });
+            }
+          });
+
+          const yangPct = Math.round((item.lines.reduce((a, b) => a + b, 0) / 6) * 100);
+          xxNameEl.textContent = `${item.name}卦`;
+          xxTermEl.textContent = item.term;
+          xxYangPctEl.textContent = `${yangPct}%`;
+          xxYangBarEl.style.width = `${yangPct}%`;
+          xxDescEl.textContent = item.desc;
+        }
+
+        xiaoxiSlider.addEventListener('input', (e) => {
+          stopCinemaMode(true);
+          setXiaoxiIndex(Number(e.target.value), true);
+        });
+
+        /* ====================================================================
+           PART 7: SLIDE 3 — 一气二态粒子太极场 + 太极生八卦树
+           ==================================================================== */
+        const s3TabQi = document.getElementById('s3TabQi');
+        const s3TabTree = document.getElementById('s3TabTree');
+        const s3PanelQi = document.getElementById('s3PanelQi');
+        const s3PanelTree = document.getElementById('s3PanelTree');
+        const qiCanvas = document.getElementById('qiCanvas');
+        const qCtx = qiCanvas.getContext('2d');
+        const qiSlider = document.getElementById('qiSlider');
+        const qiStateBadge = document.getElementById('qiStateBadge');
+        const qiOutputVal = document.getElementById('qiOutputVal');
+        const qiMetaphor = document.getElementById('qiMetaphor');
+
+        let qiValue = 50, qW = 300, qH = 180;
+        const qiParticles = Array.from({ length: 84 }, (_, i) => ({
+          angle: (i / 84) * Math.PI * 2,
+          dist: 0.2 + Math.random() * 0.78,
+          size: 1.5 + Math.random() * 2.1,
+          phase: Math.random() * Math.PI * 2,
+          arm: i % 2
+        }));
+
+        function resizeQiCanvas() {
+          const rect = qiCanvas.parentElement.getBoundingClientRect();
+          if (rect.width < 10 || rect.height < 10) return;
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          qW = rect.width; qH = rect.height;
+          qiCanvas.width = qW * dpr;
+          qiCanvas.height = qH * dpr;
+          qCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        function setQiValue(v) {
+          qiValue = Math.max(0, Math.min(100, Number(v)));
+          qiSlider.value = qiValue;
+          qiOutputVal.textContent = `能量 ${qiValue}%`;
+
+          if (qiValue < 35) {
+            qiStateBadge.textContent = '静阴 · 刹车内收';
+            qiStateBadge.className = 'px-2.5 py-0.5 rounded-full text-[10.5px] font-serif bg-black/75 border border-white/25 text-xuan/90';
+            qiMetaphor.textContent = '能量内收、沉降、收藏（五脏储精之态）——如轻踩刹车，稳重凝聚。';
+          } else if (qiValue > 65) {
+            qiStateBadge.textContent = '炽阳 · 电门升腾';
+            qiStateBadge.className = 'px-2.5 py-0.5 rounded-full text-[10.5px] font-serif bg-cinnabar/55 border border-vermilion/60 text-xuan';
+            qiMetaphor.textContent = '能量外放、升发、运动（六腑传导之态）——如深踩电门，生机勃发。';
+          } else {
+            qiStateBadge.textContent = '阴阳和合 · 动态平衡';
+            qiStateBadge.className = 'px-2.5 py-0.5 rounded-full text-[10.5px] font-serif bg-black/75 border border-gilt/40 text-gilt';
+            qiMetaphor.textContent = '同源异态：同一股“一身之气”，借升降出入呈现太极中和稳态。';
+          }
+        }
+
+        function renderQiField() {
+          if (currentSlide === 2 && !s3PanelQi.classList.contains('hidden')) {
+            qCtx.fillStyle = 'rgba(6, 6, 9, 0.24)';
+            qCtx.fillRect(0, 0, qW, qH);
+
+            const t = qiValue / 100;
+            const cx = qW * 0.5;
+            const cy = qH * (0.58 - t * 0.16);
+            const maxR = Math.min(qW, qH) * (0.24 + t * 0.25);
+            const rotSpeed = 0.006 + t * 0.048;
+
+            const grad = qCtx.createRadialGradient(cx, cy, 4, cx, cy, maxR * 1.15);
+            if (t > 0.55) {
+              grad.addColorStop(0, `rgba(184, 50, 39, ${0.22 + (t - 0.5) * 0.45})`);
+              grad.addColorStop(0.6, 'rgba(200, 169, 110, 0.1)');
+              grad.addColorStop(1, 'rgba(6, 6, 9, 0)');
+            } else {
+              grad.addColorStop(0, `rgba(242, 239, 233, ${0.15 + (0.5 - t) * 0.2})`);
+              grad.addColorStop(0.6, 'rgba(120, 130, 150, 0.08)');
+              grad.addColorStop(1, 'rgba(6, 6, 9, 0)');
+            }
+            qCtx.fillStyle = grad;
+            qCtx.beginPath();
+            qCtx.arc(cx, cy, maxR * 1.15, 0, Math.PI * 2);
+            qCtx.fill();
+
+            for (let i = 0; i < qiParticles.length; i++) {
+              const p = qiParticles[i];
+              p.angle += rotSpeed * (0.6 + (1 - p.dist) * 0.9);
+              p.phase += 0.04 + t * 0.06;
+              const spiralR = p.dist * maxR * (0.88 + 0.14 * Math.sin(p.phase));
+              const px = cx + Math.cos(p.angle + p.arm * Math.PI) * spiralR * (1 + t * 0.16);
+              const py = cy + Math.sin(p.angle + p.arm * Math.PI) * spiralR * (0.85 + t * 0.2) - (t > 0.6 ? Math.sin(p.phase) * 5 : 0);
+
+              qCtx.fillStyle = t < 0.35
+                ? (p.arm === 0 ? 'rgba(242,239,233,0.78)' : 'rgba(148,163,184,0.65)')
+                : t > 0.65
+                  ? (p.arm === 0 ? 'rgba(184,50,39,0.92)' : 'rgba(200,169,110,0.88)')
+                  : (p.arm === 0 ? 'rgba(184,50,39,0.72)' : 'rgba(242,239,233,0.8)');
+              qCtx.beginPath();
+              qCtx.arc(px, py, p.size * (0.85 + t * 0.42), 0, Math.PI * 2);
+              qCtx.fill();
+            }
+          }
+          requestAnimationFrame(renderQiField);
+        }
+
+        qiSlider.addEventListener('input', (e) => { stopCinemaMode(true); setQiValue(e.target.value); });
+        document.querySelectorAll('.qi-preset').forEach(btn => {
+          btn.addEventListener('click', () => {
+            stopCinemaMode(true);
+            setQiValue(btn.dataset.val);
+            sound.playYaoToggle(Number(btn.dataset.val) > 50);
+          });
+        });
+
+        const taijiTreeSvg = document.getElementById('taijiTreeSvg');
+        const treeCaption = document.getElementById('treeCaption');
+        const TREE_CAPTIONS = {
+          1: '太极：混沌未分之宇宙本源，“其大无外，其小无内”。',
+          2: '太极生两仪：一气动静展现阴仪（--）与阳仪（—）。',
+          3: '两仪生四象：太阴（四）、少阳（三）、少阴（二）、太阳（一）。',
+          4: '四象生八卦：由左至右得坤艮坎巽、震离兑乾，万物皆归八经卦。'
+        };
+
+        function drawMiniBars(NS, parent, x, y, bits, w = 22, h = 2.8, gap = 4.6, color = '#F2EFE9') {
+          bits.forEach((b, i) => {
+            const yy = y - i * gap;
+            if (b === 1) {
+              const r = document.createElementNS(NS, 'rect');
+              r.setAttribute('x', x - w / 2); r.setAttribute('y', yy); r.setAttribute('width', w); r.setAttribute('height', h); r.setAttribute('rx', '0.8');
+              r.setAttribute('fill', color);
+              parent.appendChild(r);
+            } else {
+              const seg = (w - 4) / 2;
+              [x - w / 2, x + 2].forEach(sx => {
+                const r = document.createElementNS(NS, 'rect');
+                r.setAttribute('x', sx); r.setAttribute('y', yy); r.setAttribute('width', seg); r.setAttribute('height', h); r.setAttribute('rx', '0.8');
+                r.setAttribute('fill', color);
+                parent.appendChild(r);
+              });
+            }
+          });
+        }
+
+        function renderTaijiTree(step, playSound = false) {
+          if (playSound) sound.playTreeStep(step);
+          const NS = 'http://www.w3.org/2000/svg';
+          taijiTreeSvg.innerHTML = '';
+          treeCaption.textContent = TREE_CAPTIONS[step];
+
+          document.querySelectorAll('.tree-step-btn').forEach(btn => {
+            const active = Number(btn.dataset.step) === step;
+            btn.className = `tree-step-btn py-2 rounded-xl text-[11px] font-serif border transition ${
+              active ? 'border-vermilion/60 bg-cinnabar/55 text-xuan font-semibold' : 'border-white/10 bg-white/5 text-ash'
+            }`;
+          });
+
+          const addLine = (x1, y1, x2, y2, stroke = 'rgba(200,169,110,0.5)') => {
+            const l = document.createElementNS(NS, 'line');
+            l.setAttribute('x1', x1); l.setAttribute('y1', y1); l.setAttribute('x2', x2); l.setAttribute('y2', y2);
+            l.setAttribute('stroke', stroke); l.setAttribute('stroke-width', '1.2');
+            taijiTreeSvg.appendChild(l);
+          };
+          const addText = (x, y, txt, size = 10, fill = '#F2EFE9', weight = '400') => {
+            const t = document.createElementNS(NS, 'text');
+            t.setAttribute('x', x); t.setAttribute('y', y); t.setAttribute('text-anchor', 'middle');
+            t.setAttribute('font-size', size); t.setAttribute('font-family', 'Noto Serif SC');
+            t.setAttribute('fill', fill); t.setAttribute('font-weight', weight);
+            t.textContent = txt;
+            taijiTreeSvg.appendChild(t);
+          };
+
+          const tjC = document.createElementNS(NS, 'circle');
+          tjC.setAttribute('cx', '170'); tjC.setAttribute('cy', '208'); tjC.setAttribute('r', '16');
+          tjC.setAttribute('fill', '#0B0B10'); tjC.setAttribute('stroke', '#C8A96E'); tjC.setAttribute('stroke-width', '1.5');
+          taijiTreeSvg.appendChild(tjC);
+          addText(170, 212, '太极', 10, '#C8A96E', '700');
+
+          if (step >= 2) {
+            addLine(170, 192, 88, 164, 'rgba(242,239,233,0.45)');
+            addLine(170, 192, 252, 164, 'rgba(184,50,39,0.7)');
+            drawMiniBars(NS, taijiTreeSvg, 88, 154, [0], 28, 3.4, 5, '#F2EFE9');
+            drawMiniBars(NS, taijiTreeSvg, 252, 154, [1], 28, 3.4, 5, '#B83227');
+            addText(88, 170, '阴仪', 10, '#9A958C');
+            addText(252, 170, '阳仪', 10, '#B83227');
+          }
+          if (step >= 3) {
+            [
+              { x: 46, px: 88, bits: [0,0], name: '太阴', col: '#9A958C' },
+              { x: 130, px: 88, bits: [0,1], name: '少阳', col: '#F2EFE9' },
+              { x: 210, px: 252, bits: [1,0], name: '少阴', col: '#C8A96E' },
+              { x: 294, px: 252, bits: [1,1], name: '太阳', col: '#B83227' }
+            ].forEach(item => {
+              addLine(item.px, 148, item.x, 111, 'rgba(200,169,110,0.42)');
+              drawMiniBars(NS, taijiTreeSvg, item.x, 99, item.bits, 24, 3, 5, item.col);
+              addText(item.x, 115, item.name, 9.5, item.col);
+            });
+          }
+          if (step >= 4) {
+            [
+              { x: 25, px: 46, bits: [0,0,0], name: '坤', num: '8' },
+              { x: 67, px: 46, bits: [0,0,1], name: '艮', num: '7' },
+              { x: 109, px: 130, bits: [0,1,0], name: '坎', num: '6' },
+              { x: 151, px: 130, bits: [0,1,1], name: '巽', num: '5' },
+              { x: 189, px: 210, bits: [1,0,0], name: '震', num: '4' },
+              { x: 231, px: 210, bits: [1,0,1], name: '离', num: '3' },
+              { x: 273, px: 294, bits: [1,1,0], name: '兑', num: '2' },
+              { x: 315, px: 294, bits: [1,1,1], name: '乾', num: '1' }
+            ].forEach(item => {
+              const col = item.x > 170 ? '#B83227' : '#F2EFE9';
+              addLine(item.px, 89, item.x, 52, item.x > 170 ? 'rgba(184,50,39,0.52)' : 'rgba(242,239,233,0.35)');
+              drawMiniBars(NS, taijiTreeSvg, item.x, 43, item.bits, 20, 2.5, 4.5, col);
+              addText(item.x, 22, item.name, 11.5, item.x > 170 ? '#C8A96E' : '#F2EFE9', '700');
+              addText(item.x, 58, item.num, 8.5, '#9A958C');
+            });
+          }
+        }
+
+        function switchS3Tab(mode) {
+          const isQi = mode === 'qi';
+          s3PanelQi.classList.toggle('hidden', !isQi);
+          s3PanelQi.classList.toggle('flex', isQi);
+          s3PanelTree.classList.toggle('hidden', isQi);
+          s3PanelTree.classList.toggle('flex', !isQi);
+          s3TabQi.className = `py-1.5 rounded-lg text-xs font-serif transition ${isQi ? 'font-semibold bg-cinnabar/85 text-xuan' : 'text-ash hover:text-xuan'}`;
+          s3TabTree.className = `py-1.5 rounded-lg text-xs font-serif transition ${!isQi ? 'font-semibold bg-cinnabar/85 text-xuan' : 'text-ash hover:text-xuan'}`;
+          if (isQi) requestAnimationFrame(resizeQiCanvas);
+        }
+
+        s3TabQi.addEventListener('click', () => { stopCinemaMode(true); switchS3Tab('qi'); sound.playDialTick(2); });
+        s3TabTree.addEventListener('click', () => { stopCinemaMode(true); switchS3Tab('tree'); sound.playTreeStep(4); });
+        document.querySelectorAll('.tree-step-btn').forEach(btn => {
+          btn.addEventListener('click', () => { stopCinemaMode(true); renderTaijiTree(Number(btn.dataset.step), true); });
+        });
+
+        /* ====================================================================
+           PART 8: SLIDE 4 — 六爻演化塔 (64 HEXAGRAM LOOKUP + YANG/YIN SFX)
+           ==================================================================== */
+        const TRIGRAM_META = {
+          '111': { name: '乾', nature: '天' }, '000': { name: '坤', nature: '地' },
+          '100': { name: '震', nature: '雷' }, '011': { name: '巽', nature: '风' },
+          '010': { name: '坎', nature: '水' }, '101': { name: '离', nature: '火' },
+          '001': { name: '艮', nature: '山' }, '110': { name: '兑', nature: '泽' }
+        };
+
+        const HEXAGRAM_64 = {
+          '111_111':'乾为天','111_000':'天地否','111_100':'天雷无妄','111_011':'天风姤','111_010':'天水讼','111_101':'天火同人','111_001':'天山遁','111_110':'天泽履',
+          '000_111':'地天泰','000_000':'坤为地','000_100':'地雷复','000_011':'地风升','000_010':'地水师','000_101':'地火明夷','000_001':'地山谦','000_110':'地泽临',
+          '100_111':'雷天大壮','100_000':'雷地豫','100_100':'震为雷','100_011':'雷风恒','100_010':'雷水解','100_101':'雷火丰','100_001':'雷山小过','100_110':'雷泽归妹',
+          '011_111':'风天小畜','011_000':'风地观','011_100':'风雷益','011_011':'巽为风','011_010':'风水涣','011_101':'风火家人','011_001':'风山渐','011_110':'风泽中孚',
+          '010_111':'水天需','010_000':'水地比','010_100':'水雷屯','010_011':'水风井','010_010':'坎为水','010_101':'水火既济','010_001':'水山蹇','010_110':'水泽节',
+          '101_111':'火天大有','101_000':'火地晋','101_100':'火雷噬嗑','101_011':'火风鼎','101_010':'火水未济','101_101':'离为火','101_001':'火山旅','101_110':'火泽睽',
+          '001_111':'山天大畜','001_000':'山地剥','001_100':'山雷颐','001_011':'山风蛊','001_010':'山水蒙','001_101':'山火贲','001_001':'艮为山','001_110':'山泽损',
+          '110_111':'泽天夬','110_000':'泽地萃','110_100':'泽雷随','110_011':'泽风大过','110_010':'泽水困','110_101':'泽火革','110_001':'泽山咸','110_110':'兑为泽'
+        };
+
+        const YAO_STAGE_INFO = [
+          { pos: '初', sancai: '地爻 · 萌芽', isYangPos: true,  desc: '初爻代表事物的萌芽阶段，根基初立，应当谦逊、谨慎。' },
+          { pos: '二', sancai: '地爻 · 中正', isYangPos: false, desc: '二爻居下卦之中，象征中正平和，内在根基稳固。' },
+          { pos: '三', sancai: '人爻 · 决断', isYangPos: true,  desc: '三爻居上下卦交接处，内外交锋，暗示着变化与决断。' },
+          { pos: '四', sancai: '人爻 · 近尊', isYangPos: false, desc: '四爻接近尊位但未至巅峰，审时度势，能进能退。' },
+          { pos: '五', sancai: '天爻 · 尊位', isYangPos: true,  desc: '五爻为尊位，居上卦之中，象征掌权者，强调中正合德。' },
+          { pos: '上', sancai: '天爻 · 终结', isYangPos: false, desc: '上爻为事物的终结，一个阶段性大环境的收官与物极必反。' }
+        ];
+
+        let hexBits = [1, 1, 1, 0, 0, 0]; // 地天泰
+        let activeYaoIdx = 4;
+
+        const yaoTowerEl = document.getElementById('yaoTower');
+        const hexFullNameEl = document.getElementById('hexFullName');
+        const hexTrigramMetaEl = document.getElementById('hexTrigramMeta');
+        const yaoInspectTitleEl = document.getElementById('yaoInspectTitle');
+        const yaoPosBadgeEl = document.getElementById('yaoPosBadge');
+        const yaoSanCaiTagEl = document.getElementById('yaoSanCaiTag');
+        const yaoInspectDescEl = document.getElementById('yaoInspectDesc');
+
+        function renderYaoTower() {
+          yaoTowerEl.innerHTML = '';
+          for (let i = 5; i >= 0; i--) {
+            const bit = hexBits[i];
+            const info = YAO_STAGE_INFO[i];
+            const isSelected = i === activeYaoIdx;
+            const yaoName = (i === 0 || i === 5) ? `${info.pos}${bit === 1 ? '九' : '六'}` : `${bit === 1 ? '九' : '六'}${info.pos}`;
+
+            const row = document.createElement('button');
+            row.className = `w-full flex items-center gap-2 px-2.5 py-1.5 rounded-xl border cursor-pointer active:scale-[0.98] transition ${
+              isSelected ? 'bg-white/10 border-gilt/55 shadow-md' : 'bg-white/[0.03] border-white/5 hover:bg-white/[0.07]'
+            }`;
+            row.innerHTML = `
+              <span class="font-serif text-[11px] w-7 text-left ${isSelected ? 'text-gilt font-bold' : 'text-ash'}">${yaoName}</span>
+              <div class="flex-1 flex items-center justify-between h-3.5">
+                ${bit === 1
+                  ? `<div class="w-full h-3 rounded-sm bg-gradient-to-r from-cinnabar via-vermilion to-cinnabar shadow-[0_0_12px_rgba(184,50,39,0.48)]"></div>`
+                  : `<div class="w-[44%] h-3 rounded-sm bg-xuan/85"></div><div class="w-[44%] h-3 rounded-sm bg-xuan/85"></div>`
+                }
+              </div>
+              <span class="font-mono text-[9px] w-7 text-right ${bit === 1 ? 'text-vermilion' : 'text-ash'}">${bit === 1 ? '阳—' : '阴--'}</span>
+            `;
+            row.addEventListener('click', () => {
+              stopCinemaMode(true);
+              hexBits[i] = hexBits[i] === 1 ? 0 : 1;
+              activeYaoIdx = i;
+              sound.playYaoToggle(hexBits[i] === 1);
+              renderYaoTower();
+            });
+            yaoTowerEl.appendChild(row);
+          }
+
+          const lowerKey = `${hexBits[0]}${hexBits[1]}${hexBits[2]}`;
+          const upperKey = `${hexBits[3]}${hexBits[4]}${hexBits[5]}`;
+          const lowerT = TRIGRAM_META[lowerKey];
+          const upperT = TRIGRAM_META[upperKey];
+          hexFullNameEl.textContent = HEXAGRAM_64[`${upperKey}_${lowerKey}`] || `${upperT.nature}${lowerT.nature}`;
+          hexTrigramMetaEl.textContent = `${upperT.name}上(${upperT.nature}) · ${lowerT.name}下(${lowerT.nature})`;
+
+          const bit = hexBits[activeYaoIdx];
+          const info = YAO_STAGE_INFO[activeYaoIdx];
+          const yaoName = (activeYaoIdx === 0 || activeYaoIdx === 5) ? `${info.pos}${bit === 1 ? '九' : '六'}` : `${bit === 1 ? '九' : '六'}${info.pos}`;
+          const isZheng = (bit === 1 && info.isYangPos) || (bit === 0 && !info.isYangPos);
+          const isZhong = (activeYaoIdx === 1 || activeYaoIdx === 4);
+
+          yaoInspectTitleEl.textContent = `${yaoName}（${bit === 1 ? '阳' : '阴'}爻居${info.isYangPos ? '阳' : '阴'}位）`;
+          if (isZhong && isZheng) {
+            yaoPosBadgeEl.textContent = '中正 · 当位';
+            yaoPosBadgeEl.className = 'text-[9.5px] px-1.5 py-0.5 rounded bg-vermilion/25 border border-vermilion/55 text-xuan font-serif';
+          } else if (isZhong) {
+            yaoPosBadgeEl.textContent = '得中 · 不当位';
+            yaoPosBadgeEl.className = 'text-[9.5px] px-1.5 py-0.5 rounded bg-gilt/20 border border-gilt/40 text-gilt font-serif';
+          } else if (isZheng) {
+            yaoPosBadgeEl.textContent = '当位 · 为正';
+            yaoPosBadgeEl.className = 'text-[9.5px] px-1.5 py-0.5 rounded bg-gilt/20 text-gilt font-serif';
+          } else {
+            yaoPosBadgeEl.textContent = '不当位';
+            yaoPosBadgeEl.className = 'text-[9.5px] px-1.5 py-0.5 rounded bg-white/10 text-ash font-serif';
+          }
+          yaoSanCaiTagEl.textContent = info.sancai;
+          yaoInspectDescEl.textContent = info.desc;
+        }
+
+        function applyHexBits(bitStr, inspectIdx = 4) {
+          hexBits = bitStr.split('').map(Number);
+          activeYaoIdx = inspectIdx;
+          renderYaoTower();
+        }
+
+        document.querySelectorAll('.hex-preset').forEach(btn => {
+          btn.addEventListener('click', () => {
+            stopCinemaMode(true);
+            applyHexBits(btn.dataset.bits, 4);
+            sound.playYaoToggle(true);
+          });
+        });
+
+        /* ====================================================================
+           PART 9: SLIDE 5 — 先天 ⇄ 后天八卦星盘变形 + 分界线开关
+           ==================================================================== */
+        const BAGUA_DATA = [
+          { id: 'qian', name: '乾', sym: '☰', family: '老父 · 天/金',
+            xt: { angle: 0, tag: '夏至 · 正南', desc: '先天居正南夏至，纯阳之极，震→离→兑→乾阳长阴消至此登峰。' },
+            ht: { angle: 135, tag: '西北 · 战乎乾', desc: '后天居西北，太阳西沉入冬之始，阴阳相薄对抗转换之位。' } },
+          { id: 'dui', name: '兑', sym: '☱', family: '少女 · 泽/金',
+            xt: { angle: 315, tag: '东南 · 山泽通气', desc: '先天由太阳生，阳气次盛于乾，与西北艮山相对通气。' },
+            ht: { angle: 90, tag: '正西 · 说言乎兑', desc: '后天居正西秋分，日光柔和西落，万物成熟愉悦收获。' } },
+          { id: 'li', name: '离', sym: '☲', family: '中女 · 火',
+            xt: { angle: 270, tag: '春分 · 正东', desc: '先天居正东春分，阳气过半，与正西坎水相对不相射。' },
+            ht: { angle: 0, tag: '正南 · 相见乎离', desc: '后天居正南夏至，日中光明最盛，圣人“面南而治”取诸此。' } },
+          { id: 'zhen', name: '震', sym: '☳', family: '长男 · 雷/木',
+            xt: { angle: 225, tag: '东北 · 阳长之始', desc: '先天一阳初动于下，阳长阴消之起点，与巽风相薄。' },
+            ht: { angle: 270, tag: '正东 · 帝出乎震', desc: '后天居正东春分，太阳早晨升起，春回大地万物萌发。' } },
+          { id: 'xun', name: '巽', sym: '☴', family: '长女 · 风/木',
+            xt: { angle: 45, tag: '西南 · 阴长之始', desc: '先天一阴初生于下，阴长阳消之起点，承夏至转凉之势。' },
+            ht: { angle: 315, tag: '东南 · 齐乎巽', desc: '后天居东南春夏之交，日光渐强，万物整齐茁壮生长。' } },
+          { id: 'kan', name: '坎', sym: '☵', family: '中男 · 水',
+            xt: { angle: 90, tag: '秋分 · 正西', desc: '先天居正西秋分，阴气过半，外虚内实，承消长中枢。' },
+            ht: { angle: 180, tag: '正北 · 劳乎坎', desc: '后天居正北冬至，深夜寒冬，万物伏藏蓄力以待新循环。' } },
+          { id: 'gen', name: '艮', sym: '☶', family: '少男 · 山/土',
+            xt: { angle: 135, tag: '西北 · 硕果存阳', desc: '先天阴气极盛仅余一阳于上，与东南兑泽通气呼应。' },
+            ht: { angle: 225, tag: '东北 · 成言乎艮', desc: '后天居东北冬春之交，黎明前夕，终结旧周期开启新起点。' } },
+          { id: 'kun', name: '坤', sym: '☷', family: '老母 · 地/土',
+            xt: { angle: 180, tag: '冬至 · 正北', desc: '先天居正北冬至，纯阴之极，厚德载物，孕育新一轮阳气。' },
+            ht: { angle: 45, tag: '西南 · 致役乎坤', desc: '后天居西南长夏之交，日影西斜，大地养育万物成熟。' } }
+        ];
+
+        let baguaMode = 'xiantian';
+        let selectedBaguaId = 'qian';
+        let showDivider = false;
+        const baguaNodesLayer = document.getElementById('baguaNodesLayer');
+        const btnXiantian = document.getElementById('btnXiantian');
+        const btnHoutian = document.getElementById('btnHoutian');
+        const dividerOverlayBtn = document.getElementById('dividerOverlayBtn');
+        const dividerDot = document.getElementById('dividerDot');
+        const xiantianArcs = document.getElementById('xiantianArcs');
+        const houtianCenter = document.getElementById('houtianCenter');
+        const houtianDivider = document.getElementById('houtianDivider');
+        const bgSelSymbol = document.getElementById('bgSelSymbol');
+        const bgSelTitle = document.getElementById('bgSelTitle');
+        const bgSelRole = document.getElementById('bgSelRole');
+        const bgSelDesc = document.getElementById('bgSelDesc');
+        const baguaDomMap = {};
+
+        function buildBaguaCompass() {
+          baguaNodesLayer.innerHTML = '';
+          BAGUA_DATA.forEach(item => {
+            const btn = document.createElement('button');
+            btn.className = 'bagua-node pointer-events-auto w-11 h-11 -ml-[22px] -mt-[22px] rounded-full flex flex-col items-center justify-center border bg-[#0E0E14]/95 shadow-lg cursor-pointer hover:border-gilt';
+            btn.innerHTML = `
+              <span class="text-[12px] leading-none text-gilt">${item.sym}</span>
+              <span class="font-serif text-[10.5px] font-bold text-xuan leading-tight mt-0.5">${item.name}</span>
+            `;
+            btn.addEventListener('click', () => {
+              stopCinemaMode(true);
+              selectedBaguaId = item.id;
+              sound.playDialTick(BAGUA_DATA.indexOf(item));
+              updateBaguaSelection();
+            });
+            baguaNodesLayer.appendChild(btn);
+            baguaDomMap[item.id] = btn;
+          });
+          setBaguaMode('xiantian', false);
+        }
+
+        function setDividerOverlay(on) {
+          showDivider = on;
+          houtianDivider.style.opacity = (on && baguaMode === 'houtian') ? '1' : '0';
+          dividerOverlayBtn.classList.toggle('border-vermilion/60', on);
+          dividerOverlayBtn.classList.toggle('bg-cinnabar/25', on);
+          dividerOverlayBtn.classList.toggle('text-xuan', on);
+          dividerDot.classList.toggle('bg-vermilion', on);
+          dividerDot.classList.toggle('bg-ash', !on);
+        }
+
+        function setBaguaMode(mode, playSound = false) {
+          baguaMode = mode;
+          const isXt = mode === 'xiantian';
+          if (playSound) sound.playBaguaMorph(!isXt);
+
+          btnXiantian.className = `py-1.5 rounded-lg text-xs font-serif transition ${isXt ? 'font-semibold bg-cinnabar/85 text-xuan' : 'text-ash hover:text-xuan'}`;
+          btnHoutian.className = `py-1.5 rounded-lg text-xs font-serif transition ${!isXt ? 'font-semibold bg-cinnabar/85 text-xuan' : 'text-ash hover:text-xuan'}`;
+          xiantianArcs.style.opacity = isXt ? '1' : '0';
+          houtianCenter.style.opacity = isXt ? '0' : '1';
+          houtianDivider.style.opacity = (!isXt && showDivider) ? '1' : '0';
+
+          const radius = 80;
+          BAGUA_DATA.forEach(item => {
+            const angle = isXt ? item.xt.angle : item.ht.angle;
+            const rad = (angle - 90) * Math.PI / 180;
+            baguaDomMap[item.id].style.transform = `translate3d(${(Math.cos(rad) * radius).toFixed(1)}px, ${(Math.sin(rad) * radius).toFixed(1)}px, 0)`;
+          });
+          updateBaguaSelection();
+        }
+
+        function updateBaguaSelection() {
+          const item = BAGUA_DATA.find(b => b.id === selectedBaguaId) || BAGUA_DATA[0];
+          const meta = baguaMode === 'xiantian' ? item.xt : item.ht;
+          BAGUA_DATA.forEach(b => {
+            const el = baguaDomMap[b.id];
+            const active = b.id === selectedBaguaId;
+            el.classList.toggle('border-vermilion', active);
+            el.classList.toggle('ring-2', active);
+            el.classList.toggle('ring-vermilion/40', active);
+            el.classList.toggle('border-white/15', !active);
+          });
+          bgSelSymbol.textContent = item.sym;
+          bgSelTitle.textContent = `${item.name} · ${meta.tag}`;
+          bgSelRole.textContent = item.family;
+          bgSelDesc.textContent = meta.desc;
+        }
+
+        btnXiantian.addEventListener('click', () => { stopCinemaMode(true); setBaguaMode('xiantian', true); });
+        btnHoutian.addEventListener('click', () => { stopCinemaMode(true); setBaguaMode('houtian', true); });
+        dividerOverlayBtn.addEventListener('click', () => {
+          stopCinemaMode(true);
+          if (baguaMode === 'xiantian') {
+            setBaguaMode('houtian', true);
+            setDividerOverlay(true);
+          } else {
+            setDividerOverlay(!showDivider);
+            sound.playDialTick(showDivider ? 7 : 3);
+          }
+        });
+
+        /* ====================================================================
+           PART 10: SLIDE 6 — 五行五角星生克图 + 旺相休囚死 + 真五音和弦声波
+           ==================================================================== */
+        // Regular Pentagon coordinates (clockwise Generating cycle: 木 -> 火 -> 土 -> 金 -> 水 -> 木)
+        const PENTAGON_ELS = [
+          { key: 'fire',  name: '火', tone: '徵音', dir: '南·丙丁', x: 150, y: 24 },
+          { key: 'earth', name: '土', tone: '宫音', dir: '中·戊己', x: 224, y: 68 },
+          { key: 'metal', name: '金', tone: '商音', dir: '西·庚辛', x: 196, y: 132 },
+          { key: 'water', name: '水', tone: '羽音', dir: '北·壬癸', x: 104, y: 132 },
+          { key: 'wood',  name: '木', tone: '角音', dir: '东·甲乙', x: 76,  y: 68 }
+        ];
+
+        const SEASON_MATRIX = {
+          spring: { summary: '春木当令 · 东方甲乙 · 姑洗角音', dominant: 'wood',  states: { wood: '旺', fire: '相', water: '休', metal: '囚', earth: '死' } },
+          summer: { summary: '夏火当令 · 南方丙丁 · 蕤宾徵音', dominant: 'fire',  states: { fire: '旺', earth: '相', wood: '休', water: '囚', metal: '死' } },
+          late:   { summary: '季土当令 · 中央戊己 · 黄钟宫音', dominant: 'earth', states: { earth: '旺', metal: '相', fire: '休', wood: '囚', water: '死' } },
+          autumn: { summary: '秋金当令 · 西方庚辛 · 太簇商音', dominant: 'metal', states: { metal: '旺', water: '相', earth: '休', fire: '囚', wood: '死' } },
+          winter: { summary: '冬水当令 · 北方壬癸 · 应钟羽音', dominant: 'water', states: { water: '旺', wood: '相', metal: '休', earth: '囚', fire: '死' } }
+        };
+
+        const STATE_LEVELS = {
+          '旺': { pct: 92, dir: 'up',   badge: 'bg-vermilion/30 text-vermilion border-vermilion/55', bar: 'linear-gradient(180deg,#B83227,#7C221A)' },
+          '相': { pct: 58, dir: 'up',   badge: 'bg-gilt/20 text-gilt border-gilt/45',               bar: 'linear-gradient(180deg,#D8BA7E,#A88642)' },
+          '休': { pct: 8,  dir: 'zero', badge: 'bg-white/10 text-xuan/80 border-white/20',          bar: 'rgba(242,239,233,0.55)' },
+          '囚': { pct: 48, dir: 'down', badge: 'bg-slate-700/45 text-slate-300 border-slate-500/40', bar: 'linear-gradient(180deg,#4B5563,#334155)' },
+          '死': { pct: 88, dir: 'down', badge: 'bg-zinc-800/85 text-ash border-white/10',           bar: 'linear-gradient(180deg,#27272A,#18181B)' }
+        };
+
+        const wuxingPentagonSvg = document.getElementById('wuxingPentagonSvg');
+        const wxBarsWrap = document.getElementById('wxBarsWrap');
+        const wxSeasonSummary = document.getElementById('wxSeasonSummary');
+
+        function setWuxingSeason(seasonKey, playSound = false) {
+          const data = SEASON_MATRIX[seasonKey];
+          wxSeasonSummary.textContent = data.summary;
+          if (playSound) sound.playFiveElementsTone(data.dominant);
+
+          document.querySelectorAll('.wx-season-btn').forEach(btn => {
+            const active = btn.dataset.season === seasonKey;
+            btn.className = `wx-season-btn py-1.5 rounded-xl text-[10.5px] font-serif border transition leading-tight ${
+              active ? 'bg-cinnabar/85 border-vermilion text-xuan font-bold shadow-md' : 'bg-white/5 border-white/10 text-ash hover:text-xuan'
+            }`;
+          });
+
+          const NS = 'http://www.w3.org/2000/svg';
+          wuxingPentagonSvg.innerHTML = '';
+
+          // Outer Pentagon Generating Ring (相生: 火->土->金->水->木->火)
+          for (let i = 0; i < 5; i++) {
+            const a = PENTAGON_ELS[i];
+            const b = PENTAGON_ELS[(i + 1) % 5];
+            const isActiveGen = (data.states[a.key] === '旺' && data.states[b.key] === '相');
+            const line = document.createElementNS(NS, 'line');
+            line.setAttribute('x1', a.x); line.setAttribute('y1', a.y);
+            line.setAttribute('x2', b.x); line.setAttribute('y2', b.y);
+            line.setAttribute('stroke', isActiveGen ? '#C8A96E' : 'rgba(200,169,110,0.22)');
+            line.setAttribute('stroke-width', isActiveGen ? '2.4' : '1.1');
+            wuxingPentagonSvg.appendChild(line);
+          }
+
+          // Inner Star Controlling Lines (相克: i -> i+2)
+          for (let i = 0; i < 5; i++) {
+            const a = PENTAGON_ELS[i];
+            const b = PENTAGON_ELS[(i + 2) % 5];
+            const isActiveKe = (data.states[a.key] === '旺' && data.states[b.key] === '死');
+            const line = document.createElementNS(NS, 'line');
+            line.setAttribute('x1', a.x); line.setAttribute('y1', a.y);
+            line.setAttribute('x2', b.x); line.setAttribute('y2', b.y);
+            line.setAttribute('stroke', isActiveKe ? '#B83227' : 'rgba(242,239,233,0.08)');
+            line.setAttribute('stroke-width', isActiveKe ? '1.8' : '0.85');
+            line.setAttribute('stroke-dasharray', '3 3');
+            wuxingPentagonSvg.appendChild(line);
+          }
+
+          // Nodes + Animated Visual Soundwave Ripple on Active Element
+          PENTAGON_ELS.forEach(el => {
+            const st = data.states[el.key];
+            const isWang = st === '旺';
+            const isXiang = st === '相';
+            const g = document.createElementNS(NS, 'g');
+            g.setAttribute('class', 'cursor-pointer');
+
+            if (isWang) {
+              // Animated Soundwave Ripple
+              const r1 = document.createElementNS(NS, 'circle');
+              r1.setAttribute('cx', el.x); r1.setAttribute('cy', el.y); r1.setAttribute('r', '18');
+              r1.setAttribute('fill', 'none'); r1.setAttribute('stroke', '#C8A96E');
+              r1.setAttribute('class', 'wx-ripple-anim');
+              g.appendChild(r1);
+
+              const halo = document.createElementNS(NS, 'circle');
+              halo.setAttribute('cx', el.x); halo.setAttribute('cy', el.y); halo.setAttribute('r', '22');
+              halo.setAttribute('fill', 'rgba(184,50,39,0.2)'); halo.setAttribute('stroke', '#B83227'); halo.setAttribute('stroke-width', '1.2');
+              g.appendChild(halo);
+            }
+
+            const c = document.createElementNS(NS, 'circle');
+            c.setAttribute('cx', el.x); c.setAttribute('cy', el.y); c.setAttribute('r', isWang ? '16.5' : '14');
+            c.setAttribute('fill', isWang ? '#9E2A22' : '#121218');
+            c.setAttribute('stroke', isWang ? '#F2EFE9' : (isXiang ? '#C8A96E' : 'rgba(242,239,233,0.24)'));
+            c.setAttribute('stroke-width', isWang || isXiang ? '1.6' : '1');
+            g.appendChild(c);
+
+            const t = document.createElementNS(NS, 'text');
+            t.setAttribute('x', el.x); t.setAttribute('y', el.y + 4.5);
+            t.setAttribute('text-anchor', 'middle'); t.setAttribute('font-size', isWang ? '13' : '11.5');
+            t.setAttribute('font-family', 'Noto Serif SC'); t.setAttribute('font-weight', '700');
+            t.setAttribute('fill', isWang ? '#F2EFE9' : (isXiang ? '#C8A96E' : '#9A958C'));
+            t.textContent = el.name;
+            g.appendChild(t);
+
+            // Tone & Direction micro label outside node
+            const lbl = document.createElementNS(NS, 'text');
+            const lx = el.key === 'wood' ? el.x - 32 : (el.key === 'earth' ? el.x + 32 : el.x);
+            const ly = el.key === 'fire' ? el.y - 20 : (el.key === 'water' || el.key === 'metal' ? el.y + 24 : el.y + 4);
+            lbl.setAttribute('x', lx); lbl.setAttribute('y', ly);
+            lbl.setAttribute('text-anchor', 'middle'); lbl.setAttribute('font-size', '9');
+            lbl.setAttribute('font-family', 'Noto Serif SC');
+            lbl.setAttribute('fill', isWang ? '#C8A96E' : 'rgba(154,149,140,0.85)');
+            lbl.textContent = `${el.tone}`;
+            g.appendChild(lbl);
+
+            // Allow tapping directly on the pentagon node too
+            const sKeyMap = { wood: 'spring', fire: 'summer', earth: 'late', metal: 'autumn', water: 'winter' };
+            g.addEventListener('click', () => { stopCinemaMode(true); setWuxingSeason(sKeyMap[el.key], true); });
+            wuxingPentagonSvg.appendChild(g);
+          });
+
+          // Render Bidirectional 旺相休囚死 Bars (order: 木 火 土 金 水)
+          const barOrder = ['wood', 'fire', 'earth', 'metal', 'water'];
+          wxBarsWrap.innerHTML = '';
+          barOrder.forEach(k => {
+            const el = PENTAGON_ELS.find(p => p.key === k);
+            const st = data.states[k];
+            const cfg = STATE_LEVELS[st];
+            const col = document.createElement('div');
+            col.className = 'flex flex-col items-center h-full justify-between';
+            col.innerHTML = `
+              <div class="w-full flex-1 flex flex-col justify-end items-center pb-0.5">
+                <div class="wuxing-bar w-6 rounded-t-md" style="height:${cfg.dir === 'up' ? cfg.pct + '%' : '0%'}; background:${cfg.bar}; ${st==='旺'?'box-shadow:0 0 12px rgba(184,50,39,0.65);':''}"></div>
+              </div>
+              <div class="relative z-10 my-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-serif border leading-none ${cfg.badge}">
+                ${el.name}·${st}
+              </div>
+              <div class="w-full flex-1 flex flex-col justify-start items-center pt-0.5">
+                <div class="wuxing-bar w-6 rounded-b-md" style="height:${cfg.dir === 'down' ? cfg.pct + '%' : '0%'}; background:${cfg.bar}; ${cfg.dir==='zero'?'height:4px;border-radius:99px;':''}"></div>
+              </div>
+            `;
+            wxBarsWrap.appendChild(col);
+          });
+        }
+
+        document.querySelectorAll('.wx-season-btn').forEach(btn => {
+          btn.addEventListener('click', () => { stopCinemaMode(true); setWuxingSeason(btn.dataset.season, true); });
+        });
+
+        /* ====================================================================
+           PART 11: SLIDE 7 — 洛书 45° 石印锁合 + 苍龙六宿真河图
+           ==================================================================== */
+        const s7TabLuoshu = document.getElementById('s7TabLuoshu');
+        const s7TabDragon = document.getElementById('s7TabDragon');
+        const s7PanelLuoshu = document.getElementById('s7PanelLuoshu');
+        const s7PanelDragon = document.getElementById('s7PanelDragon');
+        const lsYinCross = document.getElementById('lsYinCross');
+        const lsOctagram = document.getElementById('lsOctagram');
+        const lsSumLines = document.getElementById('lsSumLines');
+        const luoshuSlider = document.getElementById('luoshuSlider');
+        const luoshuSnapBtn = document.getElementById('luoshuSnapBtn');
+        const lsStatusBadge = document.getElementById('lsStatusBadge');
+        const lsAngleVal = document.getElementById('lsAngleVal');
+        const lsSumProof = document.getElementById('lsSumProof');
+
+        const lsYinDigits = [
+          { el: document.getElementById('lsYinNum2'), x: 130, y: 56 },
+          { el: document.getElementById('lsYinNum6'), x: 204, y: 130 },
+          { el: document.getElementById('lsYinNum8'), x: 130, y: 204 },
+          { el: document.getElementById('lsYinNum4'), x: 56,  y: 130 }
+        ];
+
+        let currentLsAngle = 0;
+        let wasLsLocked = false;
+
+        function setLuoshuAngle(deg, allowSound = true) {
+          currentLsAngle = Math.max(0, Math.min(45, Number(deg)));
+          luoshuSlider.value = currentLsAngle;
+          lsAngleVal.textContent = `${currentLsAngle}°`;
+
+          lsYinCross.style.transform = `rotate(${currentLsAngle}deg)`;
+          lsYinDigits.forEach(d => d.el.setAttribute('transform', `translate(${d.x}, ${d.y}) rotate(${-currentLsAngle})`));
+
+          const locked = currentLsAngle >= 44;
+          lsOctagram.style.opacity = locked ? '1' : String((currentLsAngle / 45) * 0.25);
+          lsOctagram.classList.toggle('octagram-active', locked);
+          lsSumLines.style.opacity = locked ? '1' : '0';
+
+          if (locked && !wasLsLocked && allowSound) {
+            sound.playLuoshuLock();
+          }
+          wasLsLocked = locked;
+
+          if (locked) {
+            lsStatusBadge.textContent = '45° 天地锁合 · 史前八角纹与洛书九宫显现';
+            lsStatusBadge.className = 'text-[11px] font-serif text-vermilion font-semibold';
+            lsSumProof.textContent = '对宫合十：1+9=10 · 2+8=10 · 3+7=10 · 4+6=10';
+            lsSumProof.className = 'text-[10.5px] font-mono text-center text-gilt mt-0.5';
+            luoshuSnapBtn.textContent = '复原 0°';
+          } else {
+            lsStatusBadge.textContent = currentLsAngle === 0 ? '初始叠合（0°）· 拖动旋动天地' : `阴数顺转至四隅（${currentLsAngle}° / 45°）`;
+            lsStatusBadge.className = 'text-[11px] font-serif text-ash';
+            lsSumProof.textContent = '锁合 45° 验证对宫合十并显现史前八角纹（石印声效）';
+            lsSumProof.className = 'text-[10px] font-mono text-center text-ash mt-0.5';
+            luoshuSnapBtn.textContent = '旋至 45°';
+          }
+        }
+
+        function animateLuoshuTo(targetDeg) {
+          const start = currentLsAngle;
+          const startTime = performance.now();
+          const duration = 680;
+          function step(now) {
+            const p = Math.min(1, (now - startTime) / duration);
+            const eased = 1 - Math.pow(1 - p, 3);
+            setLuoshuAngle(Math.round(start + (targetDeg - start) * eased), true);
+            if (p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+
+        luoshuSlider.addEventListener('input', (e) => { stopCinemaMode(true); setLuoshuAngle(e.target.value, true); });
+        luoshuSnapBtn.addEventListener('click', () => { stopCinemaMode(true); animateLuoshuTo(currentLsAngle >= 44 ? 0 : 45); });
+
+        // Tab B: Dragon Constellation -> True Hetu
+        const trueHetuOverlay = document.getElementById('trueHetuOverlay');
+        const dragonConstellation = document.getElementById('dragonConstellation');
+        const toggleHetuBtn = document.getElementById('toggleHetuBtn');
+        const dragonStage = document.getElementById('dragonStage');
+        const dragonDesc = document.getElementById('dragonDesc');
+        let hetuVisible = false;
+
+        function setHetuVisible(show, playSound = true) {
+          hetuVisible = show;
+          trueHetuOverlay.style.opacity = show ? '1' : '0';
+          trueHetuOverlay.style.transform = show ? 'scale(1)' : 'scale(0.84)';
+          dragonConstellation.style.opacity = show ? '0.2' : '1';
+          toggleHetuBtn.textContent = show ? '返回苍龙星象' : '显现真·河图';
+          dragonDesc.textContent = show
+            ? '黑白回互的卷曲龙形即“真·河图（太极龙图）”，象征苍龙跃出天河回天运行。'
+            : '“河”乃天河！龙星六体为龙，腹中房宿天驷为马——此即“龙马负图”真源。';
+          if (show && playSound) sound.playDragonShimmer();
+        }
+
+        toggleHetuBtn.addEventListener('click', () => { stopCinemaMode(true); setHetuVisible(!hetuVisible, true); });
+        dragonStage.addEventListener('click', () => { stopCinemaMode(true); setHetuVisible(!hetuVisible, true); });
+
+        function switchS7Tab(tab) {
+          const isLs = tab === 'luoshu';
+          s7PanelLuoshu.classList.toggle('hidden', !isLs);
+          s7PanelLuoshu.classList.toggle('flex', isLs);
+          s7PanelDragon.classList.toggle('hidden', isLs);
+          s7PanelDragon.classList.toggle('flex', !isLs);
+          s7TabLuoshu.className = `py-1.5 rounded-lg text-xs font-serif transition ${isLs ? 'font-semibold bg-cinnabar/85 text-xuan' : 'text-ash hover:text-xuan'}`;
+          s7TabDragon.className = `py-1.5 rounded-lg text-xs font-serif transition ${!isLs ? 'font-semibold bg-cinnabar/85 text-xuan' : 'text-ash hover:text-xuan'}`;
+        }
+
+        s7TabLuoshu.addEventListener('click', () => { stopCinemaMode(true); switchS7Tab('luoshu'); sound.playDialTick(4); });
+        s7TabDragon.addEventListener('click', () => { stopCinemaMode(true); switchS7Tab('dragon'); sound.playDialTick(8); });
+
+        /* ====================================================================
+           PART 12: SLIDE 8 — 静听片刻五音 MEDITATION PULSE
+           ==================================================================== */
+        const meditateZone = document.getElementById('meditateZone');
+        const meditateAudioBtn = document.getElementById('meditateAudioBtn');
+        const meditateHint = document.getElementById('meditateHint');
+
+        function stopMeditationUI() {
+          sound.stopMeditationCadence();
+          meditateZone.classList.remove('meditate-active');
+          meditateAudioBtn.textContent = '静听片刻五音';
+          meditateHint.textContent = 'CHAPTER 01 COMPLETE · 下元甲辰 元亨利貞';
+        }
+
+        meditateAudioBtn.addEventListener('click', () => {
+          stopCinemaMode(true);
+          if (sound.isMeditating) {
+            stopMeditationUI();
+            showToast('已结束五音静听');
+          } else {
+            sound.startMeditationCadence();
+            syncAudioUI();
+            meditateZone.classList.add('meditate-active');
+            meditateAudioBtn.textContent = '停止静听';
+            meditateHint.textContent = '五音十二律吕共鸣中 · 调息静观其变';
+            showToast('开启五音禅意静听');
+          }
+        });
+
+        /* ====================================================================
+           PART 13: INITIALIZATION ON WINDOW LOAD & RESIZE
+           ==================================================================== */
+        window.addEventListener('resize', () => {
+          resizeCosmos();
+          resizeQiCanvas();
+        });
+
+        window.onload = function () {
+          initStars();
+          resizeCosmos();
+          renderCosmos();
+
+          buildXiaoxiWheel();
+          setXiaoxiIndex(0, false);
+
+          setQiValue(50);
+          renderTaijiTree(4, false);
+          renderQiField();
+
+          renderYaoTower();
+          buildBaguaCompass();
+          setWuxingSeason('spring', false);
+          setLuoshuAngle(0, false);
+          setHetuVisible(false, false);
+
+          updateChrome();
+          syncAudioUI();
+        };
+
+      } catch (err) {
+        console.error('Presentation engine error:', err);
+      }
+    })();
+  </script>
+</body>
+</html>
